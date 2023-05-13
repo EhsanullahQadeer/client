@@ -1,0 +1,91 @@
+@import url("https://use.fontawesome.com/releases/v5.15.0/css/all.css");
+.homePage2-accordian .accordionBigMain {
+  padding: 100px 24% 119px;
+  background: #f2f4f8;
+  margin-bottom: 0px;
+}
+.accordionHeading {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+  color: #222222;
+  text-align: center;
+  margin-bottom: 18px;
+}
+.accordionBio {
+  color: #666666;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  text-align: center;
+  margin-bottom: 10px;
+}
+.accordionWrapper {
+  margin-top: 40px;
+}
+.accordionUpperHeading {
+  color: #222222;
+  font-size: 17px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+}
+.accordionSmallText {
+  font-size: 15px;
+  font-weight: 400;
+  color: #666666;
+  font-family: "Noto Sans", sans-serif;
+}
+/* The FAQ */
+
+/*.............bootstrap acooridan cutomization.........*/
+.accordion-button:not(.collapsed)::after {
+  content: "\2012";
+  font-size:2rem ;
+  font-weight: bolder;
+  position: relative;
+  
+  top: 16px;
+  right: 4px;
+  font-family: "Font Awesome 5 Free";
+  color: #00AAA1;
+  background-image: none;
+}
+.accordion-button.collapsed::after {
+  content: "\f067";
+  font-size: 1.2rem;
+  color: #00AAA1;
+  font-weight: 400;
+  font-family: "Font Awesome 5 Free";
+  background-image: none;
+  transform: rotate(90deg);
+}
+.accordion-button:not(.collapsed){
+   background-color:  #DFF1F0;
+}
+.accordion-button:focus {
+  z-index: 3;
+  --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem  #DFF1F0;
+}
+
+
+
+@media (max-width:992px) {
+   /*.......l-r-p 60px ......*/
+   .homePage2-accordian .accordionBigMain {
+    padding: 80px 15% 100px;
+  }
+ 
+ }
+ @media (max-width:768px) {
+   /*.......l-r-p 40px ......*/
+   .homePage2-accordian .accordionBigMain {
+    padding: 65px 10% 85px;
+  }
+   }
+
+   @media (max-width:576px) {
+     /*.......l-r-p 20px ......*/
+     .accordionBigMain {
+      padding: 50px 10% 60px;
+    }
+    }

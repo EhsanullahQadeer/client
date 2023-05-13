@@ -1,0 +1,77 @@
+.aboutBigMian {
+  padding: 110px 10% 123px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 130px;
+  flex-wrap: wrap;
+}
+.aboutMain {
+  display: flex;
+  column-gap: 50px;
+}
+.aboutMain .learnImages img{
+height: 346px;
+width: 371px;
+border-radius: 8px;
+}
+.aboutContent h1 {
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  color: #222222;
+}
+.aboutContent p {
+  font-size: 15px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  color: #555555;
+  margin-bottom: 0;
+}
+
+.flexParas {
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+}
+
+.aboutMain2 {
+  margin-top: 70px;
+}
+
+@media screen and (max-width: 1312px) {
+  .aboutMain {
+    flex-direction: column;
+  }
+  .aboutMain .learnImages img{
+    display: none;
+    }
+    .aboutBigMian{
+row-gap: 40px;
+    }
+}
+
+@media (max-width:992px) {
+   /*.......l-r-p 60px ......*/
+   .aboutBigMian {
+    padding: 90px 10% 103px;
+  }
+ 
+ }
+ @media (max-width:768px) {
+   /*.......l-r-p 40px ......*/
+   .aboutBigMian {
+    padding: 60px 10% 83px;
+  }
+  .aboutMain .learnImages{
+    display: none;
+    }
+  }
+  
+
+   @media (max-width:576px) {
+     /*.......l-r-p 20px ......*/
+     .aboutBigMian {
+      padding: 40px 10% 55px;
+    }
+    }

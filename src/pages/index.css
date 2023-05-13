@@ -1,0 +1,87 @@
+.writerPublicProfileMain {
+  display: flex;
+  gap: 50px;
+  width: 80%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding-top: 70px;
+}
+
+.writerIntro {
+  flex: 2;
+}
+
+.writerPublicProfileMainSidebar {
+  flex: 1;
+}
+
+.singleBlogMain {
+  display: flex;
+  column-gap: 54px;
+  padding: 76px 10% 104px;
+}
+
+
+.singleBlogContent {
+  flex: 2;
+}
+
+.singleBlogSideBar {
+  flex: 1;
+}
+.writerUpdate-profile{
+  padding-top: 143px 10% 124px ;
+}
+
+@media screen and (max-width: 1200px) {
+  .writerPublicProfileMain {
+    flex-direction: column;
+  }
+}
+
+
+@media (max-width:1272px){
+  .singleBlogMain {
+    flex-direction: column;
+  }
+  .author-image-div{
+    text-align: center;
+    }
+    .singleBlogAdd{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .commentsChipMain {
+      max-width: 100% ;
+      }
+      .writterInfo{
+        margin: 15px 0  10px!important;
+        padding: 0 10px;
+       }
+       .singleBlogSideBar{
+        margin-top: 30px;
+       }
+    }
+@media (max-width:992px) {
+   /*.......l-r-p 60px ......*/
+   .singleBlogMain {
+    padding: 66px 10% 94px;
+  }
+ 
+ }
+ @media (max-width:768px) {
+   /*.......l-r-p 40px ......*/
+   .singleBlogMain {
+    padding: 56px 10% 84px;
+  }
+   }
+
+   @media (max-width:576px) {
+     /*.......l-r-p 20px ......*/
+     .singleBlogMain {
+      padding: 40px 10% 60px;
+    }
+    }
+
+
+   

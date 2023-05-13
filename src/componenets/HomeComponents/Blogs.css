@@ -1,0 +1,151 @@
+.singleBlog {
+  display: flex;
+}
+.blogsPart1{
+  flex: 3;
+}
+.blogsPart2{
+  flex: 1.5;
+}
+.singleBlog-img{
+  height: 152px;
+width: 225px;
+border-radius: 5px;
+}
+.blogsMain {
+  padding: 85px 10% 114px;
+  width: 100%;
+  display: flex;
+  column-gap: 52px;
+}
+.blogsPart1-flex-gap{
+  display: flex;
+  flex-direction: column;
+  row-gap: 35px;
+}
+.blogsContent {
+  margin-left: 34px;
+}
+.right-blogsContent {
+  margin-left: 20px;
+}
+.travelChip {
+  display: inline-block;
+  margin-bottom: 10px;
+  height: 20px;
+/* width: 50px; */
+border-radius: 3px;
+padding: 1px 8px ;
+  background: #f2f8f7;
+  /* display: flex; */
+  /* justify-content: center; */
+}
+.travelChip p {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+}
+.addHere {
+  background-color: #f2f8f7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0px;
+  height: 212px;
+max-width: 721px;
+border-radius: 10px;
+}
+.addHere h1 {
+  color: #d1e4e1;
+  font-size: 64px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+}
+.blogsHead p {
+  overflow: hidden;
+  display: -webkit-box;
+  /* white-space: nowrap; */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222222;
+  font-family: "Noto Sans", sans-serif;
+  margin-bottom: 0;
+}
+.blogsHead p{
+  max-width: 461px;
+  -webkit-line-clamp: 1;
+      white-space: pre-wrap;
+}
+/**********font awesome class*********/
+
+.home-loadMore-btn{
+  text-align: center;
+  font-family: Nunito;
+font-size: 16px;
+font-weight: 500;
+color: #292929;
+text-decoration: none !important;
+background-color: transparent;
+border: none;
+}
+.home-loadMore-btn:hover{
+color: #0065fd;
+
+}
+
+@media screen and (max-width: 1270px) {
+  .blogsMain {
+    gap:40px
+  }
+  /* .blogsMain {
+    padding: 85px 5% 114px;} */
+    .blogsMain {
+      flex-direction: column;
+    }
+    .blogsHead p {
+      -webkit-line-clamp: 2;
+      white-space: pre-wrap;
+    }
+  }
+@media screen and (max-width: 1199px) {
+ 
+ 
+ 
+}
+@media (max-width:992px) {
+  .blogsMain {
+    padding: 85px 10% 70px ;
+  }
+  }
+  @media (max-width:768px) {
+    .singleBlog {
+      flex-direction: column;
+      row-gap: 20px;
+    }
+    .blogsMain {
+      padding: 40px 10% 40px;
+    }
+    .blogsContent {
+      margin-left: 0px;
+    }
+    .addHere {
+      height: 160px;
+    }
+    .addHere h1 {
+      font-size: 44px;
+    }
+    }
+    @media (max-width:576px) {
+      .blogsMain {
+        padding: 85px 10% 20px ;
+      }
+     }
+      
+
+    
+    
+    

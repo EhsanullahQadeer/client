@@ -1,0 +1,22 @@
+
+.aboutHeaderMain {
+  width: 80%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.aboutHeaderMain h1 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+  color: #ffffff;
+}
+.aboutHeaderMain p {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  color: #ffffff;
+}

@@ -1,0 +1,45 @@
+.networkBigMain {
+  background: #f2f4f8;
+  padding: 96px 10% 87px;
+}
+
+.networkMain {
+  display: flex;
+  gap: 65px;
+}
+
+.networkMain h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 57px;
+  font-weight: 600;
+  color: #555555;
+}
+
+.networkMain p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #555555;
+  font-family: "Nunito", sans-serif;
+}
+
+.networkContent {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media (max-width:992px) {
+  .networkMain {
+    flex-direction: column;
+  }
+  .networkMain h1 {
+    font-size: 40px;
+  }
+  .networkBigMain {
+    padding: 66px 10% 57px;
+  }
+  .networkMain {
+    display: flex;
+    gap: 10px;
+  }
+  }

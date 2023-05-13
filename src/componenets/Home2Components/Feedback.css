@@ -1,0 +1,103 @@
+.feedBackBigMain {
+  padding: 67px 10% 87px;
+  background-color: #f2f4f8;
+}
+.feedBackHeader {
+  font-family: "Nunito", sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #292929;
+  margin-bottom: 40px;
+}
+
+.feedBackBigMain h2 {
+  font-size: 17px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+  color: #222222;
+}
+
+.smallText {
+  color: #666666;
+  font-size: 12px;
+  font-weight: 300;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.bigText {
+  color: #555555;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.arrows {
+  display: flex;
+  gap: 17px;
+  cursor: pointer;
+}
+
+.arrowLeft {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrowRight {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0065fd;
+}
+
+.feedBackContent {
+  display: flex;
+  gap: 20px;
+  
+}
+.feedBackContent  img{
+  height: 149px;
+width: 149px;
+border-radius: 127.5px;
+}
+
+.feedBackWriterBio {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feedBackFlex {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+
+@media (max-width:992px) {
+    /*.......l-r-p 60px ......*/
+    .feedBackBigMain {
+      padding: 57px 10% 77px;
+     }
+    .feedBackContent {
+      flex-direction: column;
+    }
+  
+  }
+  @media (max-width:768px) {
+    /*.......l-r-p 40px ......*/
+    .feedBackBigMain {
+      padding: 37px 10% 47px;
+     }
+    }
+
+   

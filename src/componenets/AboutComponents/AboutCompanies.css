@@ -1,0 +1,37 @@
+.aboutCompaniesBigMian {
+  padding: 53px 10% 93px;
+  background-color: #f2f7f9;
+}
+.aboutCompaniesMain h1 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #555555;
+  font-family: "Noto Sans", sans-serif;
+  text-align: center;
+}
+.companiesImages {
+  text-align: center;
+  margin-top: 47px;
+}
+
+@media (max-width:992px) {
+   /*.......l-r-p 60px ......*/
+  .aboutCompaniesBigMian {
+    padding: 50px 10% 83px;
+  }
+ 
+ }
+ @media (max-width:768px) {
+   /*.......l-r-p 40px ......*/
+    .aboutCompaniesBigMian {
+      padding: 40px 10% 63px;
+    }
+  }
+   @media (max-width:576px) {
+     /*.......l-r-p 20px ......*/
+    .aboutCompaniesBigMian {
+      padding: 30px 10% 43px ;
+    }
+     
+    }
+

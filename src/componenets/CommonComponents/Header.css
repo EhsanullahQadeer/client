@@ -1,0 +1,51 @@
+.HeaderBigMain {
+  padding: 47px 10% 52px ;
+  background-color: #0065fd;
+}
+.HeaderMain {
+ max-width: 718px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 17px;
+}
+.HeaderMain span{
+  text-decoration: underline;
+  text-underline-offset: 7px;
+  text-decoration-thickness: 3px;
+}
+.HeaderMain h1 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: "Noto Sans", sans-serif;
+  color: #ffffff;
+  letter-spacing: 2 px;
+}
+.HeaderMain p {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  color: #ffffff;
+}
+
+  
+
+@media (max-width:992px) {
+   /*.......l-r-p 60px ......*/
+   .HeaderBigMain {
+    padding: 40px 10% 45px;
+  }
+ 
+ }
+ @media (max-width:768px) {
+   /*.......l-r-p 40px ......*/
+   .HeaderBigMain {
+    padding: 35px 10% 40px;
+  }
+   }
+
+   @media (max-width:576px) {
+     /*.......l-r-p 20px ......*/
+     .HeaderBigMain {
+      padding: 30px 10% 35px;
+    }
+    }

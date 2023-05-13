@@ -1,0 +1,42 @@
+.registerTextFieldsPart1 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  grid-gap: 30px;
+}
+.writeMain {
+  padding: 73px 10% 110px;
+}
+.upload {
+  position: relative;
+}
+.uploadBtn {
+  position: absolute;
+  right: 0px;
+  height: 47.66px;
+  border-radius: 0px 20px 20px 0px;
+  width: 117px;
+  background: #d9d9d9;
+  border-radius: 0px 45px 45px 0px;
+  color: #000000;
+  font-family: "Noto Sans", sans-serif;
+  border: none;
+  font-size: 15px;
+}
+.PublishBtn {
+  width: 201.21px;
+  height: 47.67px;
+  margin-top: 45px;
+  font-size: 15px;
+}
+.publishBtnWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+@media (max-width:576px) {
+  .uploadBtn {
+    height:35px;
+  }
+  .writeMain {
+    padding: 45px 10% 40px;
+  }
+}

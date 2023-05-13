@@ -1,0 +1,257 @@
+.writerUpdate-profile{
+  padding: 143px 10% 124px ;
+}
+.uploadBigMain {
+  margin-bottom: 57px ;
+}
+.uploadBox {
+  width: 149px;
+  height: 149px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9d9d9;
+}
+.uploadWriterImageMain {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+}
+.uploadWriterImageContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.uploadWriterImageContent h1 {
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+  color: #555555;
+}
+.uploadWriterImageContent p {
+  font-size: 12px;
+  font-weight: 300;
+  font-family: "Noto Sans", sans-serif;
+  color: #666666;
+}
+.uploadBtns {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.uploadBtns .red {
+  height: 28px;
+  width: 62px;
+  border-radius: 3px;
+  background-color: #f63434;
+  border-radius: 3px;
+  border: 1px solid #f63434;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: Nunito;
+  font-size: 12px;
+  font-weight: 500;
+}
+.uploadBtns .blue {
+  height: 28px;
+  width: 62px;
+  border-radius: 3px;
+  background-color: #0065fd;
+  border: 1px solid #0065fd;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: Nunito;
+font-size: 12px;
+font-weight: 500;
+}
+.onlyMe-div input{
+  visibility: hidden;
+}
+.showPublic-div input{
+visibility: hidden;
+}
+.onlyMe-div label{
+  cursor: pointer;
+  color: #3EE130;
+  font-family: 'Nunito';
+font-size: 14px;
+margin-bottom: 0;
+}
+.showPublic-div label{
+  cursor: pointer;
+  color: #0065FD;
+  font-family: 'Nunito';
+font-size: 14px;
+margin-bottom: 0;
+}
+.onlyMe-div input:checked ~ label {
+   text-decoration: underline;
+   text-underline-offset: 4px;
+   text-decoration-thickness: 1.5px;
+}
+.showPublic-div input:checked ~ label{
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1.5px;
+}
+.writerProfileInput-flex-div{
+  display: flex;
+  column-gap:30px ;
+  row-gap: 30px;
+  justify-content: space-around;
+  margin-bottom: 30px;
+}
+.writerProfileInput-flex{
+  flex: 50%;
+}
+.writerDetailFormWrapper {
+  padding: 20px 0px;
+}
+.writerDetailFormTextField {
+  box-shadow: 4px 2px 11px rgba(0, 0, 0, 0.15);
+  border: none;
+}
+.writerProfile-input{
+  height: 48px;
+width: 100%;
+border-radius: 45px;
+outline: 1px solid #777777 ;
+padding: 0 21px;
+font-family: Nunito;
+font-size: 14px;
+font-weight: 400;
+color: #777777;
+}
+.writerProfile-shortBioInput{
+  width: 100%;
+  min-height: 109px;
+  max-height: 200px;
+  border-radius: 20px;
+  border: 1px solid #777777;
+  outline: none;
+  padding: 10px 21px;
+  font-family: Nunito;
+font-size: 14px;
+font-weight: 400;
+color: #777777;
+line-height: 29px;
+}
+.writerProfile-description{
+  min-height:225px ;
+  max-height: 400px;
+}
+.descAlert{
+  border-radius: 10px !important;
+}
+.MuiAlert-message{
+  width: 100%;
+}
+.spanAlert-reached{
+  float: right;
+}
+.selectTag-padding{
+  border-right:22px solid transparent;
+}
+.DarkTextField {
+  background-color: #f2f2f2;
+}
+.writerInfoSave {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 30px;
+}
+.writerInfoSave button {
+  width: 100px;
+  height: 40px;
+  border-radius: 30px;
+  background-color: #0065fd;
+  color: #ffffff;
+  border: 2px solid #0065fd;
+}
+.uploadBox {
+  position: relative;
+}
+.writerImge {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  left: 0px;
+  border-radius: 50%;
+}
+.safari { visibility: hidden; }
+/*......Editor height customiztion......*/
+
+/*......................................*/
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  --moz-appearance: textfield;
+}
+@media screen and (max-width: 1279px) {
+.uploadWriterImageMain{
+  flex-direction: column;
+}
+.uploadWriterImageContent{
+text-align: center;
+}
+.uploadBtns{
+  justify-content: center;
+}
+}
+@media screen and (max-width: 800px) {
+  .uploadWriterImageMain {
+    flex-direction: column;
+  }
+}
+@media (max-width:992px) {
+   .writerUpdate-profile{
+    padding: 123px 10% 104px ;
+  }
+}
+ @media (max-width:768px) {
+   .writerUpdate-profile{
+    padding: 93px 10% 74px ;
+  }
+  .uploadBigMain{
+    margin-bottom: 40px;
+  }
+   }
+   @media (max-width:635px) {
+    .writerProfileInput-flex-div{
+      flex-direction: column;
+   }
+   .writerProfile-input{
+    width:100%;
+    height: 35px;
+    }
+    .writerProfile-shortBioInput{
+      height: 70px;
+    }
+    .uploadBigMain{
+      margin-bottom: 35px;
+    }
+   }
+   @media (max-width:576px) {
+    .writerUpdate-profile{
+      padding: 50px 10% 34px ;
+    }
+    .uploadBigMain{
+      margin-bottom: 30px;
+    }
+    .uploadBox{
+      width: 120px;
+      height: 120px;
+    }
+    .uploadWriterImageMain{
+      row-gap: 20px;
+    }
+    }
+    

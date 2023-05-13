@@ -1,0 +1,10 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  text-decoration: none;
+  list-style-type: none;
+}
+.appMain{
+  overflow-x: hidden;
+  
+}

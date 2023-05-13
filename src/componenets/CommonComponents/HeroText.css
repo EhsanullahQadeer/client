@@ -1,0 +1,44 @@
+.hero-text-div{
+  padding: 100px 10% 138px;
+}
+
+.heroTextMain {
+  /*margin-top: 100px;
+  margin-left: 10%;*/
+  max-width: 404px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+}
+.heroTextMain h1 {
+  font-weight: 500;
+  font-size: 52px;
+  color: #fefefe;
+  font-family: "Nunito", sans-serif;
+}
+.heroTextFlex {
+  display: flex;
+  gap: 20px;
+}
+
+.heroTextMain p {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #ededed;
+  font-family: "Nunito", sans-serif;
+}
+
+@media (max-width:992px) {
+  .hero-text-div{
+    padding: 40px 10%;}
+  }
+
+  @media (max-width:576px) {
+  .heroTextMain h1 {
+    font-size: 42px;}
+  }
+ 
+
+    
+      

@@ -1,0 +1,8 @@
+.heroMain {
+  background: url("../../assets/hero.png") no-repeat;
+}
+@media (min-width:1400px) {
+  .heroMain {
+    background-size: 100% 100%;
+  }
+}

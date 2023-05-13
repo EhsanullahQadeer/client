@@ -1,0 +1,45 @@
+.writerPublicProfileFlex {
+  display: flex;
+  justify-content: space-between;
+}
+.writerPublicProfileFlex p {
+  color: #0065fd;
+  font-size: 12px;
+  font-weight: 500;
+  font-family: "Nunito", sans-serif;
+}
+
+.writerPublicProfileContent {
+  margin-top: 40px;
+}
+
+.writerPublicProfileContent h1 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #222222;
+  font-family: "Noto Sans", sans-serif;
+  margin: 20px 0px;
+}
+
+.writerPublicProfileContent h2 {
+  font-size: 17px;
+  font-weight: 500;
+  color: #222222;
+  font-family: "Noto Sans", sans-serif;
+  margin: 20px 0px;
+}
+
+.writerPublicProfileContent P {
+  font-size: 15px;
+  font-weight: 400;
+  color: #555555;
+  font-family: "Noto Sans", sans-serif;
+  margin: 20px 0px;
+}
+
+.PostBy {
+  color: #555555;
+  font-size: 24px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+}

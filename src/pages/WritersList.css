@@ -1,0 +1,55 @@
+.writersListMain {
+  display: flex;
+  gap: 30px;
+padding: 77px 10% 116px;
+justify-content: space-between;
+}
+.writersListPart1 {
+max-width: 732px;
+}
+.writersIntroBigMain {
+  padding: 80px 0px;
+  background-color: #0065fd;
+}
+.writersIntroMain {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.writersList {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ffffff;
+  font-family: "Noto Sans", sans-serif;
+}
+.writersIntoPara {
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+  color: #ffffff;
+}
+@media screen and (max-width: 1200px) {
+  .writersListMain {
+    flex-direction: column;
+  }
+}
+@media (max-width:992px) {
+   /*.......l-r-p 60px ......*/
+   .writersListMain {
+  padding: 67px 10% 106px;
+  }
+ }
+ @media (max-width:768px) {
+   /*.......l-r-p 40px ......*/
+   .writersListMain {
+    padding: 50px 10% 90px;
+    }
+   }
+
+   @media (max-width:576px) {
+     /*.......l-r-p 20px ......*/
+     .writersListMain {
+      padding: 35px 20px 65px;
+      }
+     
+    }

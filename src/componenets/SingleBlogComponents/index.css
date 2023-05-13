@@ -1,0 +1,321 @@
+.writerName {
+  font-size: 15px;
+  font-weight: 400;
+  color: #3e3d41;
+  font-family: "Noto Sans", sans-serif;
+  margin-bottom: 10px;
+}
+
+.singleBlogFlex {
+  display: flex;
+  gap: 4px;
+}
+
+.singleBlogFlex p {
+  color: #777777;
+  font-size: 12px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.blogWriterLeftIntroFlex {
+  display: flex;
+  gap: 15px;
+}
+.blogIcons {
+  color: #a8a8a8;
+}
+
+.blogIconsMain {
+  display: flex;
+  gap: 8px;
+}
+
+.blogsWriterLeftIntroMain {
+  display: flex;
+  justify-content: space-between;
+}
+
+.blogContentHeading {
+  font-size: 30px;
+  font-weight: 400;
+  font-family: 'Arial';
+  color: #3e3d41;
+  margin-top: 24px;
+  margin-bottom: 34px;
+}
+
+.blogContentMain p {
+  font-size: 20px;
+  font-weight: 400;
+  font-family: "Source Serif Pro", serif;
+  color: #3e3d41;
+  margin-top: 30px;
+}
+
+.blogContentMain img {
+  margin-top: 20px;
+  max-height: 624px;
+ max-width: 720px;
+}
+.author-image-p{
+  font-family: Arial;
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  margin-top: 10px !important;
+  color: #706E72 !important;
+ 
+}
+.singleBlog-year-p p{
+  max-height: 120px ;
+max-width: 631px ;
+font-family: Arial ;
+font-size: 28px ;
+margin-top: 49px;
+}
+.single-blog-prog-h2{
+  font-family: Arial;
+font-size: 28px;
+color: #706E72;
+max-height: 80px;
+max-width: 590px;
+margin: 30px 0 ;
+}
+.singleBlog-AI-p{
+  border-left:4px solid #999999;
+  padding-left: 40px; 
+}
+.singleBlog-AI-p em{
+  font-family: Source Serif Pro;
+  font-size: 21px;
+  font-style: italic;
+}
+.singleBlogWriterInfoRight {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.singleBlogWriterInfoRight h1 {
+  font-size: 15px;
+  font-weight: 400;
+  color: #3e3d41;
+  font-family: "Roboto", sans-serif;
+}
+
+.singleBlogWriterInfoRight p {
+  font-size: 14px;
+  font-weight: 400;
+  color: #706e72;
+  font-family: "Roboto", sans-serif;
+}
+
+.chipsMain {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.singleChip {
+  height: 36px;
+  border-radius: 100px;
+  padding: 0 15px;
+  background: #EBE9EC;
+  border: none;
+  color: #3e3d41;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+}
+
+.commentsChipMain {
+  background-color: #ebeef4;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  max-width: 716px;
+  padding:0 20px ;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.commnetPreNextContent {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 52px;
+}
+.commnetPreNextContent P {
+  font-size: 16px;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+}
+
+.singleArrows {
+  display: flex;
+}
+
+.commnetArrows {
+  display: flex;
+  justify-content: space-between;
+  margin-top: -5px;
+}
+
+.singleArrows p {
+  color: #666666;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Roboto", sans-serif;
+}
+
+.commnetsResponse {
+  color: #464950;
+  font-size: 25px;
+  font-weight: 500;
+  font-family: "Nunito", sans-serif;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  box-shadow: 1px 1px 1px 1px #ffffff;
+}
+
+.commentCard {
+  background: #ffffff;
+  border: 1.96823px solid #e6e6f2;
+  border-radius: 6.56077px;
+  padding: 20px;
+}
+.commentFurther {
+  color: #57638b;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: "Noto Sans", sans-serif;
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+.commentBigFlex {
+  display: flex;
+  gap: 20px;
+}
+
+.commentSmallFlex {
+  display: flex;
+  gap: 10px;
+}
+
+.commentBigFlex,
+.commentSmallFlex img {
+  height: 20px;
+}
+
+.commentWriterFlex {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.commentWriterFlex img {
+  width: 50px;
+  height: 50px;
+}
+
+.commentWriterFlexName {
+  /* color: #000000E5; */
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.commentWriterComment {
+  color: #00000099;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+  margin-top: 30px;
+}
+
+.commentHeader{
+  margin-bottom: 20px;
+}
+.commentPicture{
+  height: 57px;
+width: 53.5368537902832px;
+margin-right: 11px;
+}
+.commentLightCard-div button{
+  border: none;
+  background: none;
+  color: #57638B;
+  font-family: 'Open Sans';
+font-size: 15px;
+}
+.commentLightCard-div a{
+  text-decoration: none;
+  color: #57638b;
+  font-family: Open Sans;
+  border: none;
+}
+.commentReadMore{
+  font-size: 14px;
+}
+.commentName-p{
+  font-family: Open Sans;
+font-size: 14px;
+color: rgba(0, 0, 0, 0.9);
+margin-bottom: 0;
+}
+.commentTime{
+  font-family: Open Sans;
+font-size: 14px;
+color: #9C9A9A;
+}
+.commentDescription-p{
+  font-family: Open Sans;
+font-size: 15px;
+font-weight: 400;
+color: rgba(0, 0, 0, 0.6);
+}
+
+.topCommentCard-div{
+  margin-bottom: 21px;
+  margin-top: 86px;
+}
+.commentTop_card{
+  padding: 20px 0 26px;
+}
+.commentTop_card{
+  border-top: 2px solid #E5E5E5;
+  border-bottom:2px solid #E5E5E5 ;
+}
+.commentCardReply_Div{
+  border-left:2px solid #E5E5E5;
+  padding: 20px 0 29px 30px;
+  margin-left: 20px;
+}
+.commentReply_card{
+  border-bottom:2px solid #E5E5E5 ;
+  margin-bottom: 20px;
+  padding: 0px 0 17px;
+}
+
+
+@media screen and (max-width: 800px) {
+  .blogContentMain img {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 900px) {
+  .commentsChipMain {
+    justify-content: space-between;
+  }
+}
+
+
+@media screen and (max-width: 900px) {
+  .blogsWriterLeftIntroMain {
+    flex-direction: column;
+  }
+  .blogIconsMain {
+    margin-top: 10px;
+  }
+}
