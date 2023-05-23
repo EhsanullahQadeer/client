@@ -12,9 +12,9 @@ const BlogContent = (props) => {
   return (
     <div className="blogContentMain">
       <h1 className="blogContentHeading">
-        {/* {props.title} */}
+        {props.title}
       </h1>
-      <p dangerouslySetInnerHTML={{ __html: blogDescription }} >
+      <div className="singleBlog-content" dangerouslySetInnerHTML={{ __html: blogDescription }} >
 
         {/* Remember 2020? So many of us thought that was going to be the big one
         for the way we work. I thought it would be the year that changes
@@ -24,7 +24,7 @@ const BlogContent = (props) => {
         year that showed us just how resilient the human spirit is and how
         robust our ability is to get things done. The big discovery that year
         was how little productivity could change if we put our minds to it. */}
-      </p>
+      </div>
       {/* <p>
         And that’s how 2022 snuck up on us. You might not have seen the flash of
         lightning if you weren’t looking out of your window… 2023 is when you’ll
@@ -93,10 +93,10 @@ const BlogContent = (props) => {
       <p>And then 2022 swept onto the scene. Progress in both research AI and applied AI came to a boil. All that horsepower could finally be applied to building all kinds of consumer applications including one that’s in a class of its own because of how it feels to the user: personal productivity.</p>
       <p className="singleBlog-AI-p"><em>By 2022, the tech got good enough that there was a profit to be made in offering consumers personal productivity tools that were better than anything a yurt full of traditional software engineers could have built.</em></p>
       <p>The thesis is simple, and it’s not AI-specific at all: you wish you could do something all by yourself but you can’t. Maybe you don’t have the talent or the skills or the time. You</p>
-       */}
+      
       <div className="blogAdd">
         <Add />
-      </div>
+      </div> */}
     </div>
   );
 };

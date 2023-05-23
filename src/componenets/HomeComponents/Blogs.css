@@ -64,6 +64,8 @@ border-radius: 10px;
 }
 .blogsHead p {
   overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
   display: -webkit-box;
   /* white-space: nowrap; */
   -webkit-box-orient: vertical;

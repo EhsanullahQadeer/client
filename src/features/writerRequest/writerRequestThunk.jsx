@@ -37,17 +37,44 @@ export const updateCurrentWriter = async (data, thunkAPI) => {
 };
 
 export const writerImage = async (event, thunkAPI) => {
+  let token = localStorage.getItem("Token");
+  let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
   try {
-    const imageFile = event.target.files[0];
+    const imageFile = event;
     const formData = new FormData();
     formData.append("file", imageFile);
     formData.append("upload_preset", "zkkzikta");
-    let data = await axios.post(
-      "https://api.cloudinary.com/v1_1/dvaodl5k8/image/upload",
-      formData
+    let response = await axios.post(
+      `${BACK_END_URL}/writer/uploadWritterProfileImage/${writerId}`,
+      formData,{
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
     );
-    return data;
+    return response.data;
   } catch (error) {
     thunkAPI.rejectWithValue(error);
   }
 };
+//
+export const removeWriterImage = async (imgUrl, thunkAPI) => {
+  let token = localStorage.getItem("Token");
+  let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
+  try {
+    let response = await axios.post(
+      `${BACK_END_URL}/writer/removeWritterProfileImage/${writerId}`,
+      imgUrl,{
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error)
+    thunkAPI.rejectWithValue(error);
+  }
+};
+
+

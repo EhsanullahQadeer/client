@@ -91,17 +91,18 @@ const WriteBody = () => {
           </select>
         </div>
 
-        <div className="upload TextFields">
+        {/* <div className="upload TextFields">
           <p>Upload Media</p>
           <div className="textarea">
           <button className="uploadBtn">Upload</button></div>
+        </div> */}
+         
+         <div className="d-flex justify-content-end  align-items-end">
+         <button onClick={handleRequired}  className="float-right authBlueBtn PublishBtn">Publish</button>
         </div>
       </div>
-      <div className="publishBtnWrapper">
-        <button onClick={handleRequired}  className="authBlueBtn PublishBtn">Publish</button>
-        {/* This is hidden only used for display required message by using this technique */}
-        <input ref={myRefname}  className="safari" type="submit" ></input>
-      </div>
+     
+
       </form>
       {/*  */}
     </div>
@@ -109,3 +110,10 @@ const WriteBody = () => {
 };
 
 export default WriteBody;
+
+
+//  <div className="publishBtnWrapper">
+// <button onClick={handleRequired}  className="authBlueBtn PublishBtn">Publish</button>
+// This is hidden only used for display required message by using this technique
+// <input ref={myRefname}  className="safari" type="submit" ></input>
+// </div> 

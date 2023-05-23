@@ -8,7 +8,7 @@ const WriteBlogForm = () => {
   return (
     <div>
       <LightNavbar signIn={true} getStarted={true} />
-      <Header />
+      {/* <Header /> */}
       <Body />
       <Footer />
     </div>

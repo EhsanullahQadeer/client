@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import "./WriterProfileContent.css";
 import Writer from "../../assets/writerImage.png";
 import { autoLoadMore } from "../logicFunctionalities/logics";
-
+import Img from "../../assets/Profile-PNG-File.png";
 import Footer from "../CommonComponents/Footer";
 import Writter_Articles from "./Writter_Articles";
 import { getsingleWriterBlogsApi } from "../../features/blog/blogSlice";
@@ -16,7 +16,7 @@ import {
 
 const WriterProfileContent = () => {
   let dispatch = useDispatch();
-  let { currentWriterInfo, isLoading, showAlert } = useSelector(
+  let { currentWriterInfo, isLoading, showAlert,image } = useSelector(
     (state) => state.writerRequest
   );
   let { singleWritterBlogs, loadMore } = useSelector((state) => state.blog);
@@ -26,9 +26,9 @@ const WriterProfileContent = () => {
 
   //This is for articles section
   const [displayArticles, setDisplayArticles] = useState({
-    allArticles: true,
-    pendingArticles: false,
-    rejectedArticles: false,
+    activeArticles: true,
+    // pendingArticles: false,
+    // rejectedArticles: false,
   });
 
   const [blogsData, setBlogsData] = useState([]);
@@ -42,8 +42,8 @@ const WriterProfileContent = () => {
   };
   //Fetching Blog apis here
   useEffect(() => {
-    if (displayArticles.allArticles) {
-      apiData.articlesType = "all";
+    if (displayArticles.activeArticles) {
+      apiData.articlesType = "Active";
       dispatch(getsingleWriterBlogsApi(apiData));
     } else if (displayArticles.pendingArticles) {
       apiData.articlesType = "Pending";
@@ -82,37 +82,38 @@ useEffect(()=>{
 
 
   //getting All blogs
-  function allArticlesFun() {
+  function activeArticlesFun() {
     setPage(1);
     setDisplayArticles({
-      allArticles: true,
-      pendingArticles: false,
-      rejectedArticles: false,
+      activeArticles: true
     });
-    apiData.articlesType = "all";
+    // apiData.articlesType = "Active";
   }
   //getting pendingblogs
   function pendingArticlesFun() {
     setPage(1);
     setDisplayArticles({
-      allArticles: false,
-      pendingArticles: true,
-      rejectedArticles: false,
+      pendingArticles: true
     });
   }
   //getting rejected blogs
   function rejectedArticlesFun() {
     setPage(1);
     setDisplayArticles({
-      allArticles: false,
-      pendingArticles: false,
-      rejectedArticles: true,
+      rejectedArticles: true
+    });
+  }
+  //
+  function recentActivitiesFun(){
+    setPage(1);
+    setDisplayArticles({
+      recentActivities: true
     });
   }
   //This is for getting writer profile information
   useEffect(() => {
     dispatch(setupGetCurrentWriter());
-    allArticlesFun();
+    activeArticlesFun();
   }, []);
 
 
@@ -125,7 +126,7 @@ useEffect(()=>{
           {/*  */}
           <div className="writerImageBio">
             <div>
-              <img src={Writer} />
+              <img src={image?image:Img} />
               <p className="writerName">{name}</p>
               <p className="writerBio">{designation}</p>
             </div>
@@ -159,10 +160,10 @@ useEffect(()=>{
         <div className="writerArticlesInfo">
           <div className="writerArticleLinks">
             <p
-              onClick={allArticlesFun}
-              className={displayArticles.allArticles == true && "activeLink"}
+              onClick={activeArticlesFun}
+              className={displayArticles.activeArticles == true && "activeLink"}
             >
-              All Articles
+            Active Articles
             </p>
             <p
               onClick={pendingArticlesFun}
@@ -180,17 +181,25 @@ useEffect(()=>{
             >
               Rejected Articles
             </p>
+            <p
+              onClick={recentActivitiesFun}
+              className={
+                displayArticles.recentActivities && "activeLink"
+              }
+            >
+              Recent Activities
+            </p>
           </div>
 
           <div className="writerLine"></div>
 
-          {displayArticles.allArticles == true && (
+          {displayArticles.activeArticles && (
             <Writter_Articles blogsData={blogsData} />
           )}
-          {displayArticles.pendingArticles == true && (
+          {displayArticles.pendingArticles && (
             <Writter_Articles blogsData={blogsData} />
           )}
-          {displayArticles.rejectedArticles == true && (
+          {displayArticles.rejectedArticles && (
             <Writter_Articles blogsData={blogsData} />
           )}
           <button className="invisible" ref={ref}>

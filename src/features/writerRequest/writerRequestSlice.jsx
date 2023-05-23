@@ -7,12 +7,14 @@ let initialState = {
   showAlert: false,
   currentWriterInfo: [],
   image: "",
+  imgLoading:false
 };
 
 import {
   getCurrentWriter,
   writerImage,
   updateCurrentWriter,
+  removeWriterImage
 } from "./writerRequestThunk";
 
 export const setupGetCurrentWriter = createAsyncThunk(
@@ -25,16 +27,23 @@ export const setupGetCurrentWriter = createAsyncThunk(
 export const setupUpdateWriter = createAsyncThunk(
   "writer/setupUpdateWriter",
   async (data, thunkAPI) => {
-    return updateCurrentWriter(data, thunkAPI);
+    return await updateCurrentWriter(data, thunkAPI);
   }
 );
 
 export const getWriterImage = createAsyncThunk(
   "writer/getWriterImage",
   async (event, thunkAPI) => {
-    return writerImage(event, thunkAPI);
+    return await writerImage(event, thunkAPI);
   }
 );
+export const removeWriterImageApi = createAsyncThunk(
+  "writer/removeWriterImageApi",
+  async (imgUrl, thunkAPI) => {
+    return await removeWriterImage(imgUrl, thunkAPI);
+  }
+);
+
 
 
 
@@ -52,9 +61,9 @@ const writerRequestSlice = createSlice({
         (state.alertType = action.payload.alertType),
         (state.showAlert = true);
     },
-    removeWriterImage: (state) => {
-      state.image = "";
-    },
+    // removeWriterImage: (state) => {
+    //   state.image = "";
+    // },
   },
   extraReducers: {
     //
@@ -70,11 +79,6 @@ const writerRequestSlice = createSlice({
       state.isLoading = false;
     },
     //
-    [getWriterImage.fulfilled]: (state, { payload }) => {
-      state.image = payload.data.secure_url;
-    },
-    [getWriterImage.rejected]: (state, payload) => {
-    },
     [setupUpdateWriter.pending]:(state) => {
       state.isLoading = true;
     },
@@ -88,10 +92,42 @@ const writerRequestSlice = createSlice({
         (state.alertType = "danger"),
         (state.alertText = payload);
     },
+    
+    //
+    [getWriterImage.pending]: (state) => {
+     state.imgLoading = true;
+    },
+    [getWriterImage.fulfilled]: (state, { payload }) => {
+      state.imgLoading = false;
+      state.image = payload.imgUrl ;
+    },
+    [getWriterImage.rejected]: (state, payload) => {
+      state.imgLoading = false;
+    },
+    //
+  [removeWriterImageApi.pending]: (state) => {
+    state.imgLoading = true;
+  },
+    [removeWriterImageApi.fulfilled]: (state, { payload }) => {
+      state.imgLoading = false;
+      // state.alertType = "success";
+      // state.alertText = "Image Removed Successfully";
+      state.image="";
+    },
+    [removeWriterImageApi.rejected]: (state, { payload }) => {
+      state.imgLoading = false;
+      // (state.showAlert = true),
+      //   (state.alertType = "danger"),
+      //   (state.alertText = payload);
+    },
+
+
+
+    
   },
 });
-
-export const { removeAlert, dispalyAlert, removeWriterImage } =
+// removeWriterImage
+export const { removeAlert, dispalyAlert,  } =
   writerRequestSlice.actions;
 
 export default writerRequestSlice.reducer;

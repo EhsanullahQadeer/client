@@ -1,3 +1,13 @@
+.singleBlog-content{
+ max-width: 720px;
+}
+.singleBlog-content p{
+  /* white-space: pre; */
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+}
+
+
 .writerName {
   font-size: 15px;
   font-weight: 400;
@@ -50,7 +60,7 @@
   font-weight: 400;
   font-family: "Source Serif Pro", serif;
   color: #3e3d41;
-  margin-top: 30px;
+  margin-bottom: 30px;
 }
 
 .blogContentMain img {
@@ -82,15 +92,25 @@ max-height: 80px;
 max-width: 590px;
 margin: 30px 0 ;
 }
+.singleBlog-content blockquote{
+  border-left:4px solid #999999;
+  padding-left: 40px; 
+}
+.singleBlog-content blockquote p{
+font-family: Source Serif Pro;
+  font-size: 21px;
+  font-style: italic;
+  margin-bottom:8px;
+}
 .singleBlog-AI-p{
   border-left:4px solid #999999;
   padding-left: 40px; 
 }
-.singleBlog-AI-p em{
+/* .singleBlog-AI-p em{
   font-family: Source Serif Pro;
   font-size: 21px;
   font-style: italic;
-}
+} */
 .singleBlogWriterInfoRight {
   display: flex;
   flex-direction: column;

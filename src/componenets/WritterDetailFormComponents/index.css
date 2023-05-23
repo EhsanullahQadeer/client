@@ -13,6 +13,13 @@
   align-items: center;
   background-color: #d9d9d9;
 }
+.writterProfile-img{
+  vertical-align: middle;
+  height: 149px;
+width: 149px;
+border-radius: 127.5px;
+background: #D9D9D9;
+}
 .uploadWriterImageMain {
   display: flex;
   gap: 40px;
@@ -179,6 +186,10 @@ line-height: 29px;
   top: 0px;
   left: 0px;
   border-radius: 50%;
+}
+/*  */
+.noClick{
+pointer-events: none;
 }
 .safari { visibility: hidden; }
 /*......Editor height customiztion......*/

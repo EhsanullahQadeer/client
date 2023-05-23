@@ -20,6 +20,9 @@ import timeToRead from "../componenets/timeToRead/timeToRead";
 const SingleBlog = () => {
   const dispatch=useDispatch();
   let {isLoading,singleBlog}=useSelector((state)=>state.blog)
+
+
+  console.log(singleBlog.description)
   let {blogId} = useParams();
 
   useEffect(()=>{
