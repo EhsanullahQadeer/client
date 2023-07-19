@@ -2,6 +2,24 @@ import axios from "axios";
 import { BACK_END_URL } from "../../utils";
 import { setupGetCurrentWriter } from "./writerRequestSlice";
 
+
+export const getTopWritters = async (data, thunkAPI) => {
+  try {
+    let response = await axios.get(`${BACK_END_URL}/writer/topWritters?pageIndex=${data?.pageIndex||1}&pageSize=${data?.pageSize||3}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.msg);
+  }
+};
+export const getSingleWriter = async (writerId, thunkAPI) => {
+  try {
+    let response = await axios.get(`${BACK_END_URL}/writer/getSingleWriter/${writerId}`);
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data.msg);
+  }
+};
+
 export const getCurrentWriter = async (_, thunkAPI) => {
   let token = localStorage.getItem("Token");
   try {
@@ -36,14 +54,12 @@ export const updateCurrentWriter = async (data, thunkAPI) => {
   }
 };
 
-export const writerImage = async (event, thunkAPI) => {
+export const writerImage = async (imageFile, thunkAPI) => {
   let token = localStorage.getItem("Token");
   let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
   try {
-    const imageFile = event;
     const formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "zkkzikta");
+    formData.append("writerPhoto", imageFile);
     let response = await axios.post(
       `${BACK_END_URL}/writer/uploadWritterProfileImage/${writerId}`,
       formData,{

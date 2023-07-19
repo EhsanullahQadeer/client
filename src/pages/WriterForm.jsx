@@ -17,7 +17,7 @@ const writerRequest = () => {
   let { showAlert, isLoading } = useSelector((state) => state.writerRequest);
   let dispatch = useDispatch();
   let alert = React.useRef(null);
-  let [open,setOpen]=React.useState(false)
+  let [open,setOpen]=React.useState(false);
   let [data, setData] = React.useState({
     age: "",
     city: "",
@@ -59,10 +59,11 @@ const writerRequest = () => {
     },3000)
 
   }
-
+  let desc="Thank you! Your request has been submitted successfully. There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form randomized words which don't look even slightly believable."
+  let title ="REQUEST SUBMITTED";
   return (
     <div>
-      <PopUp open={open} setOpen={setOpen}/>
+      <PopUp open={open} setOpen={setOpen} desc={desc} title={title}/>
       <LightNavbar signIn={true} getStarted={true} />
       <div className="registerBigMian">
         <div className="registerMain" ref={alert}>

@@ -1,6 +1,16 @@
 .rightSideBarMain,.singleBlogWriterInfoRight{
  max-width: 470px;
 }
+.topWriter-img{
+  height: 80px;
+width: 80px;
+border-radius: 100%;
+background-color: #b1b1b1;
+}
+.circularImg{
+  border-radius: 100%;
+  background-color: #b1b1b1;
+}
 
 
 .rightSideBarMainFlex {
@@ -46,7 +56,7 @@ margin-bottom: 15px !important;
 }
 
 .rightSideBarMainImage {
-  height: 104px;
+  height: 110px;
 width: 129px;
 border-radius: 7px;
 
@@ -79,6 +89,12 @@ border-radius: 7px;
 }
 
 .writterBio {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  
   font-weight: 300;
   font-size: 12px;
   font-family: "Noto Sans", sans-serif;
@@ -95,7 +111,8 @@ border-radius: 7px;
 .singleWriter-img{
   height: 149px;
 width: 149px;
-border-radius: 127.5px;
+border-radius: 50%;
+background-color: #b1b1b1;
 
 }
 
@@ -333,8 +350,9 @@ display: none;
      @media (max-width:576px) {
        /*.......l-r-p 20px ......*/
        .singleWriter-img{
+        /* text-align: center;
            margin-left: auto;
-           margin-right: auto;
+           margin-right: auto; */
        }
        .singleWritterWrapper .writtersContent{
         text-align: center;

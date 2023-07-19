@@ -1,22 +1,39 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
+import { Writer_Files_URL } from "../../utils";
 let initialState = {
   isLoading: false,
   alertText: "",
   alertType: "",
   showAlert: false,
   currentWriterInfo: [],
+  topWriters:[],
+  singleWriter:{},
   image: "",
-  imgLoading:false
+  imgLoading:false,
+  loadMore:false
 };
 
 import {
   getCurrentWriter,
   writerImage,
   updateCurrentWriter,
-  removeWriterImage
+  removeWriterImage,
+  getTopWritters,
+  getSingleWriter
 } from "./writerRequestThunk";
 
+export const setupGetTopWritters = createAsyncThunk(
+  "writer/setupGetTopWritters",
+  async(data)=>{
+   return await getTopWritters(data)
+  }    
+);
+export const setupGetSingleWriter = createAsyncThunk(
+  "writer/setupGetSingleWriter",
+  async(writerID)=>{
+   return await getSingleWriter(writerID)
+  }    
+);
 export const setupGetCurrentWriter = createAsyncThunk(
   "writer/setupGetCurrentWriter",
   async()=>{
@@ -33,8 +50,8 @@ export const setupUpdateWriter = createAsyncThunk(
 
 export const getWriterImage = createAsyncThunk(
   "writer/getWriterImage",
-  async (event, thunkAPI) => {
-    return await writerImage(event, thunkAPI);
+  async (imageFile, thunkAPI) => {
+    return await writerImage(imageFile, thunkAPI);
   }
 );
 export const removeWriterImageApi = createAsyncThunk(
@@ -71,11 +88,33 @@ const writerRequestSlice = createSlice({
       state.isLoading = true;
     },
     [setupGetCurrentWriter.fulfilled]: (state, { payload }) => {
+      let imgUrl;
+      if(payload.currentWriter.photo){
+        imgUrl=Writer_Files_URL+payload.currentWriter.photo;
+      }
       state.currentWriterInfo = payload.currentWriter;
-      state.image = payload.currentWriter.photo;
+      state.image =imgUrl;
       state.isLoading = false;
     },
     [setupGetCurrentWriter.rejected]: (state, payload) => {
+      state.isLoading = false;
+    },
+    //
+    [setupGetTopWritters.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [setupGetTopWritters.fulfilled]: (state, { payload }) => {
+      state.topWriters = payload.topWritters;
+      state.isLoading = false;
+      if(payload.topWritters.length==0){
+        state.loadMore=false
+      }else{
+        state.loadMore=true
+      }
+
+
+    },
+    [setupGetTopWritters.rejected]: (state, payload) => {
       state.isLoading = false;
     },
     //
@@ -83,6 +122,7 @@ const writerRequestSlice = createSlice({
       state.isLoading = true;
     },
     [setupUpdateWriter.fulfilled]: (state, { payload }) => {
+      debugger
       state.showAlert = true;
       state.alertType = "success";
       state.alertText = "Writer Updated Successfully";
@@ -98,8 +138,9 @@ const writerRequestSlice = createSlice({
      state.imgLoading = true;
     },
     [getWriterImage.fulfilled]: (state, { payload }) => {
+      let imgUrl=Writer_Files_URL+payload.imgUrl;
       state.imgLoading = false;
-      state.image = payload.imgUrl ;
+      state.image = imgUrl;
     },
     [getWriterImage.rejected]: (state, payload) => {
       state.imgLoading = false;
@@ -119,6 +160,17 @@ const writerRequestSlice = createSlice({
       // (state.showAlert = true),
       //   (state.alertType = "danger"),
       //   (state.alertText = payload);
+    },
+    //
+    [setupGetSingleWriter.pending]: (state) => {
+    state.isLoading = true;
+    },
+    [setupGetSingleWriter.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.singleWriter=payload.writer;
+    },
+    [setupGetSingleWriter.rejected]: (state, { payload }) => {
+      state.isLoading = false;
     },
 
 

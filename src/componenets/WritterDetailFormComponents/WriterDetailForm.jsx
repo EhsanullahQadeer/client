@@ -8,6 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Alert from "../Alert/WriterRequestAlert";
 import numberLength from "./numberLegth.js"
 import 'react-phone-number-input/style.css'
+import { updateActiveUser } from "../../features/user/userSlice";
 import PhoneInput from 'react-phone-number-input'
 
 // function Example() {
@@ -57,7 +58,7 @@ const WriterDetailForm = () => {
     facebookId: writer?.facebookId,
     instagramId: writer?.instagramId,
     linkedinId: writer?.linkedinId,
-    pinterestId: writer?.pinterestId,
+    twitterId: writer?.twitterId,
     youtube: writer?.youtube,
     shortBio: writer?.shortBio,
     description: writer?.description
@@ -114,8 +115,11 @@ const WriterDetailForm = () => {
     //   return false;
     // }
     // else{
-    let info = { ...data, photo: image, };
-    dispatch(setupUpdateWriter(info));
+    dispatch(setupUpdateWriter(data)).then((res)=>{
+      if(!res.error){
+        dispatch(updateActiveUser(res.payload))
+      }
+    });
       setTimeout(() => {
       dispatch(removeAlert());
     }, 3000);
@@ -162,7 +166,7 @@ const WriterDetailForm = () => {
           </div>
           <input
             className="writerProfile-input writerDetailFormTextField"
-            // maxlength={3}
+            // maxLength={3}
             onChange={handleChange}
             max={150}
             min={10}
@@ -371,12 +375,12 @@ const WriterDetailForm = () => {
       <div className="writerProfileInput-flex-div">
     
         <div className="TextFields writerProfileInput-flex">
-          <p>Pinterest ID</p>
+          <p>Twitter ID</p>
           <input
             className="writerProfile-input writerDetailFormTextField"
             placeholder="ID link goes here"
-            value={data.pinterestId}
-            name="pinterestId"
+            value={data.twitterId}
+            name="twitterId"
             onChange={handleChange}
           />
         </div>
@@ -400,7 +404,7 @@ const WriterDetailForm = () => {
         </AlertLength>} 
         <textarea 
           className="writerProfile-shortBioInput"
-          maxlength="400"
+          maxLength="400"
           name="shortBio"
           value={data.shortBio}
           onChange={(e)=>{handleChange(e) ;handleLength(e)}}
@@ -416,7 +420,7 @@ const WriterDetailForm = () => {
         </AlertLength>} 
           <textarea 
           className="writerProfile-shortBioInput writerProfile-description"
-          maxlength="1000"
+          maxLength="1000"
           name="description"
           value={data.description}
           onChange={(e)=>{handleChange(e) ;handleLength(e)}}

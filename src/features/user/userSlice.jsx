@@ -1,22 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
-  setupUserRole,
+  checkActiveUser,
   setupUserLogin,
   setupUserRegister,
   userImage,
   setupForgetPassword,
   setupResetPassword,
   GoogleAuth,
+  
 } from "./userThunk";
 
 
-export const setupUserRoleApi = createAsyncThunk(
-  "user/setupUserRole",
-  async(userId,thunkAPI)=>{
-   return await setupUserRole(userId)
+export const checkActiveUserApi = createAsyncThunk(
+  "user/checkActiveUserApi",
+  async(data,thunkAPI)=>{
+   return await checkActiveUser(data)
   }    
 );
-
+//
 export const setupUserRegisternApi = createAsyncThunk(
    "user/setupUserRegister",
   async (data, thunkAPI) => {
@@ -31,7 +32,7 @@ export const setupUserLoginApi = createAsyncThunk(
 );
 //
 export const GoogleAuthApi = createAsyncThunk(
-  "user/setupUserLogin",
+  "user/GoogleAuthApi",
   async (data, thunkAPI) => {
     return GoogleAuth(data, "googleLogin", thunkAPI);
   }
@@ -65,6 +66,21 @@ function addUserToLocalStorage(user, token,userId) {
   localStorage.setItem("Token",(token));
   localStorage.setItem("userId",(userId));
 }
+function removeUserFromLocalStorage(){
+  localStorage.removeItem("user");
+  localStorage.removeItem("Token"),
+  localStorage.removeItem("userId");
+  localStorage.removeItem("writerId");
+}
+function checkRoleAndSetToLocalStorage(payload){
+  //it means user is writter
+  if(payload.isApproved){
+   localStorage.setItem("writerId",payload._id);
+  }else{
+   localStorage.removeItem("writerId");
+
+  }
+}
 
 
 let initialState = {
@@ -75,14 +91,17 @@ let initialState = {
   user: localStorage.getItem("user") || null,
   token: localStorage.getItem("Token") || "",
   userId:localStorage.getItem("userId") || "",
+  writerId:localStorage.getItem("writerId") || "",
   userImage: "",
   role:"",
-  writter:""
+  writter:"",
+  activeUser:null
 };
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    resetState: () => initialState,
     removeAlert: (state) => {
       state.isLoading = false;
       (state.alertText = ""), (state.alertType = ""), (state.showAlert = false);
@@ -90,6 +109,13 @@ const userSlice = createSlice({
     logoutUser: (state) => {
       state.user = null;
       state.token = "";
+      state.writerId="";
+      state.userId=""
+      state.activeUser=null;
+      removeUserFromLocalStorage();
+    },
+    updateActiveUser: (state, action) => {
+      state.activeUser = action.payload;
     },
     deleteUserImage: (state) => {
       state.userImage = "";
@@ -97,24 +123,22 @@ const userSlice = createSlice({
   },
   extraReducers: {
     //
-    [setupUserRoleApi.pending]:(state)=>{
-      state.isLoading = true;
+    [checkActiveUserApi.fulfilled]:(state, { payload })=>{
+      state.activeUser=payload;
+      if(payload?.isApproved){
+        state.writerId=payload._id;
+      }else{
+        state.writerId="";
+      }
+      checkRoleAndSetToLocalStorage(payload);
     },
-    [setupUserRoleApi.fulfilled]:(state, { payload })=>{
-      state.role=payload.role;
-      state.writter=payload.writer;
-      state.isLoading = false;
-    },
-    [setupUserRoleApi.rejected]:(state, { payload }) => {
-      state.isLoading = false;
-    },
-
     //
     [setupUserLoginApi.pending]: (state) => {
       state.isLoading = true;
     },
     
     [setupUserLoginApi.fulfilled]: (state, { payload }) => {
+      state.writerId=""
       state.role = payload.role;
       state.writter=payload.writer;
       state.token = payload.token;
@@ -123,6 +147,7 @@ const userSlice = createSlice({
       state.showAlert = true;
       state.alertType = "success";
       state.alertText = "Login Success! Redirecting";
+      removeUserFromLocalStorage();
       addUserToLocalStorage(payload.role, payload.token,payload.userId);
     },
     [setupUserLoginApi.rejected]: (state, { payload }) => {
@@ -157,16 +182,23 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [setupUserRegisternApi.fulfilled]: (state, { payload }) => {
-      state.user = payload.user;
+      // state.user = payload.user;
+      // state.token = payload.token;
+      // state.isLoading = false;
+      // state.showAlert = true;
+      // state.alertType = "success";
+      // state.alertText = "Register Success!";
+      // addUserToLocalStorage(payload.user, payload.token);
+      state.writerId=""
+      state.role = payload.role;
+      state.writter=payload.writer;
       state.token = payload.token;
+      state.userId=payload.userId;
       state.isLoading = false;
-      state.showAlert = true;
-      state.alertType = "success";
-      state.alertText = "Register Success!";
-      addUserToLocalStorage(payload.user, payload.token);
+      removeUserFromLocalStorage();
+      addUserToLocalStorage(payload.role, payload.token,payload.userId);
     },
     [setupUserRegisternApi.rejected]: (state, { payload }) => {
-      debugger
       state.isLoading = false;
       state.showAlert = true;
       state.alertType = "danger";
@@ -218,13 +250,12 @@ const userSlice = createSlice({
       state.isLoading = true;
     },
     [uploadUserImage.rejected]: (state, props) => {
-      console.log(props);
       state.isLoading = false;
     },
   },
 });
 
-export const { removeAlert, logoutUser, deleteUserImage, changeLight } =
+export const { removeAlert, logoutUser, deleteUserImage, changeLight,resetState,updateActiveUser} =
   userSlice.actions;
 
 export default userSlice.reducer;

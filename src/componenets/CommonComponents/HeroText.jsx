@@ -2,6 +2,7 @@
 import React from "react";
 import "./HeroText.css";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const HeroText = (props) => {
   function scrollToBlog(){
@@ -9,13 +10,18 @@ const HeroText = (props) => {
     element.scrollIntoView();
   }
 
+  const {activeUser}=useSelector((state) => state.user);
+
   function home1Btn(){
 return(
   <div className="heroTextFlex">
         <Link to="/#blogPosts"><button onClick={scrollToBlog} className="md-btns trans-btn-hv">
           Start Reading
         </button></Link>
-        <Link to="/signIn"><button className="md-btns blue-btn-hv">Sign In</button></Link>
+       { !activeUser&&
+        <Link to="/signIn">
+        <button className="md-btns blue-btn-hv">Sign In</button>
+        </Link>}
       </div>
 )
   }

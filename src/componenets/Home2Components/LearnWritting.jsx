@@ -8,7 +8,7 @@ import learn2 from "../../assets/learn2.png";
 
 const LearnWritting = () => {
   return (
-    <div className="learnBigMain">
+    <div id="becomeWriterSection" className="learnBigMain">
       <div className="learnMain">
         {/*  */}
         <div className="leanContentMain">

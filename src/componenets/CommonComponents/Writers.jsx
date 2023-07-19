@@ -19,13 +19,13 @@ const Writers = () => {
               </div>
               <div className="writtersIcons">
                 <div className="rightComponentWritersIcons">
-                <a href=""><i className="fa-brands fa-facebook-f fa-sm"></i></a>
+                <a href=""><span className="fa-brands fa-facebook-f fa-sm"></span></a>
                 </div>
                 <div className="rightComponentWritersIcons ">
-                <a href=""><i className="fa-brands fa-twitter fa-sm"></i></a>
+                <a href=""><span className="fa-brands fa-twitter fa-sm"></span></a>
                 </div>
                 <div className="rightComponentWritersIcons">
-                <a href=""><i className="fa-brands fa-instagram fa-sm"></i></a>
+                <a href=""><span className="fa-brands fa-instagram fa-sm"></span></a>
                 </div>
               </div>
             </div>

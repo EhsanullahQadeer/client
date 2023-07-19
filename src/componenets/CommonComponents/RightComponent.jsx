@@ -1,79 +1,125 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./RightComponent.css";
-import { blogsData } from "../data";
-import img from "../../assets/trending.png";
-import { writers } from "../data";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { FaUserCircle } from "react-icons/fa";
+// import { writers } from "../data";
 import { Link } from "react-router-dom";
+import { setupGetTopWritters } from "../../features/writerRequest/writerRequestSlice";
+import { getTopStoriesApi } from "../../features/blog/blogSlice";
+import timeToRead from "../timeToRead/timeToRead";
+import { gettingTumbnailImg } from "../logicFunctionalities/logics";
+import { useDispatch,useSelector } from "react-redux";
+import { Writer_Files_URL } from "../../utils";
+
+
 const RightComponent = (props) => {
+  let {topWriters} = useSelector((state) => state.writerRequest);
+  let {topStories} = useSelector((state) => state.blog);
+  const {userId}= useSelector((state)=>state.user);
+  const dispatch=useDispatch();
+  const [topStr,setTopStr]=useState([]);
+  useEffect(()=>{
+    if(topStr.length==0){
+      setTopStr(topStories)
+    }
+  },[topStories])
+ 
+  useEffect(()=>{
+    dispatch(setupGetTopWritters())
+    dispatch(getTopStoriesApi())
+  },[])
   return (
+    
     <div className="rightSideBarMain">
       {/*  */}
+      {props?.category!="Top Stories" &&<>
       <div className="rightSideBarMainFlex">
         <h2 className="fancyDectoration">Top Stories</h2>
-        <a href="">View All</a>
+        <Link to="/category/Top Stories">View All</Link>
       </div>
       {/*  */}
       <div className="rightSideBarMainFlex-gap" >
-        {blogsData.slice(0, 4).map((item) => {
+        {topStr.slice(0,4).map((item) => {
+          let writerImg;
+          if(item?.writter?.photo){
+            writerImg= Writer_Files_URL+item?.writter?.photo;
+          }
+          let fName =item?.writter?.name.split(" ")[0].slice(0,10)
+           let time= timeToRead(item?.topStory?.description);
+        let src= gettingTumbnailImg(item?.topStory?.description)
           return (
+            <Link to={`/blog/${item?.topStory?._id}/${userId}`}>
             <div className="singleBlog ">
-
-              <img  src={item?.img} className="rightSideBarMainImage" />
+              <div>
+              <img  src={src} className="rightSideBarMainImage" />
+              </div>
               <div className="blogsContent right-blogsContent">
                 <div className="travelChip">
-                  <p>Travel</p>
+                  <p>{item?.topStory?.category}</p>
                 </div>
                 <p className="singleBlogtrendingEnd">
-                  set video playback speed with javascript version
+                  {item?.topStory?.title}
                 </p>
                 <div className="trendingFlex trendingFlex-right">
-                  <img src={img} />
-                  <p>{item?.name}</p>
+                 {writerImg? <img className="circularImg" src={writerImg} />:<AccountCircleIcon className='dummyProfileImage' />}
+                  <p  className="whiteSpace">{fName}</p>
                   
                 <div className="trendingTime">
                 <span className="fa-xs">|</span>
                 <span className="fa-sharp fa-regular fa-clock fa-sm"></span>
-                  <p>{item?.time}</p>
+                  <p className="whiteSpace">{time}</p>
                 </div>
                 </div>
               </div>
             </div>
-            
+            </Link>
           );
         })}
       </div>
-      <div/>
+      </>}
      
       {/*  */}
-      <div className="">
-     
+      {props?.writerSideBar!="disable" &&<div className="">
       <div className="rightSideBarMainFlex rightSideBarMainFlex-top-writer">
         <h2 className="fancyDectoration">Top Writers</h2>
-        <a href="">View All</a>
+        
+        <Link to="/writersList">View All</Link>
       </div>
       {/*  */}
       <div className="rightSideBarMain-top-writer-flex" >
-        {writers.map((writer) => {
+        {topWriters.map((data) => {
+          let writer =data?.topWriter?._id;
+          let writerImg;
+          if(writer?.photo){
+            writerImg=Writer_Files_URL+writer?.photo;
+          }
           return (
             <div className="writterWrapper">
-              <img src={writer?.img} />
+            <Link className="link" to={`/WriterPublicProfile/${writer?._id}`}> 
+            {writerImg?<img className="topWriter-img" src={writerImg} />:
+            <FaUserCircle size={80} color={"#b1b1b1"} />}
+            {/* style={{fontSize:"80px"}} className='dummyProfileImage ' */}
+            
+            </Link>
               <div className="writtersContent">
+                <Link className="link" to={`/WriterPublicProfile/${writer?._id}`}>
                 <div>
-                  <p className="writterName">{writer.name}</p>
-                  <p className="writterBio">{writer?.bio}</p>
+                  <p className="writterName">{writer?.name}</p>
+                  <p className="writterBio">{writer?.designation}</p>
                 </div>
+                </Link>
                 <div className="writtersIcons">
                   
-                  <a href=""><div className="rightComponentWritersIcons bg-blue fa-brands fa-facebook-f fa-sm"></div></a>
-                  <a href=""><div className="rightComponentWritersIcons fa-brands fa-twitter fa-sm"></div></a>
-                  <a href=""><div className="rightComponentWritersIcons fa-brands fa-instagram fa-sm"></div></a>
+                {writer?.facebookId&& <a href={writer?.facebookId}><div className="rightComponentWritersIcons bg-blue fa-brands fa-facebook-f fa-sm"></div></a>}
+                {writer?.twitterId&& <a href={writer?.twitterId}><div className="rightComponentWritersIcons fa-brands fa-twitter fa-sm"></div></a>}
+                {writer?.instagramId&& <a href={writer?.instagramId}><div className="rightComponentWritersIcons fa-brands fa-instagram fa-sm"></div></a>}
                 </div>
               </div>
             </div>
           );
         })}
       </div>
-      </div>
+      </div>}
      
 
  
@@ -131,7 +177,7 @@ const RightComponent = (props) => {
       <div style={{marginTop:"50px"}}>
       <div className="rightSideBarMainFlex rightSidebarFlexBoxes">
         <h2 className="fancyDectoration">Categories </h2>
-        <a href="">View All</a>
+        {/* <a href="">View All</a> */}
       </div>
       </div>
       <div  className="rightSideBarCategories">

@@ -9,26 +9,26 @@ import BlogChips from "../componenets/SingleBlogComponents/WriterBlogChips";
 import BlogComments from "../componenets/SingleBlogComponents/BlogComments";
 import RightComponent from "../componenets/CommonComponents/RightComponent";
 import Image from "../assets/blogWriter.png";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
 import SingleWriter from "../componenets/CommonComponents/SingleWriter";
 import { writers } from "./data";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getSingleBlogsApi } from "../features/blog/blogSlice";
 import { useEffect } from "react";
 import timeToRead from "../componenets/timeToRead/timeToRead";
+import { Writer_Files_URL } from "../utils";
 
 const SingleBlog = () => {
-  const dispatch=useDispatch();
-  let {isLoading,singleBlog}=useSelector((state)=>state.blog)
-
-
-  console.log(singleBlog.description)
-  let {blogId} = useParams();
-
-  useEffect(()=>{
-   dispatch(getSingleBlogsApi(blogId))
-  },[])
-
+  const dispatch = useDispatch();
+  let { isLoading, singleBlog } = useSelector((state) => state.blog);
+  let { blogId, userId } = useParams();
+  const data = {
+    blogId: blogId,
+    userId: userId,
+  };
+  useEffect(() => {
+    dispatch(getSingleBlogsApi(data));
+  }, []);
   let arr = [
     "Productivity",
     "2022 In Review",
@@ -36,8 +36,12 @@ const SingleBlog = () => {
     "Technology",
     "Machine Learning",
   ];
-  const time = timeToRead(singleBlog?.description)
-  const date =new Date(singleBlog?.createdAt).toUTCString().slice(4,16);
+  const time = timeToRead(singleBlog?.description);
+  const date = new Date(singleBlog?.createdAt).toUTCString().slice(4, 16);
+  let writerImg;
+  if(singleBlog?.writer?.photo){
+    writerImg=Writer_Files_URL+singleBlog?.writer?.photo;
+  }
   return (
     <div>
       <LightNavbar signIn={true} getStarted={true} />
@@ -45,22 +49,28 @@ const SingleBlog = () => {
         {/*  */}
         <div className="singleBlogContent">
           <IntroLeft
-            image={Image}
+            image={writerImg}
             name={singleBlog?.writer?.name}
             date={date}
             time={time}
+            blogId={singleBlog?._id}
+            bookmarked={singleBlog?.bookmarked}
           />
-          <BlogContent 
+          <BlogContent
             title={singleBlog.title}
             description={singleBlog?.description}
           />
-          <BlogChips chips={arr} />
-          <SingleWriter writer={writers[1]} />
-          <BlogComments />
+          {/* <BlogChips chips={arr} /> */}
+          {/* <SingleWriter writer={writers[1]} /> */}
+          <BlogComments liked={singleBlog?.liked} likes={singleBlog?.likes} />
         </div>
         {/*  */}
         <div className="singleBlogSideBar">
-          <IntroRight />
+          <IntroRight
+            writterImg={singleBlog?.writer?.photo}
+            writterName={singleBlog?.writer?.name}
+            writterDesignation={singleBlog?.writer?.designation}
+          />
           <RightComponent />
         </div>
         {/*  */}

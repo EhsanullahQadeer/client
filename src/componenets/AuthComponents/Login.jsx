@@ -34,19 +34,21 @@ const Login = () => {
         [e.target.name]: e.target.value,
       };
     });
-  }
-
+  } 
+  //get prepath from local stoarge if user is redirected from noauthenticated request
    async function LoginFun() {
-   
-
-
       dispatch(setupUserLoginApi(data)).then((res)=>{
-        const status=res.meta.requestStatus;
-        if(status=="fulfilled"){
+        if(!res.error){ 
+          let redirectPath=localStorage.getItem("prePath");
           setTimeout(() => {
-            navigate("/");
+            if (redirectPath){
+            navigate(redirectPath);
+            localStorage.removeItem("prePath")
+            }else{
+              navigate("/");
+            }
             dispatch(removeAlert());
-          }, 3000);
+          }, 1000);
         }else{
             setTimeout(() => {
               dispatch(removeAlert());

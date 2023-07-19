@@ -5,7 +5,7 @@ export default function Alert_Login() {
     const Alert = withReactContent(Swal)
       Alert.fire({
         allowOutsideClick: false,
-        timer: 3000,
+        timer: 1000,
         icon: 'success',
       title: 'You Are Successfully Logged In',
       text: 'Redirecting',

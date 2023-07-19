@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./WriterProfileContent.css";
-import Writer from "../../assets/writerImage.png";
 import { autoLoadMore } from "../logicFunctionalities/logics";
 import Img from "../../assets/Profile-PNG-File.png";
 import Footer from "../CommonComponents/Footer";
 import Writter_Articles from "./Writter_Articles";
-import { getsingleWriterBlogsApi } from "../../features/blog/blogSlice";
+import { Writer_Files_URL } from "../../utils";
+import {
+  getsingleWriterBlogsApi,
+  getRecentViewedBlogsApi,
+  getBookmarkApi,
+} from "../../features/blog/blogSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,48 +19,54 @@ import {
 } from "../../features/writerRequest/writerRequestSlice";
 
 const WriterProfileContent = () => {
-  let dispatch = useDispatch();
-  let { currentWriterInfo, isLoading, showAlert,image } = useSelector(
+  const dispatch = useDispatch();
+  const { userId, writerId, activeUser } = useSelector((state) => state.user);
+  let { currentWriterInfo, isLoading, showAlert, image } = useSelector(
     (state) => state.writerRequest
   );
   let { singleWritterBlogs, loadMore } = useSelector((state) => state.blog);
 
   let { name, designation } = currentWriterInfo;
-  const { writerId } = useParams();
+  // const {writerId} = useParams();
 
   //This is for articles section
-  const [displayArticles, setDisplayArticles] = useState({
-    activeArticles: true,
-    // pendingArticles: false,
-    // rejectedArticles: false,
+  const [displayArticles, setDisplayArticles] = useState(() => {
+    if (writerId) {
+      return { activeArticles: true };
+    } else {
+      return { recentActivities: true };
+    }
   });
-
   const [blogsData, setBlogsData] = useState([]);
   const { page, ref, setReached, setPage } = autoLoadMore();
   // pageIndex
   let apiData = {
     writerId,
+    userId: userId,
     articlesType: "",
-    pageIndex:page ,
+    pageIndex: page,
     pageSize: 10,
   };
   //Fetching Blog apis here
   useEffect(() => {
     if (displayArticles.activeArticles) {
       apiData.articlesType = "Active";
-      dispatch(getsingleWriterBlogsApi(apiData));
+      writerId && dispatch(getsingleWriterBlogsApi(apiData));
     } else if (displayArticles.pendingArticles) {
       apiData.articlesType = "Pending";
-      dispatch(getsingleWriterBlogsApi(apiData));
+      writerId && dispatch(getsingleWriterBlogsApi(apiData));
     } else if (displayArticles.rejectedArticles) {
       apiData.articlesType = "Rejected";
-      dispatch(getsingleWriterBlogsApi(apiData));
+      writerId && dispatch(getsingleWriterBlogsApi(apiData));
+    } else if (displayArticles.recentActivities) {
+      dispatch(getRecentViewedBlogsApi(apiData));
+    } else if (displayArticles.myBookmarks) {
+      dispatch(getBookmarkApi(apiData));
     }
     //This is for auto load more blogs
-   
   }, [displayArticles, page]);
-    
-  useEffect(()=>{
+
+  useEffect(() => {
     if (loadMore) {
       setTimeout(() => {
         setReached(false);
@@ -65,27 +75,25 @@ const WriterProfileContent = () => {
     } else {
       setReached(true);
     }
-  },[page,loadMore])
-  
+  }, [page, loadMore]);
 
   //This is for storing data in useState load from api
-useEffect(()=>{
-  if (page == 1) {
-  setBlogsData(singleWritterBlogs);
-} else if (page > 1) {
-  setBlogsData((pre) => {
-    return [...pre, ...singleWritterBlogs];
-  });
-}
-},[singleWritterBlogs])
-  
-
+  useEffect(() => {
+    if (page == 1) {
+      setBlogsData("");
+      setBlogsData(singleWritterBlogs);
+    } else if (page > 1) {
+      setBlogsData((pre) => {
+        return [...pre, ...singleWritterBlogs];
+      });
+    }
+  }, [singleWritterBlogs]);
 
   //getting All blogs
   function activeArticlesFun() {
     setPage(1);
     setDisplayArticles({
-      activeArticles: true
+      activeArticles: true,
     });
     // apiData.articlesType = "Active";
   }
@@ -93,30 +101,38 @@ useEffect(()=>{
   function pendingArticlesFun() {
     setPage(1);
     setDisplayArticles({
-      pendingArticles: true
+      pendingArticles: true,
     });
   }
   //getting rejected blogs
   function rejectedArticlesFun() {
     setPage(1);
     setDisplayArticles({
-      rejectedArticles: true
+      rejectedArticles: true,
     });
   }
   //
-  function recentActivitiesFun(){
+  function recentActivitiesFun() {
     setPage(1);
     setDisplayArticles({
-      recentActivities: true
+      recentActivities: true,
+    });
+  }
+  function myBookmarksFun() {
+    setPage(1);
+    setDisplayArticles({
+      myBookmarks: true,
     });
   }
   //This is for getting writer profile information
   useEffect(() => {
-    dispatch(setupGetCurrentWriter());
-    activeArticlesFun();
+    writerId && dispatch(setupGetCurrentWriter());
+    writerId && activeArticlesFun();
   }, []);
-
-
+  let writerPhoto;
+  if (activeUser?.photo) {
+    writerPhoto = Writer_Files_URL + "/" + activeUser?.photo;
+  }
   return (
     <div className="WriterProfileContentBigMain">
       {/* First Part Starts */}
@@ -126,74 +142,100 @@ useEffect(()=>{
           {/*  */}
           <div className="writerImageBio">
             <div>
-              <img src={image?image:Img} />
-              <p className="writerName">{name}</p>
-              <p className="writerBio">{designation}</p>
+              <img className="img-fluid" src={writerPhoto || Img} />
+              <p className="writerName">
+                {activeUser?.name ||
+                  activeUser?.firstName + " " + activeUser?.lastName}
+              </p>
+              <p className="writerBio">{activeUser?.designation}</p>
             </div>
-            <div className="writtersIcons">
-              <div
-                className="rightSideBarBigIcons rightSideBarTwitter"
-                style={{ color: "#FFFFFF" }}
-              >
-                <i className="fa-brands fa-facebook-f fa-xl"></i>
+
+            {writerId && (
+              <div className="writtersIcons">
+                <div
+                  className="rightSideBarBigIcons rightSideBarTwitter"
+                  style={{ color: "#FFFFFF" }}
+                >
+                  <i className="fa-brands fa-facebook-f fa-xl"></i>
+                </div>
+                <div className=" rightSideBarBigIcons ">
+                  <i className="fa-brands fa-twitter fa-xl"></i>
+                </div>
+                <div className="rightSideBarBigIcons">
+                  <i className="fa-brands fa-instagram fa-xl"></i>
+                </div>
               </div>
-              <div className=" rightSideBarBigIcons ">
-                <i className="fa-brands fa-twitter fa-xl"></i>
-              </div>
-              <div className="rightSideBarBigIcons">
-                <i className="fa-brands fa-instagram fa-xl"></i>
-              </div>
-            </div>
+            )}
           </div>
           {/*  */}
-          <div className="writersBtns">
-            <Link to="/Write">
-              <button className="writting">Start Writting</button>
-            </Link>
+          {writerId && (
+            <div className="writersBtns">
+              <Link to="/Write">
+                <button className="writting">Start Writting</button>
+              </Link>
 
-            <button className="articlesBtn">All Articles</button>
-            <button className="draftsBtn">All Drafts</button>
-          </div>
+              <button className="articlesBtn">All Articles</button>
+              <button className="draftsBtn">All Drafts</button>
+            </div>
+          )}
         </div>
         {/* First Parts ends  */}
 
         <div className="writerArticlesInfo">
+          {/* <div></div> style={{overflow:"auto"}} */}
           <div className="writerArticleLinks">
-            <p
-              onClick={activeArticlesFun}
-              className={displayArticles.activeArticles == true && "activeLink"}
-            >
-            Active Articles
-            </p>
-            <p
-              onClick={pendingArticlesFun}
-              className={
-                displayArticles.pendingArticles == true && "activeLink"
-              }
-            >
-              Pending Articles{" "}
-            </p>
-            <p
-              onClick={rejectedArticlesFun}
-              className={
-                displayArticles.rejectedArticles == true && "activeLink"
-              }
-            >
-              Rejected Articles
-            </p>
+            {writerId && (
+              <>
+                <p
+                  onClick={activeArticlesFun}
+                  className={
+                    displayArticles.activeArticles == true && "activeLink"
+                  }
+                >
+                  Active Articles
+                </p>
+                <p
+                  onClick={pendingArticlesFun}
+                  className={
+                    displayArticles.pendingArticles == true && "activeLink"
+                  }
+                >
+                  Pending Articles{" "}
+                </p>
+                <p
+                  onClick={rejectedArticlesFun}
+                  className={
+                    displayArticles.rejectedArticles == true && "activeLink"
+                  }
+                >
+                  Rejected Articles
+                </p>
+              </>
+            )}
             <p
               onClick={recentActivitiesFun}
-              className={
-                displayArticles.recentActivities && "activeLink"
-              }
+              className={displayArticles.recentActivities && "activeLink"}
             >
               Recent Activities
+            </p>
+            <p
+              onClick={myBookmarksFun}
+              className={displayArticles?.myBookmarks && "activeLink"}
+            >
+              My Bookmarks
             </p>
           </div>
 
           <div className="writerLine"></div>
-
-          {displayArticles.activeArticles && (
+          <Writter_Articles
+            userId={userId}
+            blogsData={blogsData}
+            bookmark={displayArticles?.myBookmarks ? true : false}
+            description={displayArticles?.myBookmarks && "hide"}
+            recentViewedTime={displayArticles?.recentActivities ? true : false}
+            setBlogsData={setBlogsData}
+          />
+          {/* {displayArticles.activeArticles && (
             <Writter_Articles blogsData={blogsData} />
           )}
           {displayArticles.pendingArticles && (
@@ -201,7 +243,7 @@ useEffect(()=>{
           )}
           {displayArticles.rejectedArticles && (
             <Writter_Articles blogsData={blogsData} />
-          )}
+          )} */}
           <button className="invisible" ref={ref}>
             Load More
           </button>

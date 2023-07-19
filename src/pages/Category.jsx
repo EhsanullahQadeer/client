@@ -6,7 +6,7 @@ import pin from "../assets/pin.png";
 import LightNavbar from "../componenets/CommonComponents/LightNavbar";
 import Footer from "../componenets/CommonComponents/Footer";
 import { useDispatch, useSelector } from "react-redux";
- import { getSingleCategoryBlogsApi } from "../features/blog/blogSlice";
+ import { getSingleCategoryBlogsApi,getTopStoriesApi} from "../features/blog/blogSlice";
  import { useParams } from 'react-router-dom';
  import { autoLoadMore } from "../componenets/logicFunctionalities/logics";
 
@@ -26,8 +26,12 @@ const Category = () => {
     setPage(1)
    },[categoryName])
   useEffect(()=>{ 
-    let data={pageIndex:page,category:categoryName}
-    dispatch(getSingleCategoryBlogsApi(data))
+    let data={pageSize:13,pageIndex:page,category:categoryName}
+    if(categoryName=="Top Stories"){
+      dispatch(getTopStoriesApi(data))
+    }else{
+      dispatch(getSingleCategoryBlogsApi(data))
+    }
   },[page,categoryName])
 
 
@@ -50,7 +54,6 @@ const Category = () => {
       setReached(true)
     }
   },[singleCategorsBlogs])
-
   return (
     <div>
       <LightNavbar signIn={true} getStarted={true} person={false} />

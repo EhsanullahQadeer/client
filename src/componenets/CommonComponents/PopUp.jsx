@@ -8,7 +8,7 @@ import {RxCross1}  from "react-icons/rx"
 import { Link } from "react-router-dom";
 
 
-export default function AlertDialog({open,setOpen}) {
+export default function AlertDialog({open,setOpen,desc,title}) {
 
   const handleClose = () => {
     setOpen(false);
@@ -24,14 +24,11 @@ export default function AlertDialog({open,setOpen}) {
       >
         <RxCross1  style={{position:"absolute",right:"30px",top:"30px",cursor:"pointer",}} onClick={()=>setOpen(false)}/>
         <DialogTitle id="alert-dialog-title" style={{paddingTop:"90px",textAlign:"center",fontSize: "20px",fontWeight: "600"}}>
-          {"REQUEST SUBMITTED "}
+          {title}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description" style={{textAlign:"center",}}>
-            Thank you! Your request has been submitted successfully. There are
-            many variations of passages of Lorem Ipsum available, but the
-            majority have suffered alteration in some form randomized words
-            which don't look even slightly believable.
+            {desc}
           </DialogContentText>
         </DialogContent>
         <div style={{paddingBottom:"80px"}}>

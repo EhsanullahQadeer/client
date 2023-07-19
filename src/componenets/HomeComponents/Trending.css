@@ -7,7 +7,6 @@
   padding: 81px 10% 70px;
 }
 
-
 .trendingText {
   width: 100%;
 }
@@ -23,8 +22,8 @@
   display: flex;
   flex-direction: column;
 }
-.trendingText h2{
-  margin-bottom: 47px ;
+.trendingText h2 {
+  margin-bottom: 47px;
 }
 
 .trendingHead {
@@ -32,16 +31,14 @@
   font-weight: 500;
   font-size: 17px;
   font-family: "Noto Sans", sans-serif;
-  overflow-wrap:break-word;
-  word-wrap:break-word;
-
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-
 }
 
 .trendingFlex {
@@ -50,20 +47,21 @@
   display: flex;
   gap: 7px;
   align-items: center;
+  white-space: nowrap;
 }
-.trendingFlex-right{
+.trendingFlex-right {
   margin-top: 0px;
-  margin-bottom:0px;
+  margin-bottom: 0px;
 }
-.trendingFlex img{
-  height: 18px ;
-width: 18px;
+.trendingFlex img {
+  height: 18px;
+  width: 18px;
 }
-.trendingFlex span{
-  color:#777777 ;
+.trendingFlex span {
+  color: #777777;
 }
-.trendingTime span{
-  color:#777777 ;
+.trendingTime span {
+  color: #777777;
 }
 
 .trendingFlex p {
@@ -72,7 +70,6 @@ width: 18px;
   font-size: 12px;
   font-weight: 400;
   margin: 0px;
- 
 }
 
 .trendingTime {
@@ -80,9 +77,10 @@ width: 18px;
   align-items: center;
   gap: 10px;
 }
-.trendingTime img,i{
+.trendingTime img,
+i {
   height: 12px;
-width: 10.799999237060547px;
+  width: 10.799999237060547px;
 }
 
 .trendingTime p {
@@ -94,7 +92,6 @@ width: 10.799999237060547px;
 }
 
 .trendingEnd {
-  
   text-overflow: ellipsis;
   overflow: hidden;
   /* white-space: nowrap; */
@@ -105,7 +102,7 @@ width: 10.799999237060547px;
   font-weight: 400;
   margin-bottom: 10px;
 }
-.trendingEnd  p{
+.trendingEnd p {
   text-overflow: ellipsis;
   word-wrap: break-word;
   display: -webkit-box;
@@ -114,32 +111,37 @@ width: 10.799999237060547px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.singleBlogtrendingEnd{
+.singleBlogtrendingEnd {
   font-family: "Noto Sans", sans-serif;
   color: #222222;
   margin-bottom: 10px;
-font-size: 16px;
-font-weight: 500;
-line-height: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.trendingEnd-blog{
-  max-width: 401px ;
+.trendingEnd-blog {
+  max-width: 401px;
   font-family: "Noto Sans", sans-serif;
   color: #555555;
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 10px;
 
- overflow-wrap: break-word;
- word-wrap: break-word;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   -webkit-line-clamp: 2;
   overflow: hidden;
-
 }
-.trendingEnd-blog img{
+.trendingEnd-blog img {
   display: none;
 }
 
@@ -149,15 +151,29 @@ line-height: 24px;
   gap: 32px;
 }
 
-@media (max-width:992px) {
+@media (max-width: 992px) {
   .trendingMain {
     padding: 40px 10%;
-  
   }
+}
+@media (max-width: 768px) {
+  rendingText h2 {
+    margin-bottom: 20px;
   }
-  @media (max-width:768px) {rendingText h2{
-      margin-bottom: 20px ;
-    }
-    }
-    
-      
+}
+@media (max-width: 450px) {
+  .trendingFlex {
+    gap: 4px;
+  }
+  .trendingFlex p{
+    /* letter-spacing: -0.4px; */
+  }
+}
+@media (max-width: 400px) {
+  .trendingFlex {
+    gap: 2px;
+  }
+  .trendingFlex p{
+    letter-spacing: -0.3px;
+  }
+}

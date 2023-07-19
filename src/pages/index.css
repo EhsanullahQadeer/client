@@ -5,6 +5,7 @@
   margin-left: 50%;
   transform: translateX(-50%);
   padding-top: 70px;
+  padding-bottom: 114px;
 }
 
 .writerIntro {
@@ -21,7 +22,6 @@
   padding: 76px 10% 104px;
 }
 
-
 .singleBlogContent {
   flex: 2;
 }
@@ -29,8 +29,8 @@
 .singleBlogSideBar {
   flex: 1;
 }
-.writerUpdate-profile{
-  padding-top: 143px 10% 124px ;
+.writerUpdate-profile {
+  padding-top: 143px 10% 124px;
 }
 
 @media screen and (max-width: 1200px) {
@@ -39,49 +39,51 @@
   }
 }
 
-
-@media (max-width:1272px){
+@media (max-width: 1272px) {
   .singleBlogMain {
     flex-direction: column;
   }
-  .author-image-div{
+  .author-image-div {
     text-align: center;
-    }
-    .singleBlogAdd{
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .commentsChipMain {
-      max-width: 100% ;
-      }
-      .writterInfo{
-        margin: 15px 0  10px!important;
-        padding: 0 10px;
-       }
-       .singleBlogSideBar{
-        margin-top: 30px;
-       }
-    }
-@media (max-width:992px) {
-   /*.......l-r-p 60px ......*/
-   .singleBlogMain {
+  }
+  .singleBlogAdd {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .commentsChipMain {
+    max-width: 100%;
+  }
+  .writterInfo {
+    margin: 15px 0 10px !important;
+    padding: 0 10px;
+  }
+  .singleBlogSideBar {
+    margin-top: 30px;
+  }
+}
+@media (max-width: 992px) {
+  /*.......l-r-p 60px ......*/
+  .singleBlogMain {
     padding: 66px 10% 94px;
   }
- 
- }
- @media (max-width:768px) {
-   /*.......l-r-p 40px ......*/
-   .singleBlogMain {
+}
+@media (max-width: 768px) {
+  /*.......l-r-p 40px ......*/
+  .singleBlogMain {
     padding: 56px 10% 84px;
   }
-   }
+}
 
-   @media (max-width:576px) {
-     /*.......l-r-p 20px ......*/
-     .singleBlogMain {
-      padding: 40px 10% 60px;
-    }
-    }
+@media (max-width: 576px) {
+  /*.......l-r-p 20px ......*/
+  .singleBlogMain {
+    padding: 40px 10% 60px;
+  }
+  .singleBlogSideBar {
+    display: none;
+  }
 
-
-   
+  .writerPublicProfileMainSidebar {
+    display: none;
+  }
+}

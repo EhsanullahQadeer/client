@@ -1,19 +1,27 @@
 import axios from "axios";
 import { BACK_END_URL } from "../../utils";
 
-export const setupUserRole = async (userId,thunkAPI) => {
+
+export const checkActiveUser = async (data,thunkAPI) => {
+  let token = localStorage.getItem("Token");
   try {
-    let response = await axios.post(`${BACK_END_URL}/auth/checkRole`,{userId:userId});
+    let response = await axios.post(`${BACK_END_URL}/auth/checkActiveUser`,data
+    ,{
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
    return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.msg);
   }
 };
 
+
 export const setupUserRegister = async (data, route, thunkAPI) => {
   try {
     let response = await axios.post(`${BACK_END_URL}/auth/${route}`, data);
-   return response;
+   return response.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data.msg,error.response);
   }

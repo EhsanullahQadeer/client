@@ -7,25 +7,17 @@ import {useEffect } from "react";
 import timeToRead from "../timeToRead/timeToRead";
 import { getAllBLogsApi } from "../../features/blog/blogSlice";
 import "./Blogs.css";
-import { blogsData } from "../data";
-import img from "../../assets/trending.png";
 import RightComponent from "../CommonComponents/RightComponent";
 import Add from "../CommonComponents/Add";
-
-import img1 from "../../assets/blog1.png";
 import SingleBlogHomePage from "./SingleBlogHomePage";
-import { Metadata } from "libphonenumber-js/min";
 import { autoLoadMore } from "../logicFunctionalities/logics";
-
-
-
-
 const Blogs = () => {
   //this is used to auto loadmore blogs
   const {page,ref,setReached}= autoLoadMore();
   //Only related to blogs data 
   let dispatch =useDispatch();
   let {isLoading,showAlert,blogs}= useSelector((state)=>state.blog);
+  const {userId}= useSelector((state)=>state.user);
   const [blogsData,setBlogsData]=React.useState([])
   useEffect(
     ()=>{
@@ -77,9 +69,9 @@ const Blogs = () => {
             let date =new Date(data.createdAt).toUTCString().slice(4,16);
             let time= timeToRead(data?.description);
             return (
-            <Link to={`/blog/${data._id}`}><SingleBlogHomePage 
-             writterImage={img1}
-             blogImg={img}
+            <Link to={`/blog/${data._id}/${userId}`}>
+            <SingleBlogHomePage 
+             writterImage={data?.writter[0]?.photo}
               title={data?.title}
               name={data?.writter[0]?.name}
               date={date}
@@ -98,9 +90,9 @@ const Blogs = () => {
             let date =new Date(data.createdAt).toUTCString().slice(4,16);
             let time= timeToRead(data?.description);
             return (
-            <Link to={`/blog/${data._id}`}><SingleBlogHomePage 
-             writterImage={img1}
-             blogImg={img}
+            <Link to={`/blog/${data._id}/${userId}`}>
+            <SingleBlogHomePage 
+             writterImage={data?.writter[0]?.photo}
               title={data?.title}
               name={data?.writter[0]?.name}
               date={date}

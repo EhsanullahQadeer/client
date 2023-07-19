@@ -75,6 +75,15 @@ border-radius: 127.5px;
   align-items: center;
   margin-bottom: 10px;
 }
+.writerBio{
+  overflow-wrap: break-word;
+ word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
 
 .feedBackFlex {
   display: flex;
