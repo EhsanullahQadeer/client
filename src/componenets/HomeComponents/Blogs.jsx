@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import {useLocation} from 'react-router-dom';
 import {useEffect } from "react";
 import timeToRead from "../timeToRead/timeToRead";
-import { getAllBLogsApi } from "../../features/blog/blogSlice";
+import { getAllBLogsApi } from "../../features/blog/blogThunk";
 import "./Blogs.css";
 import RightComponent from "../CommonComponents/RightComponent";
 import Add from "../CommonComponents/Add";

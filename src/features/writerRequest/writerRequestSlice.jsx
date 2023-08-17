@@ -1,68 +1,25 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import { Writer_Files_URL } from "../../utils";
+import {
+  setupGetTopWritters,
+  setupGetSingleWriter,
+  setupGetCurrentWriter,
+  setupUpdateWriter,
+  getWriterImage,
+  removeWriterImageApi,
+} from "./writerRequestThunk";
+
 let initialState = {
   isLoading: false,
   alertText: "",
   alertType: "",
   showAlert: false,
   currentWriterInfo: [],
-  topWriters:[],
-  singleWriter:{},
+  singleWriter: {},
   image: "",
-  imgLoading:false,
-  loadMore:false
+  imgLoading: false,
+  loadMore: false,
 };
-
-import {
-  getCurrentWriter,
-  writerImage,
-  updateCurrentWriter,
-  removeWriterImage,
-  getTopWritters,
-  getSingleWriter
-} from "./writerRequestThunk";
-
-export const setupGetTopWritters = createAsyncThunk(
-  "writer/setupGetTopWritters",
-  async(data)=>{
-   return await getTopWritters(data)
-  }    
-);
-export const setupGetSingleWriter = createAsyncThunk(
-  "writer/setupGetSingleWriter",
-  async(writerID)=>{
-   return await getSingleWriter(writerID)
-  }    
-);
-export const setupGetCurrentWriter = createAsyncThunk(
-  "writer/setupGetCurrentWriter",
-  async()=>{
-   return await getCurrentWriter()
-  }    
-);
-
-export const setupUpdateWriter = createAsyncThunk(
-  "writer/setupUpdateWriter",
-  async (data, thunkAPI) => {
-    return await updateCurrentWriter(data, thunkAPI);
-  }
-);
-
-export const getWriterImage = createAsyncThunk(
-  "writer/getWriterImage",
-  async (imageFile, thunkAPI) => {
-    return await writerImage(imageFile, thunkAPI);
-  }
-);
-export const removeWriterImageApi = createAsyncThunk(
-  "writer/removeWriterImageApi",
-  async (imgUrl, thunkAPI) => {
-    return await removeWriterImage(imgUrl, thunkAPI);
-  }
-);
-
-
-
 
 const writerRequestSlice = createSlice({
   name: "writerRequest",
@@ -89,11 +46,11 @@ const writerRequestSlice = createSlice({
     },
     [setupGetCurrentWriter.fulfilled]: (state, { payload }) => {
       let imgUrl;
-      if(payload.currentWriter.photo){
-        imgUrl=Writer_Files_URL+payload.currentWriter.photo;
+      if (payload.currentWriter.photo) {
+        imgUrl = Writer_Files_URL + payload.currentWriter.photo;
       }
       state.currentWriterInfo = payload.currentWriter;
-      state.image =imgUrl;
+      state.image = imgUrl;
       state.isLoading = false;
     },
     [setupGetCurrentWriter.rejected]: (state, payload) => {
@@ -104,26 +61,18 @@ const writerRequestSlice = createSlice({
       state.isLoading = true;
     },
     [setupGetTopWritters.fulfilled]: (state, { payload }) => {
-      state.topWriters = payload.topWritters;
       state.isLoading = false;
-      if(payload.topWritters.length==0){
-        state.loadMore=false
-      }else{
-        state.loadMore=true
-      }
-
-
     },
     [setupGetTopWritters.rejected]: (state, payload) => {
       state.isLoading = false;
     },
     //
-    [setupUpdateWriter.pending]:(state) => {
+    [setupUpdateWriter.pending]: (state) => {
       state.isLoading = true;
     },
     [setupUpdateWriter.fulfilled]: (state, { payload }) => {
-      debugger
       state.showAlert = true;
+      state.isLoading=false;
       state.alertType = "success";
       state.alertText = "Writer Updated Successfully";
     },
@@ -132,13 +81,13 @@ const writerRequestSlice = createSlice({
         (state.alertType = "danger"),
         (state.alertText = payload);
     },
-    
+
     //
     [getWriterImage.pending]: (state) => {
-     state.imgLoading = true;
+      state.imgLoading = true;
     },
     [getWriterImage.fulfilled]: (state, { payload }) => {
-      let imgUrl=Writer_Files_URL+payload.imgUrl;
+      let imgUrl = Writer_Files_URL + payload.imgUrl;
       state.imgLoading = false;
       state.image = imgUrl;
     },
@@ -146,14 +95,14 @@ const writerRequestSlice = createSlice({
       state.imgLoading = false;
     },
     //
-  [removeWriterImageApi.pending]: (state) => {
-    state.imgLoading = true;
-  },
+    [removeWriterImageApi.pending]: (state) => {
+      state.imgLoading = true;
+    },
     [removeWriterImageApi.fulfilled]: (state, { payload }) => {
       state.imgLoading = false;
       // state.alertType = "success";
       // state.alertText = "Image Removed Successfully";
-      state.image="";
+      state.image = "";
     },
     [removeWriterImageApi.rejected]: (state, { payload }) => {
       state.imgLoading = false;
@@ -163,23 +112,18 @@ const writerRequestSlice = createSlice({
     },
     //
     [setupGetSingleWriter.pending]: (state) => {
-    state.isLoading = true;
+      state.isLoading = true;
     },
     [setupGetSingleWriter.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      state.singleWriter=payload.writer;
+      state.singleWriter = payload.writer;
     },
     [setupGetSingleWriter.rejected]: (state, { payload }) => {
       state.isLoading = false;
     },
-
-
-
-    
   },
 });
 // removeWriterImage
-export const { removeAlert, dispalyAlert,  } =
-  writerRequestSlice.actions;
+export const { removeAlert, dispalyAlert } = writerRequestSlice.actions;
 
 export default writerRequestSlice.reducer;

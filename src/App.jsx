@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import ScrollToTop from './componenets/ScrollToTop/ScrollToTop';
+import ScrollToTop from "./componenets/ScrollToTop/ScrollToTop";
 import "./App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { CheckUser } from "./componenets/logicFunctionalities/logics";
@@ -25,22 +25,38 @@ import {
   SingleBlog,
 } from "./pages/index";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import { AxiosApihandling } from "./functions/ApiHandling";
+import Global_Loader from "./componenets/Alert/Global_Loader";
+import { useState } from "react";
+let isLoading_sync = false;
 const App = () => {
+  let [isLoading, setIsLoading] = useState(false);
+  AxiosApihandling(loader);
+  function loader(_isLoading) {
+    if (_isLoading != isLoading_sync) {
+      isLoading_sync = _isLoading;
+      setIsLoading(_isLoading);
+    }
+  }
   return (
     <div id="App" className="appMain">
+      {isLoading &&
+       <Global_Loader />}
       <BrowserRouter>
-      <ScrollToTop/>
-      <CheckUser/>
+        <ScrollToTop />
+        <CheckUser />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/courses" element={<Courses />} />
           <Route path="/FAQ" element={<FAQ />} />
           <Route path="/Write" element={<WriteBlogForm />} />
-          <Route path="/contact-us" element={<Request/>} />
+          <Route path="/contact-us" element={<Request />} />
           <Route path="/WriterForm" element={<WriterForm />} />
-          <Route path="/updateProfile/:writerId" element={<WriterDetailForm />} />
+          <Route
+            path="/updateProfile/:writerId"
+            element={<WriterDetailForm />}
+          />
           <Route path="/blog/:blogId/:userId?" element={<SingleBlog />} />
           <Route
             path="/WriterPublicProfile/:writerId"

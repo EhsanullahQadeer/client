@@ -1,96 +1,65 @@
 import axios from "axios";
-import { BACK_END_URL } from "../../utils";
-import { setupGetCurrentWriter } from "./writerRequestSlice";
-
-
-export const getTopWritters = async (data, thunkAPI) => {
-  try {
-    let response = await axios.get(`${BACK_END_URL}/writer/topWritters?pageIndex=${data?.pageIndex||1}&pageSize=${data?.pageSize||3}`);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
-  }
-};
-export const getSingleWriter = async (writerId, thunkAPI) => {
-  try {
-    let response = await axios.get(`${BACK_END_URL}/writer/getSingleWriter/${writerId}`);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
-  }
-};
-
-export const getCurrentWriter = async (_, thunkAPI) => {
-  let token = localStorage.getItem("Token");
-  try {
-    let response = await axios.get(`${BACK_END_URL}/writer/currentWritter`, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
-  }
-};
-
-export const updateCurrentWriter = async (data, thunkAPI) => {
-  let token = localStorage.getItem("Token");
-  let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
-  try {
-    let props = await axios.post(
-      `${BACK_END_URL}/writer/updateWriter/${writerId}`,
-      data,
-      {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
+import { axiosConfig } from "../../functions/Functions";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosShowLoader } from "../../functions/Functions";
+import { axiosLoader_Auth } from "../../functions/Functions";
+export const setupGetTopWritters = createAsyncThunk(
+  "writer/setupGetTopWritters",
+  async (data) => {
+    let {pageIndex,pageSize} = data;
+    return await axios.get(
+      `writer/topWritters?pageIndex=${pageIndex}&pageSize=${pageSize}`,
+      pageIndex > 1 ? "" : axiosShowLoader
     );
-    thunkAPI.dispatch(setupGetCurrentWriter());
-    return props.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
   }
-};
+);
+export const setupGetSingleWriter = createAsyncThunk(
+  "writer/setupGetSingleWriter",
+  async (writerId) => {
+    return await axios.get(`writer/getSingleWriter/${writerId}`);
+  }
+);
+export const setupGetCurrentWriter = createAsyncThunk(
+  "writer/setupGetCurrentWriter",
+  async () => {
+    return await axios.get(`writer/currentWritter`, axiosConfig);
+  }
+);
 
-export const writerImage = async (imageFile, thunkAPI) => {
-  let token = localStorage.getItem("Token");
-  let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
-  try {
+export const setupUpdateWriter = createAsyncThunk(
+  "writer/setupUpdateWriter",
+  async (data, thunkAPI) => {
+    let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
+    return await axios.post(
+      `writer/updateWriter/${writerId}`,
+      data,
+      axiosLoader_Auth
+    );
+  }
+);
+
+export const getWriterImage = createAsyncThunk(
+  "writer/getWriterImage",
+  async (imageFile, thunkAPI) => {
+    let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
     const formData = new FormData();
     formData.append("writerPhoto", imageFile);
-    let response = await axios.post(
-      `${BACK_END_URL}/writer/uploadWritterProfileImage/${writerId}`,
-      formData,{
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
+    return await axios.post(
+      `writer/uploadWritterProfileImage/${writerId}`,
+      formData,
+      axiosConfig
     );
-    return response.data;
-  } catch (error) {
-    thunkAPI.rejectWithValue(error);
   }
-};
-//
-export const removeWriterImage = async (imgUrl, thunkAPI) => {
-  let token = localStorage.getItem("Token");
-  let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
-  try {
-    let response = await axios.post(
-      `${BACK_END_URL}/writer/removeWritterProfileImage/${writerId}`,
-      imgUrl,{
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }
+);
+
+export const removeWriterImageApi = createAsyncThunk(
+  "writer/removeWriterImageApi",
+  async (imgUrl, thunkAPI) => {
+    let writerId = thunkAPI.getState().writerRequest.currentWriterInfo._id;
+    return await axios.post(
+      `writer/removeWritterProfileImage/${writerId}`,
+      imgUrl,
+      axiosConfig
     );
-    return response.data;
-  } catch (error) {
-    console.log(error)
-    thunkAPI.rejectWithValue(error);
   }
-};
-
-
+);

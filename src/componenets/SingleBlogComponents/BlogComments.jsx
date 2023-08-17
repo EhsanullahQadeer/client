@@ -17,8 +17,9 @@ import { commentArr } from "./CommentsData";
 import img1 from "../../assets/Ellipse 77.png";
 import likeSound from "../../assets/audios/like.mp3";
 import { useDispatch, useSelector } from "react-redux";
-import { LikeSingleBlogApi } from "../../features/blog/blogSlice";
+import { LikeSingleBlogApi } from "../../features/blog/blogThunk";
 import Button from "@mui/material/Button";
+import BookMark from "./BookMark";
 import { Writer_Files_URL } from "../../utils";
 import {
   createCommentApi,
@@ -33,7 +34,7 @@ import {
   deleteCommentApi,
   deleteCommentReplyApi,
   deleteReplyToReplyApi,
-} from "../../features/comments/commentsSlice";
+} from "../../features/comments/commentThunk";
 import { LoadApi } from "../logicFunctionalities/logics";
 import defImg from "../../assets/Profile-PNG-File.png";
 import TextField from "@mui/material/TextField";
@@ -45,7 +46,7 @@ import CommentOptions from "./commentMoreAction";
 import ConfirmationAlertMui from "../Alert/Alerts";
 import { SmallAlert } from "../Alert/Alerts";
 
-const BlogComments = ({ likes,liked }) => {
+const BlogComments = ({ likes, liked, isBookmarked, setisBookMarked }) => {
   moment().format();
   let { blogId } = useParams();
   const dispatch = useDispatch();
@@ -59,7 +60,6 @@ const BlogComments = ({ likes,liked }) => {
   const [commentsData, setCommentsData] = useState([]);
   //
   const [isLiked, setisLiked] = useState(false);
-
 
   //Getting comments
   useEffect(() => {
@@ -77,28 +77,27 @@ const BlogComments = ({ likes,liked }) => {
   }, [comments]);
 
   function getAllComments() {
-    let dataSet = {pageIndex, blogId };
+    let dataSet = { pageIndex, blogId };
     dispatch(getAllCommentsApi(dataSet));
   }
   useEffect(() => {
-    let dataSet = {pageIndex, blogId };
+    let dataSet = { pageIndex, blogId };
     dispatch(getAllCommentsApi(dataSet));
-    liked&&setisLiked(true);
+    liked && setisLiked(true);
   }, [liked]);
   //for chunks
   // const targetElementRef = LoadApi(getAllComments());
 
   //get comment replies
   const [replyData, setReplyData] = useState([]);
-  const [toggleShowReplyId,setToggleReplyId]=useState(0);
+  const [toggleShowReplyId, setToggleReplyId] = useState(0);
 
   //
   const [editCommentValue, setEditCommentValue] = useState("");
   const [replyValue, setReplyValue] = useState("");
   const [ifnoChangeEditValue, setIfnoChangeEditValue] = useState();
-  const [editReplyValue,setEditReplyValue]=useState("");
-  const [pushNewReply,setPushNewReply]=useState("")
-
+  const [editReplyValue, setEditReplyValue] = useState("");
+  const [pushNewReply, setPushNewReply] = useState("");
 
   const handleInputChange = (event) => {
     let inputName = event.target.name;
@@ -109,35 +108,31 @@ const BlogComments = ({ likes,liked }) => {
         setEditCommentValue(value);
       } else if (inputName == "reply") {
         setReplyValue(value);
-      } else if(inputName=="commentReply"){
-        setEditReplyValue(value)
-      }
-      else {
+      } else if (inputName == "commentReply") {
+        setEditReplyValue(value);
+      } else {
         setInputValue(value);
       }
     }
   };
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ...................................Geting................................................................
+  // ...................................Geting................................................................
 
   function getCommentReplies(commentId) {
-    if(toggleShowReplyId!=commentId){
-     setToggleReplyId(commentId)
-     dispatch(getCommentRepliesApi(commentId)).then((res) => {
-       if (!res.error) {
-         setReplyData(res.payload);
-       }
-     });
-     
-   }else{
-     setToggleReplyId(0)
-   setReplyData([])
-
-   }
-   
- }
-// ...................................Create................................................................
+    if (toggleShowReplyId != commentId) {
+      setToggleReplyId(commentId);
+      dispatch(getCommentRepliesApi(commentId)).then((res) => {
+        if (!res.error) {
+          setReplyData(res.payload);
+        }
+      });
+    } else {
+      setToggleReplyId(0);
+      setReplyData([]);
+    }
+  }
+  // ...................................Create................................................................
 
   //Create comment
   const submitComment = () => {
@@ -146,9 +141,9 @@ const BlogComments = ({ likes,liked }) => {
       let data = { blogId: blogId, userId: userId, text: inputValue };
 
       dispatch(createCommentApi(data)).then((res) => {
-        console.log(res)
+        console.log(res);
         if (!res.error) {
-        setCommentsData((pre) => [res.payload, ...pre]);
+          setCommentsData((pre) => [res.payload, ...pre]);
           setInputValue([]);
         }
       });
@@ -165,16 +160,13 @@ const BlogComments = ({ likes,liked }) => {
           setInputValue("");
           setReplyValue("");
           setopenReplyId(0);
-          setPushNewReply((pre)=>(
-            [...pre , id]
-          ))
-      setToggleReplyId(id)
-
+          setPushNewReply((pre) => [...pre, id]);
+          setToggleReplyId(id);
         }
       }
     );
   }
-  
+
   //handle comment Actions
   const handleEdit = (id, text) => {
     setEditCommentId(id);
@@ -182,25 +174,24 @@ const BlogComments = ({ likes,liked }) => {
     setIfnoChangeEditValue(text);
   };
 
-
-// ...................................Report................................................................
+  // ...................................Report................................................................
 
   const handleReport = () => {};
-  
-// ...................................Edit/Upadte................................................................
-//handling edit comment input
-const editCommentInputRef = useRef(null);
-const [editCommentId, setEditCommentId] = useState(0);
-useEffect(() => {
-  if (editCommentId) {
-    // Set focus on the input field when editCommentId changes
-    editCommentInputRef.current.focus();
-    editCommentInputRef.current.setSelectionRange(
-      editCommentValue.length,
-      editCommentValue.length
-    );
-  }
-}, [editCommentId]);
+
+  // ...................................Edit/Upadte................................................................
+  //handling edit comment input
+  const editCommentInputRef = useRef(null);
+  const [editCommentId, setEditCommentId] = useState(0);
+  useEffect(() => {
+    if (editCommentId) {
+      // Set focus on the input field when editCommentId changes
+      editCommentInputRef.current.focus();
+      editCommentInputRef.current.setSelectionRange(
+        editCommentValue.length,
+        editCommentValue.length
+      );
+    }
+  }, [editCommentId]);
   //handling editcommet Upadte
   const [editerror, setEditerror] = useState("");
   function updateEditedComment(commentId, index) {
@@ -231,16 +222,16 @@ useEffect(() => {
     }
   }
 
-    //handle reply edit
-    const [editReplyId,setEditReplyId]=useState(0);
+  //handle reply edit
+  const [editReplyId, setEditReplyId] = useState(0);
 
-    function handleEditReply(id, text){
-      setEditReplyId(id)
-      setEditReplyValue(text);
-      setIfnoChangeEditValue(text);
-    }
-  //handle edit comment Reply 
-  function submitEditCommentReply(replyId,index){
+  function handleEditReply(id, text) {
+    setEditReplyId(id);
+    setEditReplyValue(text);
+    setIfnoChangeEditValue(text);
+  }
+  //handle edit comment Reply
+  function submitEditCommentReply(replyId, index) {
     let submit = editReplyValue.replace(/\s/g, "").length > 1;
     if (submit) {
       if (!(ifnoChangeEditValue == editReplyValue)) {
@@ -249,9 +240,9 @@ useEffect(() => {
         dispatch(updateCommentReplyApi(data)).then((res) => {
           if (!res.error) {
             let newArr = [...replyData];
-          newArr[index] = res.payload;
-          setReplyData(newArr);
-          setEditReplyId(0);
+            newArr[index] = res.payload;
+            setReplyData(newArr);
+            setEditReplyId(0);
             setReplyValue("");
           }
         });
@@ -268,7 +259,7 @@ useEffect(() => {
       }, 2000);
     }
   }
-// ...................................Delete................................................................
+  // ...................................Delete................................................................
   // handle delete comment
   function handleDelete(commentId, index) {
     dispatch(deleteCommentApi(commentId)).then((res) => {
@@ -298,7 +289,7 @@ useEffect(() => {
   }
 
   // ........................................................................................................
-  
+
   //toggle like
 
   const [likeCount, setLikeCount] = useState(0);
@@ -323,7 +314,6 @@ useEffect(() => {
     });
   }
 
-
   //Handling Readmore
   const [expandedComments, setExpandedComments] = useState([]);
 
@@ -338,19 +328,18 @@ useEffect(() => {
   };
 
   // handling reply readmore
-  const [expandReply,setExpandReply]=useState()
-  function togglExpandReply(id){
-    if(expandReply==id){
-      setExpandReply(0)
-    }else{
-      setExpandReply(id)
+  const [expandReply, setExpandReply] = useState();
+  function togglExpandReply(id) {
+    if (expandReply == id) {
+      setExpandReply(0);
+    } else {
+      setExpandReply(id);
     }
-
   }
 
   let curentuserImg;
-  if(activeUser?.photo){
-    curentuserImg=Writer_Files_URL+activeUser?.photo ;
+  if (activeUser?.photo) {
+    curentuserImg = Writer_Files_URL + activeUser?.photo;
   }
 
   return (
@@ -380,8 +369,11 @@ useEffect(() => {
           </div>
         </div>
         <div className="commentBigFlex">
-          <img className="mr-3" src={Up} />
-          <img src={Down} />
+          <BookMark
+            setisBookMarked={setisBookMarked}
+            isBookmarked={isBookmarked}
+            Bookmarkcolor={"rgb(45, 152, 153)"}
+          />
         </div>
       </div>
       {/*  */}
@@ -423,11 +415,12 @@ useEffect(() => {
         <div className="commentWriterFlex">
           <img
             className=" img-fluid rounded-circle"
-            src={curentuserImg|| defImg}
+            src={curentuserImg || defImg}
           />
           <p className="commentWriterFlexName">
-          {activeUser?.name?activeUser?.name:
-            activeUser?.firstName (activeUser?.lastName)}
+            {activeUser?.name
+              ? activeUser?.name
+              : activeUser?.firstName(activeUser?.lastName)}
           </p>
         </div>
         <div className="mt-4">
@@ -465,353 +458,348 @@ useEffect(() => {
         </div>
       </div>
 
-
-{/* ,..............................comments.............................................. */}
+      {/* ,..............................comments.............................................. */}
       <div className="commentLightCard-div">
         <div className="topCommentCard-div">
           {commentsData.map((data, i) => {
             let user = data?.userId;
             let userPhoto;
-            if(user?.photo){
-              userPhoto= Writer_Files_URL+user?.photo
+            if (user?.photo) {
+              userPhoto = Writer_Files_URL + user?.photo;
             }
             const formattedTime = moment(data.createdAt).fromNow();
             const commentLines = Math.ceil(data.text.length / 80);
             const isCommentExpanded = commentLines <= 3;
             return (
               <div>
-              <div key={i} className="commentTop_card">
-                <div className="d-flex justify-content-between commentHeader">
-                  <div className="d-flex ">
-                    <img
-                      className="comment-user-img mr-3 img-fluid rounded-circle"
-                      src={userPhoto|| defImg}
-                      alt="img"
-                    />
-                    <div>
-                      <p className="commentName-p">
-                        {user?.firstName} {user?.lastName}
-                      </p>
-                      <span className="commentTime">{formattedTime}</span>
-                    </div>
-                  </div>
-                  <CommentOptions
-                    handleDelete={() => {
-                      handleDelete(data._id, i);
-                    }}
-                    handleEdit={() => {
-                      handleEdit(data._id, data.text);
-                    }}
-                    handleReport={handleReport}
-                    user={user._id == userId}
-                    isShowAction={!(editCommentId == data._id)}
-                  />
-                </div>
-
-                {editCommentId == data._id ? (
-                  <div className="pb-5">
-                    <TextField
-                      name="editComment"
-                      className="w-100"
-                      id="filled-multiline-flexible"
-                      placeholder="What are your thoughts?"
-                      multiline
-                      maxRows={10}
-                      variant="standard"
-                      maxLength="100"
-                      value={editCommentValue}
-                      helperText={
-                        editCommentValue.length >= 2000
-                          ? "You can write only upto 2000 character"
-                          : editerror && editerror
-                      }
-                      error
-                      required
-                      onChange={handleInputChange}
-                      inputRef={editCommentInputRef}
-                    />
-                    <div className="float-right mt-2 mr-5">
-                      <Button
-                        onClick={() => {
-                          setEditCommentId(0);
-                        }}
-                        style={{ backgroundColor: "#f24e1e", color: "#fff" }}
-                        variant="contained"
-                      >
-                        Cancel
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          updateEditedComment(data._id, i);
-                        }}
-                        style={{ backgroundColor: "#0065fd", color: "#fff" }}
-                        className="ml-3"
-                        variant="contained"
-                      >
-                        Save
-                      </Button>
-                    </div>
-                  </div>
-                ) : (
-                  <>
-                    <p className="commentDescription-p">
-                      {expandedComments.includes(data._id)
-                        ? data.text
-                        : isCommentExpanded
-                        ? data.text
-                        : data.text.slice(0, 240) + "..."}
-                    </p>
-                    {!isCommentExpanded && (
-                      <button
-                        onClick={() => toggleCommentExpansion(data._id)}
-                        className="commentReadMore mt-2"
-                      >
-                        {expandedComments == data._id
-                          ? "Read Less"
-                          : "Read More"}
-                      </button>
-                    )}
-                    {!(openReplyId == data._id) ? (
-                      <div className="d-flex justify-content-between align-items-center mt-3">
-                     
-                        <div className={`${!data.replies &&!pushNewReply.includes(data._id)&&"invisible"}`}>
-                          <img src={comment} alt="img" />
-                          <button
-                            onClick={() => {
-                              getCommentReplies(data._id);
-                            }}
-                            className="ml-2"
-                          >
-                         { (!(toggleShowReplyId==data._id))?
-                            "Show Replies ":"Hide Replies"}
-                          </button>
-                        </div>
-                        <div>
-                          <button
-                            onClick={() => {
-                              setopenReplyId(data._id);
-                              setReplyValue("")
-
-                            }}
-                          >
-                            Reply
-                          </button>
-                        </div>
+                <div key={i} className="commentTop_card">
+                  <div className="d-flex justify-content-between commentHeader">
+                    <div className="d-flex ">
+                      <img
+                        className="comment-user-img mr-3 img-fluid rounded-circle"
+                        src={userPhoto || defImg}
+                        alt="img"
+                      />
+                      <div>
+                        <p className="commentName-p">
+                          {user?.firstName} {user?.lastName}
+                        </p>
+                        <span className="commentTime">{formattedTime}</span>
                       </div>
-                    ) : (
-                      <div className="mt-4">
-                        <TextField
-                          name="reply"
-                          className="w-100"
-                          id="filled-multiline-flexible"
-                          placeholder="Add a reply..."
-                          multiline
-                          maxRows={10}
-                          variant="standard"
-                          maxLength="100"
-                          value={replyValue}
-                          helperText={
-                            replyValue.length >= 2000 ?
-                            "You can write only upto 2000 character":
-                            editerror && editerror
-                          }
-                          error
-                          required
-                          onChange={handleInputChange}
-                        />
-                        <div className="pt-2 pb-4">
-                          <Button
-                            className={`float-right ml-2 ${
-                              processing && "pe-none"
-                            }`}
-                            variant="text"
-                            onClick={() => {
-                              submitReply(data._id);
-                            }}
-                          >
-                            {processing ? "Replying..." : "Reply"}
-                          </Button>
-                          <Button
-                            style={{ color: "#f24e1e" }}
-                            color="error"
-                            className="float-right"
-                            variant="text"
-                            onClick={() => {
-                              setopenReplyId(0);
-                              setReplyValue("")
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                        </div>
-                      </div>
-                      
-                     
-
-                    )}
-                    
-                  </>
-                  
-                )}
-        </div>
-
-
-                
-             
-        
-
-
-
-{/*.................................... Coment Reply................................................ */}
-
-   {(data._id ==replyData[0]?.commentId)&&
-
-        <div className="commentCardReply_Div">
-          {replyData.map((replyDataValue, replyIndex) => {
-            let replyUser=replyDataValue.userId;
-            let replyText=replyDataValue.text;
-            const replyTime = moment(data.createdAt).fromNow();
-            return (
-              <div key={i} className="commentReply_card commentReplyMain">
-                <div className="d-flex justify-content-between commentHeader">
-                  <div className="d-flex">
-                    <img className="replyUserImg" src={replyDataValue.photo||defImg} alt="img" />
-                    <div>
-                      <p className="commentName-p">{replyUser.firstName} {replyUser.lastName}</p>
-                      <span className="commentTime">{replyTime}</span>
                     </div>
+                    <CommentOptions
+                      handleDelete={() => {
+                        handleDelete(data._id, i);
+                      }}
+                      handleEdit={() => {
+                        handleEdit(data._id, data.text);
+                      }}
+                      handleReport={handleReport}
+                      user={user._id == userId}
+                      isShowAction={!(editCommentId == data._id)}
+                    />
                   </div>
 
-
-     
-
-
-                  <CommentOptions
-                    handleDelete={() => {
-                      handleDeleteReply(replyDataValue._id, replyIndex);
-                    }}
-                    handleEdit={() => {
-                      handleEditReply(replyDataValue._id, replyText);
-                    }}
-                    handleReport={handleReport}
-                    user={replyUser._id == userId}
-                    isShowAction={!(editCommentId == replyUser._id)}
-
-                    commentsReply={true}
-                  />
-
-                </div>
-
-
-                <>
-                {!(editReplyId ==replyDataValue._id)?
-                  <>
-                    <p className="commentDescription-p">
-                      {
-                        (expandReply==replyDataValue._id)?replyText:
-
-                        replyText.length>240?replyText.slice(0, 240) + "...":replyText
-                        
-                        
-                        }
-                    </p>
-                    {replyText.length>240&& (
-                      <button
-                        onClick={() => togglExpandReply(replyDataValue._id)}
-                        className="commentReadMore mt-2"
-                      >
-                        {expandReply==replyDataValue._id
-                          ? "Read Less"
-                          : "Read More"}
-                      </button>
-                    )}
-                    </>
-                    :
-                    
-                    <div className="mt-4">
-                        <TextField
-                          name="commentReply"
-                          className="w-100"
-                          id="filled-multiline-flexible"
-                          placeholder="Add a reply..."
-                          multiline
-                          maxRows={10}
-                          variant="standard"
-                          maxLength="100"
-                          value={editReplyValue}
-                          helperText={
-                            editReplyValue.length >= 2000 ?
-                            "You can write only upto 2000 character"
+                  {editCommentId == data._id ? (
+                    <div className="pb-5">
+                      <TextField
+                        name="editComment"
+                        className="w-100"
+                        id="filled-multiline-flexible"
+                        placeholder="What are your thoughts?"
+                        multiline
+                        maxRows={10}
+                        variant="standard"
+                        maxLength="100"
+                        value={editCommentValue}
+                        helperText={
+                          editCommentValue.length >= 2000
+                            ? "You can write only upto 2000 character"
                             : editerror && editerror
-                          }
-                          error
-                          required
-                          onChange={handleInputChange}
-                        />
-                        <div className="pt-2 pb-4">
-                          <Button
-                            className={`float-right ml-2 ${
-                              processing && "pe-none"
-                            }`}
-                            variant="text"
-                            onClick={() => {
-                              submitEditCommentReply(replyDataValue._id,replyIndex);
-                            }}
-                          >
-                            {processing ? "Saving..." : "Save"}
-                          </Button>
-                          <Button
-                            style={{ color: "#f24e1e" }}
-                            color="error"
-                            className="float-right"
-                            variant="text"
-                            onClick={() => {
-                              setEditReplyId(0);
-                            }}
-                          >
-                            Cancel
-                          </Button>
-                        </div>
+                        }
+                        error
+                        required
+                        onChange={handleInputChange}
+                        inputRef={editCommentInputRef}
+                      />
+                      <div className="float-right mt-2 mr-5">
+                        <Button
+                          onClick={() => {
+                            setEditCommentId(0);
+                          }}
+                          style={{ backgroundColor: "#f24e1e", color: "#fff" }}
+                          variant="contained"
+                        >
+                          Cancel
+                        </Button>
+                        <Button
+                          onClick={() => {
+                            updateEditedComment(data._id, i);
+                          }}
+                          style={{ backgroundColor: "#0065fd", color: "#fff" }}
+                          className="ml-3"
+                          variant="contained"
+                        >
+                          Save
+                        </Button>
                       </div>
-                }
-                  </>
-
-                 { !(editReplyId ==replyDataValue._id) &&
-                <div className=" d-flex justify-content-between  align-items-center">
-                {replyData?.replies?
-                  <div className="">
-                    <img src={comment} alt="img" />
-                    <button className="ml-2">{data.replies} Replies</button>
-                  </div>:
-                  <div></div>
-                }
-                  <div className="float-right w">
-                  <button className="float-right">Reply</button>
-                  </div>
+                    </div>
+                  ) : (
+                    <>
+                      <p className="commentDescription-p">
+                        {expandedComments.includes(data._id)
+                          ? data.text
+                          : isCommentExpanded
+                          ? data.text
+                          : data.text.slice(0, 240) + "..."}
+                      </p>
+                      {!isCommentExpanded && (
+                        <button
+                          onClick={() => toggleCommentExpansion(data._id)}
+                          className="commentReadMore mt-2"
+                        >
+                          {expandedComments == data._id
+                            ? "Read Less"
+                            : "Read More"}
+                        </button>
+                      )}
+                      {!(openReplyId == data._id) ? (
+                        <div className="d-flex justify-content-between align-items-center mt-3">
+                          <div
+                            className={`${
+                              !data.replies &&
+                              !pushNewReply.includes(data._id) &&
+                              "invisible"
+                            }`}
+                          >
+                            <img src={comment} alt="img" />
+                            <button
+                              onClick={() => {
+                                getCommentReplies(data._id);
+                              }}
+                              className="ml-2"
+                            >
+                              {!(toggleShowReplyId == data._id)
+                                ? "Show Replies "
+                                : "Hide Replies"}
+                            </button>
+                          </div>
+                          <div>
+                            <button
+                              onClick={() => {
+                                setopenReplyId(data._id);
+                                setReplyValue("");
+                              }}
+                            >
+                              Reply
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="mt-4">
+                          <TextField
+                            name="reply"
+                            className="w-100"
+                            id="filled-multiline-flexible"
+                            placeholder="Add a reply..."
+                            multiline
+                            maxRows={10}
+                            variant="standard"
+                            maxLength="100"
+                            value={replyValue}
+                            helperText={
+                              replyValue.length >= 2000
+                                ? "You can write only upto 2000 character"
+                                : editerror && editerror
+                            }
+                            error
+                            required
+                            onChange={handleInputChange}
+                          />
+                          <div className="pt-2 pb-4">
+                            <Button
+                              className={`float-right ml-2 ${
+                                processing && "pe-none"
+                              }`}
+                              variant="text"
+                              onClick={() => {
+                                submitReply(data._id);
+                              }}
+                            >
+                              {processing ? "Replying..." : "Reply"}
+                            </Button>
+                            <Button
+                              style={{ color: "#f24e1e" }}
+                              color="error"
+                              className="float-right"
+                              variant="text"
+                              onClick={() => {
+                                setopenReplyId(0);
+                                setReplyValue("");
+                              }}
+                            >
+                              Cancel
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  )}
                 </div>
-}
 
+                {/*.................................... Coment Reply................................................ */}
 
+                {data._id == replyData[0]?.commentId && (
+                  <div className="commentCardReply_Div">
+                    {replyData.map((replyDataValue, replyIndex) => {
+                      let replyUser = replyDataValue.userId;
+                      let replyText = replyDataValue.text;
+                      const replyTime = moment(data.createdAt).fromNow();
+                      return (
+                        <div
+                          key={i}
+                          className="commentReply_card commentReplyMain"
+                        >
+                          <div className="d-flex justify-content-between commentHeader">
+                            <div className="d-flex">
+                              <img
+                                className="replyUserImg"
+                                src={replyDataValue.photo || defImg}
+                                alt="img"
+                              />
+                              <div>
+                                <p className="commentName-p">
+                                  {replyUser.firstName} {replyUser.lastName}
+                                </p>
+                                <span className="commentTime">{replyTime}</span>
+                              </div>
+                            </div>
+
+                            <CommentOptions
+                              handleDelete={() => {
+                                handleDeleteReply(
+                                  replyDataValue._id,
+                                  replyIndex
+                                );
+                              }}
+                              handleEdit={() => {
+                                handleEditReply(replyDataValue._id, replyText);
+                              }}
+                              handleReport={handleReport}
+                              user={replyUser._id == userId}
+                              isShowAction={!(editCommentId == replyUser._id)}
+                              commentsReply={true}
+                            />
+                          </div>
+
+                          <>
+                            {!(editReplyId == replyDataValue._id) ? (
+                              <>
+                                <p className="commentDescription-p">
+                                  {expandReply == replyDataValue._id
+                                    ? replyText
+                                    : replyText.length > 240
+                                    ? replyText.slice(0, 240) + "..."
+                                    : replyText}
+                                </p>
+                                {replyText.length > 240 && (
+                                  <button
+                                    onClick={() =>
+                                      togglExpandReply(replyDataValue._id)
+                                    }
+                                    className="commentReadMore mt-2"
+                                  >
+                                    {expandReply == replyDataValue._id
+                                      ? "Read Less"
+                                      : "Read More"}
+                                  </button>
+                                )}
+                              </>
+                            ) : (
+                              <div className="mt-4">
+                                <TextField
+                                  name="commentReply"
+                                  className="w-100"
+                                  id="filled-multiline-flexible"
+                                  placeholder="Add a reply..."
+                                  multiline
+                                  maxRows={10}
+                                  variant="standard"
+                                  maxLength="100"
+                                  value={editReplyValue}
+                                  helperText={
+                                    editReplyValue.length >= 2000
+                                      ? "You can write only upto 2000 character"
+                                      : editerror && editerror
+                                  }
+                                  error
+                                  required
+                                  onChange={handleInputChange}
+                                />
+                                <div className="pt-2 pb-4">
+                                  <Button
+                                    className={`float-right ml-2 ${
+                                      processing && "pe-none"
+                                    }`}
+                                    variant="text"
+                                    onClick={() => {
+                                      submitEditCommentReply(
+                                        replyDataValue._id,
+                                        replyIndex
+                                      );
+                                    }}
+                                  >
+                                    {processing ? "Saving..." : "Save"}
+                                  </Button>
+                                  <Button
+                                    style={{ color: "#f24e1e" }}
+                                    color="error"
+                                    className="float-right"
+                                    variant="text"
+                                    onClick={() => {
+                                      setEditReplyId(0);
+                                    }}
+                                  >
+                                    Cancel
+                                  </Button>
+                                </div>
+                              </div>
+                            )}
+                          </>
+
+                          {!(editReplyId == replyDataValue._id) && (
+                            <div className=" d-flex justify-content-between  align-items-center">
+                              {replyData?.replies ? (
+                                <div className="">
+                                  <img src={comment} alt="img" />
+                                  <button className="ml-2">
+                                    {data.replies} Replies
+                                  </button>
+                                </div>
+                              ) : (
+                                <div></div>
+                              )}
+                              <div className="float-right w">
+                                <button className="float-right">Reply</button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
         </div>
-      }
-
-        </div>
-            );
-          })}
-
-
-
-
-</div>
       </div>
       <div className="text-center mt-5">
-      {pageIndex <= totalPages && (
-        <button onClick={getAllComments} className="home-loadMore-btn" >Load More</button>
-        
-      )}
+        {pageIndex <= totalPages && (
+          <button onClick={getAllComments} className="home-loadMore-btn">
+            Load More
+          </button>
+        )}
       </div>
     </div>
   );

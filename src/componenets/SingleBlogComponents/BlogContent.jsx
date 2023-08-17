@@ -8,10 +8,11 @@ import Add from "../CommonComponents/Add";
 
 const BlogContent = (props) => {
   //emptry string is added to avoid some issue which occurs
-  const blogDescription=parse(""+props?.description)
+  const blogDescription=parse(""+props?.description);
+  let titleLanguage=props?.titleLanguage;
   return (
     <div className="blogContentMain">
-      <h1 className="blogContentHeading">
+      <h1 className={`blogContentHeading ${titleLanguage=='urd'?'urduFont-h':''}`}>
         {props.title}
       </h1>
       <div className="singleBlog-content" dangerouslySetInnerHTML={{ __html: blogDescription }} >

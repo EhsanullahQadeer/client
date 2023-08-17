@@ -1,12 +1,14 @@
 import React, { useState, useRef } from "react";
 import _ from "lodash.capitalize";
+import { franc } from "franc-min";
 import "./index.css";
 import Editor from "./Editor";
 import {
   paraRequiredValidator,
   imgRequiredValidator,
 } from "./editorValidation";
-import { setupCreateBlog, removeAlert } from "../../features/blog/blogSlice";
+import { setupCreateBlog } from "../../features/blog/blogThunk";
+import { removeAlert } from "../../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../Alert/blogAlert";
 import CommonAlert from "../CommonComponents/CommonAlert";
@@ -42,13 +44,37 @@ const WriteBody = () => {
 
     if (isFullfiledPara) {
       if (imgRequiredValidator(content)) {
-        let info = { ...data, content };
-        dispatch(setupCreateBlog(info)).then((res) => {
+        const hiddenDiv = document.createElement("div");
+        hiddenDiv.style.display = "none";
+        hiddenDiv.innerHTML = content;
+        // Get the paragraphs from the hidden div
+        const paragraphs = Array.from(hiddenDiv.querySelectorAll("p"));
+        let updateContent = "";
+        paragraphs.forEach((p) => {
+          let innerText = p.innerText;
+          let outerHTML = p.outerHTML;
+          if (innerText.trim()) {
+            var detectedLanguage = franc(innerText);
+            if (detectedLanguage == "urd") {
+              outerHTML = outerHTML.replace(/<p>/g, `<p class="urduFont-p">`);
+            }
+          }
+          updateContent += outerHTML;
+        });
+        //check title lanuage
+       let titleLanguage=franc(data.title);
+        let blogData = {
+          title: data.title,
+          titleLanguage,
+          subTitle: data.subTitle,
+          description: updateContent,
+          category: data.category,
+        };
+        dispatch(setupCreateBlog(blogData)).then((res) => {
           if (!res.error) {
             // alert.current.scrollIntoView({ behavior: "smooth" })
             setTimeout(() => {
-            setOpen(true);
-              
+              setOpen(true);
             }, 500);
             setData({
               title: "",
@@ -59,8 +85,6 @@ const WriteBody = () => {
             formRef.current.reset();
           }
         });
-
-       
 
         setTimeout(() => {
           dispatch(removeAlert());
@@ -90,11 +114,11 @@ const WriteBody = () => {
       }, 3000);
     }
   }
-let title="You blog has been submitted for approval."
- 
+  let title = "You blog has been submitted for approval.";
+
   return (
     <div className="writeMain" ref={alert}>
-      <PopUp open={open} setOpen={setOpen}title={title}/>
+      <PopUp open={open} setOpen={setOpen} title={title} />
       {showAlert && <Alert />}
       {imageAlert.showAlert && (
         <CommonAlert alertType="danger" alertText={imageAlert?.alertText} />

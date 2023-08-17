@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState, useRef } from "react";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { checkActiveUserApi } from "../../features/user/userSlice";
+import { checkActiveUserApi } from "../../features/user/userThunk";
 import { logoutUser } from "../../features/user/userSlice";
 export function autoLoadMore() {
   // This Logic is auto reload when Reached to last post
@@ -64,90 +64,60 @@ export function gettingBlogDescription(desc) {
   return description;
 }
 //sorting stories data
-export function sortStoriesData(stoiresData) {
+export function sortStoriesData(stories) {
+  // Categorize stories based on types
+  const sponsoredStories = stories.filter((story) => story.isSponsored);
+  const howSquareAddStories = stories.filter((story) => story.isHowSquareAdd);
+  const simpleStories = stories.filter(
+    (story) => story.isSponsored == false && story.isHowSquareAdd == false
+  );
+
   let sortedStories = [];
-  let sponsoredCount = 0;
-  let howSquareCount = 0;
-  let simpleCount = 0;
+  let howSquareAddIndex = 0;
+  let sponsoredIndex = 0;
+  let simpleIndex = 0;
+//this for mantainng order .....
+  let numberOfIterations = Math.max(
+    howSquareAddStories.length,
+    sponsoredStories.length
+  );
+  if (numberOfIterations < 1) {
+    numberOfIterations = Math.ceil(stories.length / 7);
+  }
 
-  let length =
-    stoiresData?.simpleStories?.length +
-    stoiresData?.sponsoredStories?.length +
-    stoiresData?.HowSquareAddStories?.length;
-
-  for (let index = 0; index < length; index++) {
-    // .................................................................
-    if (stoiresData.HowSquareAddStories.length > 0) {
-      if (index % 6 === 0 && index != 0) {
-        if (howSquareCount < stoiresData.HowSquareAddStories.length) {
-          sortedStories.push(stoiresData.HowSquareAddStories[howSquareCount]);
-          howSquareCount++;
+  for (let i = 0; i < numberOfIterations; i++) {
+    for (let j = 0; j < 7; j++) {
+      if (howSquareAddStories.length > 0) {
+        if (j == 6) {
+          sortedStories.push(howSquareAddStories[howSquareAddIndex]);
+          if (howSquareAddIndex + 1 == howSquareAddStories.length) {
+            howSquareAddIndex = 0;
+          } else {
+            howSquareAddIndex += 1;
+          }
+          continue;
+        }
+      }
+      if (sponsoredStories.length > 0) {
+        //j==6 beacuse if howSquareAddStories not availble then we will push sponsoredStories
+        //if howSquareAddStories availble then at index 6 loop skip from above
+        if (j == 3 || j == 6) {
+          sortedStories.push(sponsoredStories[sponsoredIndex]);
+          if (sponsoredIndex + 1 == sponsoredStories.length) {
+            sponsoredIndex = 0;
+          } else {
+            sponsoredIndex += 1;
+          }
+          continue;
+        }
+      }
+      if (simpleStories.length > 0) {
+        sortedStories.push(simpleStories[simpleIndex]);
+        if (simpleIndex + 1 == simpleStories.length) {
+          simpleIndex = 0;
         } else {
-          howSquareCount = 0;
-          sortedStories.push(stoiresData.HowSquareAddStories[howSquareCount]);
+          simpleIndex += 1;
         }
-      }
-    }
-    // .................................................................
-    if (stoiresData.sponsoredStories.length > 0) {
-      if (stoiresData.HowSquareAddStories.length > 0) {
-        if (index % 3 === 0 && index != 0 && index % 6 != 0) {
-          if (sponsoredCount < stoiresData.sponsoredStories.length) {
-            sortedStories.push(stoiresData.sponsoredStories[sponsoredCount]);
-            sponsoredCount++;
-          } else {
-            sponsoredCount = 0;
-            sortedStories.push(stoiresData.sponsoredStories[sponsoredCount]);
-          }
-        }
-      } else {
-        if (index % 3 === 0 && index != 0) {
-          if (sponsoredCount < stoiresData.sponsoredStories.length) {
-            sortedStories.push(stoiresData.sponsoredStories[sponsoredCount]);
-            sponsoredCount++;
-          } else {
-            sponsoredCount = 0;
-            sortedStories.push(stoiresData.sponsoredStories[sponsoredCount]);
-          }
-        }
-      }
-    }
-    // .................................................................
-    if (stoiresData?.simpleStories?.length > 0) {
-      if (
-        stoiresData.sponsoredStories.length > 0 &&
-        stoiresData.HowSquareAddStories.length > 0
-      ) {
-        if (
-          index % 3 != 0 &&
-          index % 6 != 0 &&
-          simpleCount < stoiresData?.simpleStories?.length
-        ) {
-          sortedStories.push(stoiresData?.simpleStories[simpleCount]);
-          simpleCount += 1;
-        }
-      } else if (stoiresData.sponsoredStories.length) {
-        if (
-          index % 3 != 0 &&
-          simpleCount < stoiresData?.simpleStories?.length
-        ) {
-          sortedStories.push(stoiresData?.simpleStories[simpleCount]);
-          simpleCount += 1;
-        }
-      } else if (stoiresData.HowSquareAddStories.length > 0) {
-        if (
-          index % 6 != 0 &&
-          simpleCount < stoiresData?.simpleStories?.length
-        ) {
-          sortedStories.push(stoiresData?.simpleStories[simpleCount]);
-          simpleCount += 1;
-        }
-      } else if (simpleCount < stoiresData?.simpleStories?.length) {
-        sortedStories.push(stoiresData?.simpleStories[simpleCount]);
-        simpleCount += 1;
-      } else if (index % 3 != 0 && index % 6 != 0) {
-        simpleCount = 0;
-        sortedStories.push(stoiresData?.simpleStories[simpleCount]);
       }
     }
   }
@@ -185,65 +155,29 @@ export function CheckUser() {
 
 //sending request when reaches to specific portion
 
-export function LoadApi(callback) {
-  const targetElementRef = useRef(null);
-
-  useEffect(() => {
-    const options = {
-      root: null,
-      rootMargin: "0px",
-      threshold: 0.5,
-    };
-
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        callback();
-      }
-    }, options);
-
-    if (targetElementRef.current) {
-      observer.observe(targetElementRef.current);
+export function LoadApi(targetElementRef, callback) {
+  // useEffect(() => {
+  const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.5,
+  };
+  const observer = new IntersectionObserver(([entry]) => {
+    if (entry.isIntersecting) {
+      callback();
     }
+  }, options);
 
-    return () => {
-      if (targetElementRef.current) {
-        observer.unobserve(targetElementRef.current);
-      }
-    };
-  }, []);
+  if (targetElementRef.current) {
+    observer.observe(targetElementRef.current);
+  }
 
-  return targetElementRef;
+  // return () => {
+  // if (targetElementRef.current) {
+  //   observer.unobserve(targetElementRef.current);
+  // }
+  // };
+  // }, []);
+
+  // return targetElementRef;
 }
-
-// console.log(length);
-// .length + stoiresData?.sponsoredStories?.length + stoiresData?.HowSquareAddStories?.length;
-
-// stoiresData?.simpleStories?.forEach((story, index) => {
-//   commonIndex += 1;
-//   sortedStories.push(story);
-
-//   if (stoiresData.HowSquareAddStories.length > 0) {
-//     if (commonIndex % 6 === 0) {
-//       if (howSquareCount < stoiresData.HowSquareAddStories.length) {
-//         commonIndex += 1;
-//         sortedStories.push(stoiresData.HowSquareAddStories[howSquareCount]);
-//         howSquareCount++;
-//       } else {
-//         howSquareCount = 0;
-//         sortedStories.push(stoiresData.HowSquareAddStories[howSquareCount]);
-//       }
-//     }
-//   }
-//   if (stoiresData.sponsoredStories.length > 0) {
-//     if (commonIndex % 3 === 0) {
-//       if (sponsoredCount < stoiresData.sponsoredStories.length) {
-//         commonIndex += 1;
-//         sortedStories.push(stoiresData.sponsoredStories[sponsoredCount]);
-//         sponsoredCount++;
-//       } else {
-//         sponsoredCount = 0;
-//         sortedStories.push(stoiresData.sponsoredStories[sponsoredCount]);
-//       }
-//     }
-//   }
-// });

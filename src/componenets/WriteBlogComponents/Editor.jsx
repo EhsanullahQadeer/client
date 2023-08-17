@@ -1,17 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { uploadBlogImgsApi } from "../../features/blog/blogSlice";
+import { uploadBlogImgsApi } from "../../features/blog/blogThunk";
 import { useSelector, useDispatch } from "react-redux";
-// import { Global } from "@emotion/core";
+import tinymce from "tinymce";
+window.tinymce = tinymce;
+import "@wiris/mathtype-tinymce6";
 
-const EditorCom = (props) => {
+const EditorCom = ({setContent}) => {
   const editorRef = useRef(null);
   const dispatch = useDispatch();
   //
   const upImg = (blobInfo, progress) =>
     new Promise((resolve, reject) => {
-      debugger
-      console.log(blobInfo)
       const formData = new FormData();
       formData.append("blogImage", blobInfo.blob(), blobInfo.filename());
       dispatch(uploadBlogImgsApi(formData))
@@ -61,6 +61,11 @@ const EditorCom = (props) => {
       return false;
     },
     []);
+
+  const handleEditorChange = (e) => {
+    const newContent = e.target.getContent();
+   setContent(newContent);
+  };
   return (
     <div>
       <Editor
@@ -71,6 +76,9 @@ const EditorCom = (props) => {
         }}
         initialValue=""
         init={{
+          external_plugins: {
+            tiny_mce_wiris: `${window.location.href}/node_modules/@wiris/mathtype-tinymce6/plugin.min.js`,
+          },
           content_style:
             // img { display: block; margin-bottom: 10px; }
             "body { font-family:Helvetica,Arial,sans-serif; font-size:14px } img {display: block; margin: 0 auto; max-width: 50%; max-height: 50%;  } p{display: block;}",
@@ -78,6 +86,7 @@ const EditorCom = (props) => {
           // force_br_newlines : false,
           // force_p_newlines : false,
           // forced_root_block : '',
+          spellchecker_spellcheck_languages: "en,es,fr",
           paste_data_images: true,
           paste_as_text: true,
           branding: false,
@@ -92,13 +101,15 @@ const EditorCom = (props) => {
           min_height: 288,
           max_height: 1500,
           plugins:
-            "autoresize print preview -paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern",
-          // underline
-          // strikethrough forecolor backcolor removeformat alignleft aligncenter alignright alignjustify
+            " autoresize print preview -paste searchreplace autolink directionality visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern",
 
           toolbar:
-            "formatselect | bold italic  link numlist bullist outdent indent image blockquote  table  media undo redo ",
+            "formatselect | bold italic  link numlist bullist outdent indent image blockquote  table  media tiny_mce_wiris_formulaEditor tiny_mce_wiris_formulaEditorChemistry undo redo ",
           // forced_root_block: false,
+          //
+          draggable_modal: true,
+          extended_valid_elements: "*[.*]",
+          //
           image_advtab: true,
           image_title: true,
           automatic_uploads: true,
@@ -128,9 +139,10 @@ const EditorCom = (props) => {
             input.click();
           },
         }}
-        onChange={(e) => {
-          props.setContent(e.target.getContent());
-        }}
+        onChange={handleEditorChange}
+        // onChange={(e) => {
+        //   props.setContent(e.target.getContent());
+        // }}
         // onChange={(e) =>{console.log(e.target.getContent())}}
       />
     </div>

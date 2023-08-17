@@ -1,90 +1,57 @@
 import axios from "axios";
-import { BACK_END_URL } from "../../utils";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import { axiosShowLoader } from "../../functions/Functions";
+import { createPostAsyncThunk } from "../../functions/CreateAsyncThunk";
+// export const checkActiveUserApi = createAsyncThunk(
+//   "user/checkActiveUserApi",
+//   async (data, thunkAPI) => {
+//     return await axios.post(`auth/checkActiveUser`, data, axiosShowLoader);
+//   }
+// );
+export const checkActiveUserApi = createPostAsyncThunk(
+  "user/checkActiveUserApi",
+  `auth/checkActiveUser`,
+  axiosShowLoader
+);
 
+//
+export const setupUserRegisternApi = createPostAsyncThunk(
+  "user/setupUserRegister",
+  `auth/register`
+);
 
-export const checkActiveUser = async (data,thunkAPI) => {
-  let token = localStorage.getItem("Token");
-  try {
-    let response = await axios.post(`${BACK_END_URL}/auth/checkActiveUser`,data
-    ,{
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
+export const setupUserLoginApi = createAsyncThunk(
+  "user/setupUserLogin",
+  async (data, thunkAPI) => {
+    return await axios.post(`auth/login`, data);
+  }
+);
+//
+export const GoogleAuthApi = createAsyncThunk(
+  "user/GoogleAuthApi",
+  async (data, thunkAPI) => {
+    return axios.post(`googleLogin`, {
+      idToken: data.credential,
     });
-   return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
   }
-};
+);
 
-
-export const setupUserRegister = async (data, route, thunkAPI) => {
-  try {
-    let response = await axios.post(`${BACK_END_URL}/auth/${route}`, data);
-   return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg,error.response);
-  }
-};
-
-export const setupUserLogin = async (data, route, thunkAPI) => {
-  try {
-    let response = await axios.post(`${BACK_END_URL}/auth/${route}`, data);
-    return response.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
-  }
-};
-
-
-
-export const setupForgetPassword = async (data, route, thunkAPI) => {
-  try {
-    let props = await axios.post(`${BACK_END_URL}/auth/${route}`, {
+export const ForgetPasswordApi = createAsyncThunk(
+  "user/ForgetPasswordApi",
+  async (data, thunkAPI) => {
+    return axios.post(`auth/forgetPassword`, {
       email: data,
     });
-    return props.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
   }
-};
+);
 
-export const setupResetPassword = async (data, route, thunkAPI) => {
-  try {
-    let props = await axios.post(`${BACK_END_URL}/auth/${route}`, {
+export const ResetPasswordApi = createAsyncThunk(
+  "user/ResetPasswordApi",
+  async (data, thunkAPI) => {
+    return axios.post(`auth/resetPassword`, {
       email: data.email,
       token: data.token,
       password: data.password,
     });
-    return props.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
   }
-};
-
-export const GoogleAuth = async (data, route, thunkAPI) => {
-  try {
-    let props = await axios.post(`${BACK_END_URL}/${route}`, {
-      idToken: data.credential,
-    });
-    return props.data;
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error.response.data.msg);
-  }
-};
-
-export const userImage = async (event, thunkAPI) => {
-  try {
-    const imageFile = event.target.files[0];
-    const formData = new FormData();
-    formData.append("file", imageFile);
-    formData.append("upload_preset", "zkkzikta");
-    let data = await axios.post(
-      "https://api.cloudinary.com/v1_1/dvaodl5k8/image/upload",
-      formData
-    );
-    return data;
-  } catch (error) {
-    thunkAPI.rejectWithValue(error);
-  }
-};
+);

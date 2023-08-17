@@ -41,6 +41,12 @@ border-radius: 1386px;
   background-color: white;
   font-family: "Nunito", sans-serif;
 }
+.categoryBtn:hover{
+  transform: scale(1.1);
+  transition: transform 150ms;
+  background-color: #0065fd;
+  color: #fff;
+}
 
 .categoryTextFlex {
   display: flex;
@@ -54,6 +60,13 @@ border-radius: 1386px;
   gap: 40px;
 }
 
+.categoryLink {
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Nunito", sans-serif;
+  cursor: pointer;
+}
 .categoryActiveLink {
   color: #292929;
   font-size: 14px;
@@ -61,13 +74,6 @@ border-radius: 1386px;
   font-family: "Noto Sans", sans-serif;
   text-decoration: underline 2px #757575;
   text-underline-offset: 5px;
-}
-
-.categoryLink {
-  color: #757575;
-  font-size: 14px;
-  font-weight: 400;
-  font-family: "Nunito", sans-serif;
 }
 
 .categoryLine {

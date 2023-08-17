@@ -10,13 +10,13 @@ import {
   getsingleWriterBlogsApi,
   getRecentViewedBlogsApi,
   getBookmarkApi,
-} from "../../features/blog/blogSlice";
+} from "../../features/blog/blogThunk";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setupGetCurrentWriter,
   removeAlert,
 } from "../../features/writerRequest/writerRequestSlice";
+import { setupGetCurrentWriter } from "../../features/writerRequest/writerRequestThunk";
 
 const WriterProfileContent = () => {
   const dispatch = useDispatch();

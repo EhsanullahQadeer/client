@@ -1,7 +1,8 @@
 import React,{useState} from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
-import { setupUserLoginApi, removeAlert } from "../../features/user/userSlice";
+import {removeAlert } from "../../features/user/userSlice";
+import { setupUserLoginApi } from "../../features/user/userThunk";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../Alert/UserAlert";
 import GoogleLogin from "../GoogleAuth/GoogleLogin";

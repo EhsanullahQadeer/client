@@ -39,7 +39,7 @@ const Navbar = ({ signIn, getStarted, person }) => {
             </li>
 
             <li>
-              <Link className="fancy-link" to="/creator">
+              <Link className="fancy-link" to="/Write">
                 Write
               </Link>
             </li>
@@ -125,7 +125,7 @@ const Navbar = ({ signIn, getStarted, person }) => {
               <Link
                 onClick={() => setHam(true)}
                 className="fancy-link links"
-                to="/creator"
+                to="/Write"
               >
                 Write
               </Link>

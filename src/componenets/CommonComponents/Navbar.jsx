@@ -56,8 +56,6 @@ const Navbar = () => {
               </Link>
             </li> */}
             <li>
-              {console.log(activeUser)}
-              {activeUser && activeUser.isApproved ? (
                 <Link
                   onClick={scrollToWrite}
                   className="fancy-link"
@@ -65,25 +63,6 @@ const Navbar = () => {
                 >
                   Write
                 </Link>
-              ) : !activeUser ? (
-                <Link
-                  onClick={scrollToWrite}
-                  className="fancy-link"
-                  to="/SignIn"
-                >
-                  Write
-                </Link>
-              ) : (
-                !activeUser.writer && (
-                  <Link
-                    onClick={scrollToWrite}
-                    className="fancy-link"
-                    to="/creator#becomeWriterSection"
-                  >
-                    Write
-                  </Link>
-                )
-              )}
             </li>
             <li>
               <Link
@@ -120,10 +99,7 @@ const Navbar = () => {
         />
         <nav>
           <ul>
-          <li>
-        { activeUser && <Profile_Logo profile={true} />}
-
-          </li>
+            <li>{activeUser && <Profile_Logo profile={true} />}</li>
             <li>
               <Link
                 className="links fancy-link"
@@ -152,43 +128,16 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              {console.log(activeUser)}
-              {activeUser && activeUser.isApproved ? (
-                <Link
-                  onClick={() => {
-                    setHam(true);
-                    scrollToWrite();
-                  }}
-                  className="fancy-link links"
-                  to="/Write"
-                >
-                  Write
-                </Link>
-              ) : !activeUser ? (
-                <Link
-                  onClick={() => {
-                    setHam(true);
-                    scrollToWrite();
-                  }}
-                  className="fancy-link links"
-                  to="/SignIn"
-                >
-                  Write
-                </Link>
-              ) : (
-                !activeUser.writer && (
-                  <Link
-                    onClick={() => {
-                      setHam(true);
-                      scrollToWrite();
-                    }}
-                    className="fancy-link links"
-                    to="/creator#becomeWriterSection"
-                  >
-                    Write
-                  </Link>
-                )
-              )}
+              <Link
+                onClick={() => {
+                  setHam(true);
+                  scrollToWrite();
+                }}
+                className="fancy-link links"
+                to="/Write"
+              >
+                Write
+              </Link>
             </li>
             <li>
               <Link
@@ -204,7 +153,9 @@ const Navbar = () => {
         <div className="navBtnsSmallScreen">
           {!activeUser && (
             <Link className="w-100" to="/signIn">
-              <button className="sm-btns blue-btn-hv float-left">Sign In</button>
+              <button className="sm-btns blue-btn-hv float-left">
+                Sign In
+              </button>
             </Link>
           )}
           <Link className="w-100" to="/getStarted">

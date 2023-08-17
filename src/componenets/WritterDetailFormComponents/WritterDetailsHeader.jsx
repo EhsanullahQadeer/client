@@ -5,9 +5,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Img from "../../assets/upload.png";
 import {
   getWriterImage,
-  // removeWriterImage,
   removeWriterImageApi,
-} from "../../features/writerRequest/writerRequestSlice";
+} from "../../features/writerRequest/writerRequestThunk";
 import { useDispatch, useSelector } from "react-redux";
 const WritterDetailsHeader = () => {
   let photoRef = useRef(null);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
 import LightNavbar from "../componenets/CommonComponents/LightNavbar";
 import Footer from "../componenets/CommonComponents/Footer";
@@ -13,12 +13,13 @@ import { useParams } from "react-router-dom";
 import SingleWriter from "../componenets/CommonComponents/SingleWriter";
 import { writers } from "./data";
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleBlogsApi } from "../features/blog/blogSlice";
+import { getSingleBlogsApi } from "../features/blog/blogThunk";
 import { useEffect } from "react";
 import timeToRead from "../componenets/timeToRead/timeToRead";
 import { Writer_Files_URL } from "../utils";
-
+import { useLocation } from "react-router-dom";
 const SingleBlog = () => {
+  let location = useLocation();
   const dispatch = useDispatch();
   let { isLoading, singleBlog } = useSelector((state) => state.blog);
   let { blogId, userId } = useParams();
@@ -28,7 +29,7 @@ const SingleBlog = () => {
   };
   useEffect(() => {
     dispatch(getSingleBlogsApi(data));
-  }, []);
+  }, [location]);
   let arr = [
     "Productivity",
     "2022 In Review",
@@ -39,9 +40,17 @@ const SingleBlog = () => {
   const time = timeToRead(singleBlog?.description);
   const date = new Date(singleBlog?.createdAt).toUTCString().slice(4, 16);
   let writerImg;
-  if(singleBlog?.writer?.photo){
-    writerImg=Writer_Files_URL+singleBlog?.writer?.photo;
+  if (singleBlog?.writer?.photo) {
+    writerImg = Writer_Files_URL + singleBlog?.writer?.photo;
   }
+  let writerId = singleBlog.writer?._id;
+  //
+  let bookmarked = singleBlog?.bookmarked;
+  const [isBookmarked, setisBookMarked] = useState("");
+  useEffect(() => {
+    setisBookMarked(bookmarked);
+  }, [bookmarked]);
+
   return (
     <div>
       <LightNavbar signIn={true} getStarted={true} />
@@ -54,15 +63,23 @@ const SingleBlog = () => {
             date={date}
             time={time}
             blogId={singleBlog?._id}
-            bookmarked={singleBlog?.bookmarked}
+            writerId={writerId}
+            setisBookMarked={setisBookMarked}
+            isBookmarked={isBookmarked}
           />
           <BlogContent
             title={singleBlog.title}
             description={singleBlog?.description}
+            titleLanguage={singleBlog?.titleLanguage}
           />
           {/* <BlogChips chips={arr} /> */}
           {/* <SingleWriter writer={writers[1]} /> */}
-          <BlogComments liked={singleBlog?.liked} likes={singleBlog?.likes} />
+          <BlogComments
+            setisBookMarked={setisBookMarked}
+            isBookmarked={isBookmarked}
+            liked={singleBlog?.liked}
+            likes={singleBlog?.likes}
+          />
         </div>
         {/*  */}
         <div className="singleBlogSideBar">
@@ -70,6 +87,7 @@ const SingleBlog = () => {
             writterImg={singleBlog?.writer?.photo}
             writterName={singleBlog?.writer?.name}
             writterDesignation={singleBlog?.writer?.designation}
+            writerId={writerId}
           />
           <RightComponent />
         </div>

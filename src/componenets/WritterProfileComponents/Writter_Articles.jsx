@@ -14,7 +14,7 @@ import {
   RemoveBookMarkAlert,
   RemoveBookMarkSuccessAlert,
 } from "../Alert/Alerts";
-import { removeBookmarkApi } from "../../features/blog/blogSlice";
+import { removeBookmarkApi } from "../../features/blog/blogThunk";
 import { useDispatch } from "react-redux";
 import { Writer_Files_URL } from "../../utils";
 

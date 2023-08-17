@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import "./Trending.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getTrendingBlogsApi } from "../../features/blog/blogSlice";
+import { getTrendingBlogsApi } from "../../features/blog/blogThunk";
 import timeToRead from "../timeToRead/timeToRead";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";

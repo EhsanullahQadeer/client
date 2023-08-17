@@ -96,13 +96,7 @@ export default function Stories({
               How Square Add
             </Button>
           )}
-          <ClearIcon
-            onClick={() => {
-              setOpen(false), setOpenStory(false);
-            }}
-            style={{ fontSize: 32, cursor: "pointer", zIndex: "2" }}
-            className="my-auto b6babd  float-right"
-          />
+          
         </div>
 
         {imageUrl && (
@@ -173,7 +167,18 @@ export default function Stories({
           </a>
         )}
       </div>
-      <div className="ml-2 mt-3">
+      <div className="ml-2">
+      <IconButton className="b6babd" aria-label="delete">
+
+      <ClearIcon
+            onClick={() => {
+              setOpen(false), setOpenStory(false);
+            }}
+            style={{ fontSize: 32, cursor: "pointer", zIndex: "2" }}
+            className="my-auto b6babd  float-right"
+          />
+          </IconButton>
+
         <div className="mb-2">
           <IconButton className="b6babd pe-none" aria-label="delete">
             <RemoveRedEyeOutlinedIcon style={{ fontSize: 30 }} />

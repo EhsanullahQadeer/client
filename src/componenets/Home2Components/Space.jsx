@@ -25,7 +25,7 @@ const Space = () => {
               <br />
               story submission system and expressive customization options.
             </p>
-           <Link to="/signIn"><button className="spaceBtn blue-btn-hv">Start writing</button></Link> 
+           <Link to="/Write"><button className="spaceBtn blue-btn-hv">Start writing</button></Link> 
           </div>
         </div>
 

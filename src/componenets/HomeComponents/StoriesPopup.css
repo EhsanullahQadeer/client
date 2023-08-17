@@ -1,6 +1,7 @@
 .customOverlay {
   background: #232227;
 }
+
 .customModal {
   background: transparent;
   box-shadow: none;
@@ -107,14 +108,12 @@ outline: none !important;
   display: flex;
   align-items: center;
   text-align: center;
-  /* padding: 10px; */
   font-size: 18px;
   font-weight: 600;
+  position: relative;
+  margin: 0 auto;
 }
 .tubnailSpons{
-  /* display: flex;
-  align-items: center;
-  justify-content: center; */
   position: absolute;
   z-index: 1;
   top: 10px;
@@ -126,8 +125,6 @@ outline: none !important;
   padding: 2px 4px;
   border-radius: 3px;
   outline:1px solid #b6babd;
-  /* margin-top: 2;
-  margin-left: 2; */
 }
 .storyThumbnailMain p{
   word-wrap: break-word;
@@ -148,10 +145,14 @@ outline: none !important;
   color: #fff;
   font-size: 60px !important;
   text-align: center;
-  left: 28%;
-  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  cursor: pointer;
   cursor: pointer;
 }
+
+
 .storyBody {
   position: relative;
 }

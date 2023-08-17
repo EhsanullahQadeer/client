@@ -1,3 +1,9 @@
+@font-face {
+  font-family: 'CustomFont';
+  src: url('../../font/Jameel_Noori_Nastaleeq.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 .singleBlog-content {
   max-width: 720px;
 }
@@ -6,6 +12,12 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
+.urduFont-p{
+  font-family: 'CustomFont' !important;
+  font-size: 23px !important;
+  text-align: right;
+}
+
 
 .writerName {
   font-size: 15px;
@@ -63,6 +75,11 @@
   -webkit-box-orient: vertical;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.urduFont-h{
+  font-family: 'CustomFont' !important;
+  font-size: 35px;
+  text-align: right;
 }
 
 .blogContentMain p {
@@ -233,11 +250,6 @@
 .commentSmallFlex {
   display: flex;
   gap: 10px;
-}
-
-.commentBigFlex,
-.commentSmallFlex img {
-  height: 20px;
 }
 
 .commentWriterFlex {

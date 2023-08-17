@@ -71,10 +71,10 @@ const WriterIntro = ({ writer }) => {
 
       <div>
         <h1 className="PostBy">Posts By {writer?.name}</h1>
-        <div className="categoryLinks">
+        {/* <div className="categoryLinks">
           <p className="categoryActiveLink">Latest</p>
           <p className="categoryLink">Top Stories</p>
-        </div>
+        </div> */}
         <div className="categoryLine"></div>
       </div>
     </div>

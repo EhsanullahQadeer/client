@@ -8,7 +8,7 @@ import AliceCarousel from "react-alice-carousel";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useDispatch, useSelector } from "react-redux";
-import { viewStoryApi } from "../../features/stories/StoriesSlice";
+import { viewStoryApi } from "../../features/stories/StoriesThunk";
 
 let activeIndex = 0;
 export default function StoriesPopup({
@@ -124,7 +124,7 @@ export default function StoriesPopup({
     };
   }, []);
   return (
-    <>
+    <div>
       <Modal
         classNames={{
           overlay: "customOverlay",
@@ -171,6 +171,6 @@ export default function StoriesPopup({
           })}
         </AliceCarousel>
       </Modal>
-    </>
+    </div>
   );
 }

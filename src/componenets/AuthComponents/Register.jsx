@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import "./Register.css";
 import { AuthenticateAlert } from "../Alert/Alerts";
 import { Link } from "react-router-dom";
-import {
-  setupUserRegisternApi,
-  removeAlert,
-} from "../../features/user/userSlice";
+import { removeAlert } from "../../features/user/userSlice";
+import { setupUserRegisternApi } from "../../features/user/userThunk";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "../Alert/UserAlert";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -47,9 +45,9 @@ const Register = () => {
   async function RegisterFun() {
     dispatch(setupUserRegisternApi(data)).then((res) => {
       if (!res.error) {
-      let title="You are successfully signed up.";
-      let desc="Redirecting"
-      AuthenticateAlert({title,desc})
+        let title = "You are successfully signed up.";
+        let desc = "Redirecting";
+        AuthenticateAlert({ title, desc });
         setTimeout(() => {
           dispatch(removeAlert());
           navigate("/");

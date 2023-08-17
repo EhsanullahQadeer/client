@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import "./WritersList.css";
 import LightNavbar from "../componenets/CommonComponents/LightNavbar";
 import { writers } from "./data";
@@ -7,57 +7,41 @@ import RightComponent from "../componenets/CommonComponents/RightComponent";
 import Footer from "../componenets/CommonComponents/Footer";
 import SingleWriter from "../componenets/CommonComponents/SingleWriter";
 import Header from "../componenets/CommonComponents/Header";
-import { useDispatch,useSelector } from "react-redux";
-import { autoLoadMore } from "../componenets/logicFunctionalities/logics";
-import { setupGetTopWritters } from "../features/writerRequest/writerRequestSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setupGetTopWritters } from "../features/writerRequest/writerRequestThunk";
+import { LoadApi } from "../componenets/logicFunctionalities/logics";
 
 const WritersList = () => {
-  let {topWriters,loadMore} = useSelector((state) => state.writerRequest);
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
+  const [writersData, setWritersData] = React.useState([]);
+  const targetElementRef = useRef(null);
+  const [page, setPage] = useState(1);
+  const [totalBlogs, setTotalBlogs] = useState(10);
 
+  let isLoadMore = page <= Math.ceil(totalBlogs / 10);
+  function getTopWriters() {
+    setPage((pre) => {
+      let apiData = {
+        pageIndex: pre,
+        pageSize: 10,
+      };
+      dispatch(setupGetTopWritters(apiData)).then(({ payload }) => {
+        setWritersData((pre) => {
+          console.log(payload[0].totalRecords[0].total);
+          debugger;
 
- //this is used to auto loadmore blogs
- const {page,ref,setReached}= autoLoadMore();
-
- let {isLoading,showAlert,blogs}= useSelector((state)=>state.blog);
- const [writersData,setWritersData]=React.useState([])
- 
- // pageIndex
- let apiData = {
-  pageIndex:page ,
-  pageSize: 10,
-};
- useEffect(() => {
- dispatch(setupGetTopWritters(apiData))
-}, [page]);
-
-
- useEffect(()=>{
-  if (loadMore) {
-    setTimeout(() => {
-      setReached(false);
-    }, 1000);
-    loadMore = false;
-  } else {
-    setReached(true);
+          return [...pre, ...payload[0].topWriter];
+        });
+      });
+      return pre + 1;
+    });
   }
-},[page,loadMore])
-
-
-// This is for storing data in useState load from api
-useEffect(()=>{
-if (page == 1) {
-setWritersData(topWriters);
-} else if (page > 1) {
-setWritersData((pre) => {
-  return [...pre, ...topWriters];
-});
-}
-},[topWriters])
-
+  useEffect(() => {
+    LoadApi(targetElementRef, getTopWriters);
+  }, []);
 
   return (
-    <div className="writerListMain" >
+    <div className="writerListMain">
       <LightNavbar signIn={true} getStarted={true} person={false} />
       {/*  */}
       <Header
@@ -71,14 +55,20 @@ setWritersData((pre) => {
       <div className="writersListMain">
         <div className="writersListPart1">
           {writersData?.map((data) => {
-          let writer =data?.topWriter?._id;
-            return <SingleWriter writer={writer} />;
+            return <SingleWriter writer={data._id} />;
           })}
-          <button ref={ref} className="home-loadMore-btn" style={{visibility:"hidden"}}   >Load More</button>
+          {isLoadMore && (
+            <button
+              ref={targetElementRef}
+              className="home-loadMore-btn invisible"
+            >
+              Load More
+            </button>
+          )}
         </div>
-        
+
         <div className="writersListPart2">
-          <RightComponent writerSideBar="disable"/>
+          <RightComponent writerSideBar="disable" />
         </div>
       </div>
 

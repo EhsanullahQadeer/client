@@ -1,78 +1,138 @@
-import { apiCall } from "../../CommonFunctions";
+import { axiosConfig } from "../../functions/Functions";
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 //create comment
-export const createComment = async (data, thunkAPI) => {
-  return await apiCall(`comment/createComment`, "post", data ,true);
-};
+export const createCommentApi = createAsyncThunk(
+  "comment/createCommentApi",
+  async (data, thunkAPI) => {
+    return await axios.post(`comment/createComment`, data, axiosConfig);
+  }
+);
 
 //replyToComment
-export const replyToComment = async (data, thunkAPI) => {
-  const { commentId, text } = data;
+export const replyToCommentApi = createAsyncThunk(
+  "comment/replyToCommentApi",
+  async (data, thunkAPI) => {
+    const { commentId, text } = data;
+    return await axios.post(
+      `comment/replyToComment/${commentId}`,
+      {
+        text: text,
+      },
+      axiosConfig
+    );
+  }
+);
+//create
+export const createReplyToReplyApi = createAsyncThunk(
+  "comment/createReplyToReplyApi",
+  async (data, thunkAPI) => {
+    const { replyId, text } = data;
 
-  return await apiCall(`comment/replyToComment/${commentId}`, "post", {
-    text: text,
-  },true);
-};
-//createReplyToReply
-export const createReplyToReply = async (data, thunkAPI) => {
-  const { replyId, text } = data;
-  return await apiCall(`comment/createReplyToReply/${replyId}`, "post", text ,true);
-};
+    return axios.post(
+      `comment/createReplyToReply/${replyId}`,
+      text,
+      axiosConfig
+    );
+  }
+);
 
-// getAllComments
-export const getAllComments = async (data, thunkAPI) => {
-  let {blogId,pageIndex}=data;
-   return await apiCall(`comment/getAllComments/${blogId}?pageIndex=${pageIndex}`, 'get');
-};
-
-// getCommentReplies
-export const getCommentReplies = async (commentId, thunkAPI) => {
-  return await apiCall(`comment/getCommentReplies/${commentId}`, "get");
-};
-
+//get
+export const getAllCommentsApi = createAsyncThunk(
+  "comment/getAllCommentsApi",
+  async (data, thunkAPI) => {
+    let { blogId, pageIndex } = data;
+    return await axios.get(
+      `comment/getAllComments/${blogId}?pageIndex=${pageIndex}`
+    );
+  }
+);
+//get
+export const getCommentRepliesApi = createAsyncThunk(
+  "comment/getCommentRepliesApi",
+  async (commentId, thunkAPI) => {
+    return await axios.get(`comment/getCommentReplies/${commentId}`);
+  }
+);
 // getReplyToCommentReply
-export const getReplyToCommentReply = async (commentReplyId, thunkAPI) => {
-  return await apiCall(
-    `comment/getReplyToCommentReply/${commentReplyId}`,
-    "get"
-  );
-};
+export const getReplyToCommentReplyApi = createAsyncThunk(
+  "comment/getReplyToCommentReplyApi",
+  async (commentReplyId, thunkAPI) => {
+    return await axios.get(`comment/getReplyToCommentReply/${commentReplyId}`);
+  }
+);
 
 //updateComment
-
-export const updateComment = async (data, thunkAPI) => {
-  let { commentId, text } = data;
-  return await apiCall(`comment/updateComment/${commentId}`, "post", text ,true);
-};
-
+export const updateCommentApi = createAsyncThunk(
+  "comment/updateCommentApi",
+  async (data, thunkAPI) => {
+    let { commentId, text } = data;
+    return await axios.post(
+      `comment/updateComment/${commentId}`,
+      text,
+      axiosConfig
+    );
+  }
+);
 //updateCommentReply
-
-export const updateCommentReply = async (data, thunkAPI) => {
-  let { replyId, text } = data;
-  return await apiCall(`comment/updateCommentReply/${replyId}`, "post", text, true);
-};
+export const updateCommentReplyApi = createAsyncThunk(
+  "comment/updateCommentReplyApi",
+  async (data, thunkAPI) => {
+    let { replyId, text } = data;
+    return await axios.post(
+      `comment/updateCommentReply/${replyId}`,
+      text,
+      axiosConfig
+    );
+  }
+);
 
 //updateReplyToReply
-export const updateReplyToReply = async (data, thunkAPI) => {
-  let { replyToReplyId, text } = data;
-  return await apiCall(
-    `comment/updateReplyToReply/${replyToReplyId}`,
-    "post",
-    text,
-    true
-  );
-};
+export const updateReplyToReplyApi = createAsyncThunk(
+  "comment/updateReplyToReplyApi",
+  async (data, thunkAPI) => {
+    let { replyToReplyId, text } = data;
+    return await axios.post(
+      `comment/updateReplyToReply/${replyToReplyId}`,
+      text,
+      axiosConfig
+    );
+  }
+);
 
 // delete comment
-export const deleteComment = async (commentId, thunkAPI) => {
-  return await apiCall(`comment/deleteComment/${commentId}`, "post","",true);
-};
+export const deleteCommentApi = createAsyncThunk(
+  "comment/deleteCommentApi",
+  async (commentId, thunkAPI) => {
+    return await axios.post(
+      `comment/deleteComment/${commentId}`,
+      null,
+      axiosConfig
+    );
+  }
+);
 
 // deleteCommentReply
-export const deleteCommentReply = async (replyId, thunkAPI) => {
-  return await apiCall(`comment/deleteCommentReply/${replyId}`, "post" ,"",true);
-};
+export const deleteCommentReplyApi = createAsyncThunk(
+  "comment/deleteCommentReplyApi",
+  async (replyId, thunkAPI) => {
+    return await axios.post(
+      `comment/deleteCommentReply/${replyId}`,
+      null,
+      axiosConfig
+    );
+  }
+);
+
 //deleteReplyToReply
-export const deleteReplyToReply = async (deleteReplyToReply, thunkAPI) => {
-  return await apiCall(`comment/deleteReplyToReply/${replyToReplyId}`, "post" ,"",true);
-};
+export const deleteReplyToReplyApi = createAsyncThunk(
+  "comment/deleteReplyToReplyApi",
+  async (replyToReplyId, thunkAPI) => {
+    return await axios.post(
+      `comment/deleteReplyToReply/${replyToReplyId}`,
+      null,
+      axiosConfig
+    );
+  }
+);

@@ -260,7 +260,7 @@ cursor: pointer;
 .fancyDectoration {
   text-decoration: none;
   position: relative;
-  padding-bottom: 4px;
+  padding-bottom: 6px;
 }
 
 .fancyDectoration::after {
