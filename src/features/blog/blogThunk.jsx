@@ -35,7 +35,6 @@ export const getAllBLogsApi = createAsyncThunk(
 export const getSingleBlogsApi = createAsyncThunk(
   "blog/getSingleBlogsApi",
   async (data) => {
-    debugger
     const { blogId, userId } = data;
     return await axios.get(
       `blog/singleBlog/${blogId}/${userId}`,

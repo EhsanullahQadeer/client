@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import axios from "axios";
 
 export function createPostAsyncThunk(typePrefix, url,config) {
     return createAsyncThunk(typePrefix, async (data, thunkAPI) => {

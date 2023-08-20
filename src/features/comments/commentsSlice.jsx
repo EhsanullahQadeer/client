@@ -18,11 +18,13 @@ import {
   deleteReplyToReplyApi,
 } from "./commentThunk";
 
-
-
 let initialState = {
-  processing: false,
-  comments: [],
+  processing: {
+    comment: false,
+    replyToComment: false,
+    showCommentReply: false,
+    editCommentReply:false,
+  },
 };
 
 const commentSlice = createSlice({
@@ -31,16 +33,44 @@ const commentSlice = createSlice({
   reducers: {},
   extraReducers: {
     [createCommentApi.pending]: (state) => {
-      state.processing = true;
+      state.processing.comment = true;
     },
     [createCommentApi.fulfilled]: (state, { payload }) => {
-      state.processing = false;
+      state.processing.comment = false;
     },
     [createCommentApi.rejected]: (state, { payload }) => {
-      state.processing = false;
+      state.processing.comment = false;
     },
-    [getAllCommentsApi.fulfilled]: (state, { payload }) => {
-      state.comments = payload;
+    [getAllCommentsApi.fulfilled]: (state, { payload }) => {},
+    //
+    [replyToCommentApi.pending]: (state) => {
+      state.processing.replyToComment = true;
+    },
+    [replyToCommentApi.fulfilled]: (state) => {
+      state.processing.replyToComment = false;
+    },
+    [replyToCommentApi.rejected]: (state) => {
+      state.processing.replyToComment = false;
+    },
+    //
+    [getCommentRepliesApi.pending]: (state) => {
+      state.processing.showCommentReply = true;
+    },
+    [getCommentRepliesApi.fulfilled]: (state) => {
+      state.processing.showCommentReply = false;
+    },
+    [getCommentRepliesApi.rejected]: (state) => {
+      state.processing.showCommentReply = false;
+    },
+    //
+    [updateCommentReplyApi.pending]: (state) => {
+      state.processing.editCommentReply = true;
+    },
+    [updateCommentReplyApi.fulfilled]: (state) => {
+      state.processing.editCommentReply = false;
+    },
+    [updateCommentReplyApi.rejected]: (state) => {
+      state.processing.editCommentReply = false;
     },
   },
 });

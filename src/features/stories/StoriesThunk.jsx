@@ -5,10 +5,10 @@ import { axiosShowLoader } from "../../functions/Functions";
 export const getStoriesApi = createAsyncThunk(
   "stories/getStoriesApi",
   async (data) => {
-    let {userId,pageIndex}=data;
+    let { userId, pageIndex } = data;
     return await axios.get(
       `stories/getStories/${userId}?pageIndex=${pageIndex}`,
-      pageIndex > 1 ? '' : axiosShowLoader
+      pageIndex > 1 ? "" : axiosShowLoader
     );
   }
 );

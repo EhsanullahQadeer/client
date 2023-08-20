@@ -1,7 +1,7 @@
 import { axiosConfig } from "../../functions/Functions";
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
+import { axiosShowLoader } from "../../functions/Functions";
 //create comment
 export const createCommentApi = createAsyncThunk(
   "comment/createCommentApi",
@@ -24,15 +24,16 @@ export const replyToCommentApi = createAsyncThunk(
     );
   }
 );
-//create
+//replyToReply
 export const createReplyToReplyApi = createAsyncThunk(
   "comment/createReplyToReplyApi",
   async (data, thunkAPI) => {
     const { replyId, text } = data;
+    debugger
 
     return axios.post(
       `comment/createReplyToReply/${replyId}`,
-      text,
+      {text},
       axiosConfig
     );
   }
@@ -44,7 +45,7 @@ export const getAllCommentsApi = createAsyncThunk(
   async (data, thunkAPI) => {
     let { blogId, pageIndex } = data;
     return await axios.get(
-      `comment/getAllComments/${blogId}?pageIndex=${pageIndex}`
+      `comment/getAllComments/${blogId}?pageIndex=${pageIndex}`,
     );
   }
 );
@@ -70,7 +71,7 @@ export const updateCommentApi = createAsyncThunk(
     let { commentId, text } = data;
     return await axios.post(
       `comment/updateComment/${commentId}`,
-      text,
+     {text},
       axiosConfig
     );
   }

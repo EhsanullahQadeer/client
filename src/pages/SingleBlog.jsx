@@ -18,6 +18,8 @@ import { useEffect } from "react";
 import timeToRead from "../componenets/timeToRead/timeToRead";
 import { Writer_Files_URL } from "../utils";
 import { useLocation } from "react-router-dom";
+import CommentHeaderChip from "../componenets/SingleBlogComponents/comment/CommentHeaderChip";
+
 const SingleBlog = () => {
   let location = useLocation();
   const dispatch = useDispatch();
@@ -47,6 +49,8 @@ const SingleBlog = () => {
   //
   let bookmarked = singleBlog?.bookmarked;
   const [isBookmarked, setisBookMarked] = useState("");
+  const [totalComments, setTotalComments] = useState(0);
+
   useEffect(() => {
     setisBookMarked(bookmarked);
   }, [bookmarked]);
@@ -74,11 +78,16 @@ const SingleBlog = () => {
           />
           {/* <BlogChips chips={arr} /> */}
           {/* <SingleWriter writer={writers[1]} /> */}
-          <BlogComments
+          <CommentHeaderChip
             setisBookMarked={setisBookMarked}
             isBookmarked={isBookmarked}
+            totalComments={totalComments}
             liked={singleBlog?.liked}
             likes={singleBlog?.likes}
+          />
+          <BlogComments
+            totalComments={totalComments}
+            setTotalComments={setTotalComments}
           />
         </div>
         {/*  */}

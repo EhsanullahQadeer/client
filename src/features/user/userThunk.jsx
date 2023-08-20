@@ -2,12 +2,7 @@ import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosShowLoader } from "../../functions/Functions";
 import { createPostAsyncThunk } from "../../functions/CreateAsyncThunk";
-// export const checkActiveUserApi = createAsyncThunk(
-//   "user/checkActiveUserApi",
-//   async (data, thunkAPI) => {
-//     return await axios.post(`auth/checkActiveUser`, data, axiosShowLoader);
-//   }
-// );
+
 export const checkActiveUserApi = createPostAsyncThunk(
   "user/checkActiveUserApi",
   `auth/checkActiveUser`,
@@ -20,13 +15,11 @@ export const setupUserRegisternApi = createPostAsyncThunk(
   `auth/register`
 );
 
-export const setupUserLoginApi = createAsyncThunk(
+export const setupUserLoginApi = createPostAsyncThunk(
   "user/setupUserLogin",
-  async (data, thunkAPI) => {
-    return await axios.post(`auth/login`, data);
-  }
+  `auth/login`
 );
-//
+//......................................................................................
 export const GoogleAuthApi = createAsyncThunk(
   "user/GoogleAuthApi",
   async (data, thunkAPI) => {
@@ -35,7 +28,7 @@ export const GoogleAuthApi = createAsyncThunk(
     });
   }
 );
-
+//......................................................................................
 export const ForgetPasswordApi = createAsyncThunk(
   "user/ForgetPasswordApi",
   async (data, thunkAPI) => {
@@ -44,7 +37,7 @@ export const ForgetPasswordApi = createAsyncThunk(
     });
   }
 );
-
+//......................................................................................
 export const ResetPasswordApi = createAsyncThunk(
   "user/ResetPasswordApi",
   async (data, thunkAPI) => {

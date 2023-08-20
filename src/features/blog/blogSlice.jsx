@@ -71,12 +71,10 @@ const blogSlice = createSlice({
       state.isLoading = true;
     },
     [getSingleBlogsApi.fulfilled]: (state, { payload }) => {
-      debugger
       state.isLoading = false;
       state.singleBlog = payload.Blog;
     },
     [getSingleBlogsApi.rejected]: (state, response) => {
-      debugger
       state.isLoading = false;
       state.showAlert = true;
       state.alertText = response.payload;

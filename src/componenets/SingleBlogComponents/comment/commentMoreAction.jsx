@@ -12,7 +12,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FlagIcon from "@mui/icons-material/Flag";
-import ConfirmationAlertMui from "../Alert/Alerts";
+import ConfirmationAlertMui from "../../Alert/Alerts";
 import { useState } from "react";
 const StyledMenu = styled((props) => (
   <Menu
@@ -63,10 +63,10 @@ export default function CommentOptions({
   handleEdit,
   handleDelete,
   handleReport,
-  commentsReply
+  commentsReply,
 }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [showDeleteAlert,setShowDeleteAlert]=useState(false);
+  const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -88,11 +88,16 @@ export default function CommentOptions({
           onClick={handleClick}
           endIcon={<KeyboardArrowDownIcon />}
         >
-          <MoreHorizIcon  className={`${commentsReply&&"moreHorizIconHiden"}`} style={{ fontSize:`${commentsReply?"30px":"45px"}`, color: "#57638b" }} />
+          <MoreHorizIcon
+            className={`${commentsReply && "moreHorizIconHiden"}`}
+            style={{
+              fontSize: `${commentsReply ? "30px" : "45px"}`,
+              color: "#57638b",
+            }}
+          />
         </IconButton>
       )}
       <StyledMenu
-      
         id="demo-customized-menu"
         MenuListProps={{
           "aria-labelledby": "demo-customized-button",
@@ -114,7 +119,7 @@ export default function CommentOptions({
             </MenuItem>
             <MenuItem
               onClick={() => {
-                handleClose(),setShowDeleteAlert(true);
+                handleClose(), setShowDeleteAlert(true);
               }}
               disableRipple
             >
@@ -134,15 +139,16 @@ export default function CommentOptions({
           </MenuItem>
         )}
       </StyledMenu>
-      {showDeleteAlert&&
-      <ConfirmationAlertMui
-      title="Delete comment"
-      desc="Delete your comment permanently?"
-      cancelBtnName="Cancel"
-      confirmBtnName="Delete"
-      onConfirm={handleDelete}
-      setState={setShowDeleteAlert}
-    />}
+      {showDeleteAlert && (
+        <ConfirmationAlertMui
+          title="Delete comment"
+          desc="Delete your comment permanently?"
+          cancelBtnName="Cancel"
+          confirmBtnName="Delete"
+          onConfirm={handleDelete}
+          setState={setShowDeleteAlert}
+        />
+      )}
     </div>
   );
 }

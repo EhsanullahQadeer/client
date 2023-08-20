@@ -3,6 +3,7 @@ import { axiosConfig } from "../../functions/Functions";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { axiosShowLoader } from "../../functions/Functions";
 import { axiosLoader_Auth } from "../../functions/Functions";
+import { createPostAsyncThunk } from "../../functions/CreateAsyncThunk";
 export const setupGetTopWritters = createAsyncThunk(
   "writer/setupGetTopWritters",
   async (data) => {
