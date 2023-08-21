@@ -1,33 +1,26 @@
 import React, {
-  useEffect,
   useState,
   forwardRef,
   useImperativeHandle,
   useContext,
+  useRef,
+  createContext,
 } from "react";
-import comment from "../../../assets/comment.png";
 import { getCommentRepliesApi } from "../../../features/comments/commentThunk";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
-import defImg from "../../../assets/Profile-PNG-File.png";
-import CommentOptions from "./commentMoreAction";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
-import LoadingButton from "@mui/lab/LoadingButton";
 import {
   updateCommentReplyApi,
   deleteCommentReplyApi,
-  createReplyToReplyApi
+  createReplyToReplyApi,
 } from "../../../features/comments/commentThunk";
 import { SmallAlert } from "../../Alert/Alerts";
-import Step3Replies from "./step3Replies";
-import WriteReply from "./WriteReply";
 import SmallComment from "./SmallComment";
 import { CombinedContext } from "./Step1Repies";
+import Step3Replies from "./Step3Replies";
 
-
-
-
+let preOpenReplyId;
+export const Step2Context = createContext();
 const Step2Repies = (
   {
     commentId,
@@ -37,33 +30,23 @@ const Step2Repies = (
     tempReplyData,
     setTempReplyData,
     setEditCommentId,
-    editCommentId,
-    handleEdit,
-    trackChangesInput,
     editCommentValue,
-    editCommentInputRef,
-    expandedComments,
-    setExpandedComments,
-    toggleCommentExpansion,
-    handleReplyToComment,
-    openReplyId
   },
   ref
 ) => {
+  const grandchildRef = useRef(null);
+
   useImperativeHandle(ref, () => ({
     getCommentReplies,
   }));
-
   const dispatch = useDispatch();
 
   moment().format();
-  const { activeUser, userId } = useSelector((state) => state.user);
-  const { processing } = useSelector((state) => state.comments);
   const [editerror, setEditerror] = useState("");
 
-  const {handleInputChange,replyText,setReplyText,setopenReplyId} = useContext(CombinedContext);
-
-
+  const { replyText, setReplyText, setopenReplyId, trackChangesInput } =
+    useContext(CombinedContext);
+  //
 
   //Getting comment replies
   function getCommentReplies(commentId) {
@@ -76,7 +59,7 @@ const Step2Repies = (
 
   //handle edit comment Reply
   function submitEditCommentReply(replyId, index, arrayName) {
-    let submit = editCommentValue.replace(/\s/g, "").length > 1;
+    let submit = editCommentValue.replace(/\s/g, "").length > 0;
     if (submit) {
       if (!(trackChangesInput == editCommentValue)) {
         let data = { replyId: replyId, text: { text: editCommentValue } };
@@ -152,14 +135,26 @@ const Step2Repies = (
 
   function handleReport() {}
 
-  function submitReply(id){
-    console.log(id);
-    let submit = replyText.replace(/\s/g, "").length > 1;
+  function submitReply(id) {
+    let submit = replyText.replace(/\s/g, "").length > 0;
     if (submit) {
       dispatch(createReplyToReplyApi({ replyId: id, text: replyText })).then(
         (res) => {
           if (!res.error) {
-            // setTempReplyData((pre) => [res.payload, ...pre]);
+            let data = res.payload;
+            setReplyToReplyData((pre) => {
+              //   let data = updateHierarchy(pre, res.payload);
+              const updatedHierarchy = JSON.parse(JSON.stringify(pre));
+              // Update the copied hierarchy with the new data using updateHierarchy
+              grandchildRef.current.updateHierarchy(updatedHierarchy, data, {
+                addReply: true,
+              });
+              if (updatedHierarchy.length > 0) {
+                return updatedHierarchy;
+              } else {
+                return [...pre, data];
+              }
+            });
             setReplyText("");
             setopenReplyId(0);
           }
@@ -167,225 +162,111 @@ const Step2Repies = (
       );
     }
   }
+  const [replyToReplyData, setReplyToReplyData] = useState([]);
+  const [currentReplyId, setCurrentReplyId] = useState([]);
 
+  const removeChilds = (currentLevel, replyIdToDelete, isDeleteWholeReply) => {
+    for (let item of currentLevel) {
+      if (item._id === replyIdToDelete) {
+        // Remove the childReplies property from the parent reply
+        if (isDeleteWholeReply) {
+          const index = currentLevel.findIndex(
+            (item) => item._id == replyIdToDelete
+          );
+          currentLevel.splice(index, 1);
+        } else {
+          delete item.childReplies;
+        }
+        return true;
+      }
+      if (item.childReplies) {
+        const found = removeChilds(
+          item.childReplies,
+          replyIdToDelete,
+          isDeleteWholeReply
+        );
+        if (found) {
+          return true;
+        }
+      }
+    }
+    return false;
+  };
+  //get replies of replies
+
+  function handleShowReplies(id) {
+    //make empty state
+    // setReplyToReplyData([]);
+    if (!currentReplyId.includes(id)) {
+      grandchildRef.current.getRepliesToReply(id);
+      // setCurrentReplyId(id);
+      setCurrentReplyId((pre) => [id,...pre]);
+    } else {
+      setCurrentReplyId((pre) => pre.filter((ID) => ID != id));
+      setReplyToReplyData((pre) => {
+        const updatedHierarchy = JSON.parse(JSON.stringify(pre));
+        const found = removeChilds(updatedHierarchy, id);
+        if (!found) {
+          // make empty bcz its top level
+          return [];
+        } else {
+          return updatedHierarchy;
+        }
+      });
+    }
+  }
+  // making all the state gloabal to use in child gloabal instead passing as props
+  const contextValue = {
+    replyToReplyData,
+    setReplyToReplyData,
+    currentReplyId,
+    setCurrentReplyId,
+    handleDeleteReply,
+    handleReport,
+    submitReply,
+    submitEditCommentReply,
+    editerror,
+    setEditerror,
+    handleShowReplies,
+    removeChilds,
+  };
   return (
-    <>
-      {/* This is for to display comment for specifc commets */}
-      {(data._id != commentId
-        ? tempReplyData.some((element) => element.commentId == data._id)
-        : true) && (
-        <div className="commentCardReply_Div">
-          {(data._id != commentId
-            ? tempReplyData.filter((item) => item.commentId == data._id)
-            : replyData
-          ).map((replyDataValue, replyIndex) => {
-            let replyUser = replyDataValue.userId;
-            let isShowReplies =replyDataValue?.replyCount>0;
-              let showReplyText =replyDataValue?.replyCount>1?`Show ${replyDataValue?.replyCount} Replies`:'Show 1 Reply';
-              let hideReplyText=replyDataValue?.replyCount>1?'Hide Replies':'Hide Reply';
+    <Step2Context.Provider value={contextValue}>
+      <>
+        {/* This is for to display comment for specifc commets */}
+        {(data._id != commentId
+          ? tempReplyData.some((element) => element.commentId == data._id)
+          : true) && (
+          <div className="commentCardReply_Div">
+            {(data._id != commentId
+              ? tempReplyData.filter((item) => item.commentId == data._id)
+              : replyData
+            ).map((replyDataValue, replyIndex) => {
+              let arrayName;
+              if (data._id != commentId) {
+                arrayName = "tempReplyData";
+              } else {
+                arrayName = "replyData";
+              }
 
-            let replyText = replyDataValue.text;
-            let replyId = replyDataValue._id;
-            const replyTime = moment(replyDataValue.createdAt).fromNow();
-            let arrayName;
-            if (data._id != commentId) {
-              arrayName = "tempReplyData";
-            } else {
-              arrayName = "replyData";
-            }
-            //is edit edit selected
-            let isSelected = editCommentId == replyId;
-
-            const commentLines = Math.ceil(replyText.length / 80);
-            const isCommentExpanded = commentLines <= 3;
-
-            //
-            let text = replyText;
-            //if not readmore clicked
-            //Open Readmore
-            let isExpandComment = expandedComments == replyId;
-            if (!isExpandComment && text.length > 240) {
-              text = text.slice(0, 240) + "......";
-            }
-            //
-            let isReply = openReplyId == replyId;
-            return (
-              <div key={replyIndex}>
-                <div className="commentReply_card commentReplyMain">
-                  <div className="d-flex justify-content-between commentHeader">
-                    <div className="d-flex">
-                      <img
-                        className="replyUserImg"
-                        src={replyDataValue.photo || defImg}
-                        alt="img"
-                      />
-                      <div>
-                        <p className="commentName-p">
-                          {replyUser.firstName} {replyUser.lastName}
-                        </p>
-                        <span className="commentTime">{replyTime}</span>
-                      </div>
-                    </div>
-
-                    <CommentOptions
-                      handleDelete={() => {
-                        handleDeleteReply(replyId, replyIndex, arrayName);
-                      }}
-                      handleEdit={() => {
-                        handleEdit(replyId, replyText);
-                      }}
-                      handleReport={handleReport}
-                      user={replyUser._id == userId}
-                      isShowAction={!(editCommentId == replyId)}
-                      commentsReply={true}
-                    />
-                  </div>
-
-                  <>
-                    {/* {!(editReplyId == replyDataValue._id) && ( */}
-                    <div className="mt-4">
-                      <TextField
-                        name="commentReply"
-                        className="w-100"
-                        id="filled-multiline-flexible"
-                        placeholder="Add a reply..."
-                        multiline
-                        maxRows={isSelected ? 10 : ""}
-                        variant="standard"
-                        maxLength="100"
-                        value={isSelected ? editCommentValue : text}
-                        helperText={
-                          isSelected &&
-                          (editCommentValue.length >= 2000
-                            ? "You can write only upto 2000 character"
-                            : editerror && editerror)
-                        }
-                        error
-                        required
-                        onChange={handleInputChange}
-                        inputRef={(input) =>
-                          (editCommentInputRef.current[replyId] = input)
-                        }
-                      />
-
-                      {/* Reply To Reply Text Field */}
-                      {isReply && (
-                        <WriteReply
-                          submitReply={submitReply}
-                          processing={processing.replyToComment}
-                          commentId={replyId}
-                        />
-                      )}
-
-                      {/* These button will only display when edit clicked ... */}
-                      {isSelected && (
-                        <div className="text-end w-100 pt-4 ">
-                          {/* Cancel will disable when coment is updating ... */}
-                          {!processing.editCommentReply && (
-                            <Button
-                              size="small"
-                              onClick={() => {
-                                setEditCommentId(0);
-                              }}
-                              style={{ color: "#f24e1e" }}
-                              variant="text"
-                            >
-                              Cancel
-                            </Button>
-                          )}
-
-                          <LoadingButton
-                            onClick={() => {
-                              submitEditCommentReply(
-                                replyId,
-                                replyIndex,
-                                arrayName
-                              );
-                            }}
-                            style={{ color: "#0065fd" }}
-                            className="ml-3"
-                            variant="text"
-                            size="small"
-                            loadingPosition="end"
-                            loading={processing.editCommentReply}
-                          >
-                            <div
-                              className={` ml-2 ${
-                                processing.editCommentReply ? "mr-4" : ""
-                              }`}
-                            >
-                              {processing.editCommentReply ? "Saving" : "Save"}
-                            </div>
-                          </LoadingButton>
-                        </div>
-                      )}
-                    </div>
-                    {/* )} */}
-                  </>
-                  {/* hide read more when edit opens */}
-                  {(!isSelected && !isReply && !isCommentExpanded )&& (
-                    <button
-                      onClick={() => toggleCommentExpansion(replyId)}
-                      className="commentReadMore mt-2"
-                    >
-                      {expandedComments == replyId ? "Read Less" : "Read More"}
-                    </button>
-                  )}
-
-                  {/* hide and show reply div */}
-                  {/* Two condititons for hide when edit selected and also hide when reply open */}
-                  {!isSelected && !isReply && (
-                  <div className="d-flex justify-content-between align-items-center mt-3">
-                    {/* also make invisible when intially comment has no reply */}
-                    <div
-                    className={`${
-                      !isShowReplies &&
-                      "invisible"
-                    }`}
-                    >
-                      <LoadingButton
-                        onClick={() => {
-                          handleShowReplies(data._id);
-                        }}
-                        // this is beacuse to prevent loading on other comments
-                        // loading={
-                        //   commentId == data._id && processing.showCommentReply
-                        // }
-                        loadingPosition="end"
-                        variant="text"
-                        size="small"
-                      >
-                        <img src={comment} alt="img" />
-                        <span
-                          className={` ml-2 ${
-                            processing.showCommentReply ? "mr-4" : ""
-                          }`}
-                        >
-                          {!(commentId == replyId)
-                            ? showReplyText
-                            : hideReplyText}
-                        </span>
-                      </LoadingButton>
-                    </div>
-                    <div>
-                      <button
-                        onClick={() => {
-                          handleReplyToComment(replyId,false);
-                        }}
-                      >
-                        Reply
-                      </button>
-                    </div>
-                  </div>
-                  )}
+              return (
+                <div key={replyIndex}>
+                  <SmallComment
+                    replyDataValue={replyDataValue}
+                    replyIndex={replyIndex}
+                    arrayName={arrayName}
+                  />
+                  <Step3Replies
+                    parentData={replyDataValue}
+                    ref={grandchildRef}
+                  />
                 </div>
-                <Step3Replies />
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </>
+              );
+            })}
+          </div>
+        )}
+      </>
+    </Step2Context.Provider>
   );
 };
 

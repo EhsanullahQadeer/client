@@ -29,8 +29,6 @@ export const createReplyToReplyApi = createAsyncThunk(
   "comment/createReplyToReplyApi",
   async (data, thunkAPI) => {
     const { replyId, text } = data;
-    debugger
-
     return axios.post(
       `comment/createReplyToReply/${replyId}`,
       {text},

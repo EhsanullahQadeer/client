@@ -54,7 +54,7 @@ export default function WriteReply({
           variant="text"
         >
           <span className={`${processing ? "mr-4" : ""}`}>
-            {processing ? "Replying" : "Reply"}
+            {processing ? "Submitting" : "Reply"}
           </span>
         </LoadingButton>
         {/* Also remove cancel when reply is submitting */}

@@ -106,7 +106,7 @@ export default function Step1Repies({
   }, [editCommentId]);
   //updateEditedComment
   function updateEditedComment(commentId, index) {
-    let submit = editCommentValue.replace(/\s/g, "").length > 1;
+    let submit = editCommentValue.replace(/\s/g, "").length > 0;
     if (submit) {
       if (!(trackChangesInput == editCommentValue)) {
         let data = { commentId: commentId, text: editCommentValue };
@@ -154,7 +154,7 @@ export default function Step1Repies({
 
   //create comment reply
   function submitReply(id) {
-    let submit = replyText.replace(/\s/g, "").length > 1;
+    let submit = replyText.replace(/\s/g, "").length > 0;
     if (submit) {
       dispatch(replyToCommentApi({ commentId: id, text: replyText })).then(
         (res) => {
@@ -187,10 +187,23 @@ export default function Step1Repies({
   // ................................................................................................
   // making all the state gloabal to use in child gloabal instead passing as props
   const contextValue = {
+    openReplyId,
     setopenReplyId,
     replyText,
     setReplyText,
     handleInputChange,
+    handleEdit,
+    userId,
+    editCommentId,
+    setEditCommentId,
+    editCommentValue,
+    editerror,
+    editCommentInputRef,
+    toggleCommentExpansion,
+    expandedComments,
+    commentId,
+    handleReplyToComment,
+    trackChangesInput,
   };
 
   return (
@@ -200,9 +213,13 @@ export default function Step1Repies({
           <div className="topCommentCard-div">
             {commentsData.map((data, i) => {
               let user = data?.userId;
-              let isShowReplies =data?.replyCount>0;
-              let showReplyText =data?.replyCount>1?`Show ${data?.replyCount} Replies`:'Show 1 Reply';
-              let hidReplyText=data?.replyCount>1?'Hide Replies':'Hide Reply'
+              let isShowReplies = data?.replyCount > 0;
+              let showReplyText =
+                data?.replyCount > 1
+                  ? `Show ${data?.replyCount} Replies`
+                  : "Show 1 Reply";
+              let hidReplyText =
+                data?.replyCount > 1 ? "Hide Replies" : "Hide Reply";
 
               let userPhoto;
               if (user?.photo) {
@@ -215,7 +232,7 @@ export default function Step1Repies({
               //Open to edit
               let isSelected = editCommentId == data._id;
               //Open Readmore
-              let isExpandComment = expandedComments == data._id;
+              let isExpandComment = expandedComments.includes(data._id);
               //
               let text = data.text;
               //if not readmore clicked
@@ -242,6 +259,7 @@ export default function Step1Repies({
                           <span className="commentTime">{formattedTime}</span>
                         </div>
                       </div>
+
                       <CommentOptions
                         handleDelete={() => {
                           handleDelete(data._id, i);
@@ -252,6 +270,7 @@ export default function Step1Repies({
                         handleReport={handleReport}
                         user={user._id == userId}
                         isShowAction={!(editCommentId == data._id)}
+                        id={data._id}
                       />
                     </div>
                     {/* ..................................................................... */}
@@ -294,32 +313,38 @@ export default function Step1Repies({
 
                       {/* These button will only display when edit clicked ... */}
                       {isSelected && (
-                        <div className="float-right mt-2 mr-5">
-                          <Button
-                            onClick={() => {
-                              setEditCommentId(0);
-                            }}
-                            style={{
-                              backgroundColor: "#f24e1e",
-                              color: "#fff",
-                            }}
-                            variant="contained"
-                          >
-                            Cancel
-                          </Button>
-                          <Button
+                        <div className="float-right mt-2">
+                          {!processing.editComment && (
+                            <Button
+                              onClick={() => {
+                                setEditCommentId(0);
+                              }}
+                              style={{ color: "#f24e1e" }}
+                              variant="text"
+                              size="small"
+                            >
+                              Cancel
+                            </Button>
+                          )}
+                          <LoadingButton
                             onClick={() => {
                               updateEditedComment(data._id, i);
                             }}
-                            style={{
-                              backgroundColor: "#0065fd",
-                              color: "#fff",
-                            }}
+                            style={{ color: "#0065fd" }}
                             className="ml-3"
-                            variant="contained"
+                            variant="text"
+                            size="small"
+                            loadingPosition="end"
+                            loading={processing.editComment}
                           >
-                            Save
-                          </Button>
+                            <div
+                              className={` ml-2 ${
+                                processing.editComment ? "mr-4" : ""
+                              }`}
+                            >
+                              {processing.editComment ? "Saving" : "Save"}
+                            </div>
+                          </LoadingButton>
                         </div>
                       )}
                     </div>
@@ -329,7 +354,7 @@ export default function Step1Repies({
                         onClick={() => toggleCommentExpansion(data._id)}
                         className="commentReadMore mt-2"
                       >
-                        {expandedComments == data._id
+                        {expandedComments.includes(data._id)
                           ? "Read Less"
                           : "Read More"}
                       </button>
@@ -360,20 +385,24 @@ export default function Step1Repies({
                                 processing.showCommentReply ? "mr-4" : ""
                               }`}
                             >
-                              {!(commentId == data._id)
-                                ? showReplyText
-                                : hidReplyText}
+                              {/*processing.showCommentReply because it shhould change text after loading  */}
+
+                              {!processing.showCommentReply
+                                ? !(commentId == data._id)
+                                  ? showReplyText
+                                  : hidReplyText
+                                : showReplyText}
                             </span>
                           </LoadingButton>
                         </div>
                         <div>
-                          <button
+                          <LoadingButton
                             onClick={() => {
                               handleReplyToComment(data._id, true);
                             }}
                           >
                             Reply
-                          </button>
+                          </LoadingButton>
                         </div>
                       </div>
                     )}
@@ -390,16 +419,8 @@ export default function Step1Repies({
                     tempReplyData={tempReplyData}
                     setTempReplyData={setTempReplyData}
                     setEditCommentId={setEditCommentId}
-                    editCommentId={editCommentId}
                     handleEdit={handleEdit}
-                    trackChangesInput={trackChangesInput}
                     editCommentValue={editCommentValue}
-                    editCommentInputRef={editCommentInputRef}
-                    expandedComments={expandedComments}
-                    setExpandedComments={setExpandedComments}
-                    toggleCommentExpansion={toggleCommentExpansion}
-                    handleReplyToComment={handleReplyToComment}
-                    openReplyId={openReplyId}
                   />
                 </div>
               );

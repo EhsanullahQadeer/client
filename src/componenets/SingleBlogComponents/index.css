@@ -8,7 +8,6 @@
   max-width: 720px;
 }
 .singleBlog-content p {
-  /* white-space: pre; */
   overflow-wrap: break-word;
   word-wrap: break-word;
 }
@@ -368,7 +367,7 @@ width: 45px;
   height: 57px;
   width: 57px;
 }
-/*  */
+
 .like-container {
   position: relative;
   display: inline-block;
@@ -403,6 +402,17 @@ width: 45px;
 .commentReplyMain span{
   font-size: 13px;
 }
+.replyUserNameMain {
+  font-size: 14px !important;
+  margin-top: -10px !important  ;
+}
+.replyUserNameMain span{
+ color: #0065fd;
+}
+.css-repss6.Mui-error::before, .css-repss6.Mui-error::after{
+  border: none !important;
+}
+
 @keyframes heartbeat {
   0%, 100% {
     transform:  rotate(0deg) scale(1);
@@ -415,7 +425,7 @@ width: 45px;
 
   }
 }
-/*  */
+
 
 
 

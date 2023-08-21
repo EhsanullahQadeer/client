@@ -15,13 +15,13 @@ export default function WriteComment({ setCommentsData, processing }) {
 
   //Create comment
   const submitComment = () => {
-    let submit = inputValue.replace(/\s/g, "").length > 1;
+    let submit = inputValue.replace(/\s/g, "").length > 0;
     if (submit) {
       let data = { blogId: blogId, userId: userId, text: inputValue };
 
       dispatch(createCommentApi(data)).then((res) => {
         if (!res.error) {
-          debugger
+          debugger;
           setCommentsData((pre) => [res.payload, ...pre]);
           setInputValue("");
         }
@@ -76,12 +76,13 @@ export default function WriteComment({ setCommentsData, processing }) {
             size="small"
             onClick={submitComment}
             loading={processing}
-            loadingIndicator=" "
-            variant="standard"
+            loadingPosition="end"
+            variant="text"
+            style={{ color: "#57638b" }}
           >
-            <h2 className="commentFurther m-0">
-              {processing ? "Submitting..." : "Comment"}
-            </h2>
+            <span className={`commentFurther ${processing ? "mr-4" : ""}`}>
+              {processing ? "Submitting" : "Comment"}
+            </span>
           </LoadingButton>
         </div>
       </div>
