@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import TextField from "@mui/material/TextField";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
-
+import { Writer_Files_URL } from "../../../utils";
 export default function SmallComment({
   replyDataValue,
   replyIndex,
@@ -87,14 +87,18 @@ export default function SmallComment({
   } else {
     editProcessing = processing.editCommentReply;
   }
-  console.log(processing.replyToComment);
+  //
+  let userPhoto;
+  if (replyUser?.photo) {
+    userPhoto = Writer_Files_URL + replyUser?.photo;
+  }
   return (
     <div className="commentReply_card commentReplyMain">
       <div className="d-flex justify-content-between commentHeader">
         <div className="d-flex">
           <img
-            className="replyUserImg"
-            src={replyDataValue.photo || defImg}
+            className="replyUserImg  img-fluid rounded-circle"
+            src={userPhoto || defImg}
             alt="img"
           />
           <div>
@@ -241,7 +245,6 @@ export default function SmallComment({
               <span
                 className={` ml-2 ${processing.showReplyToReply ? "mr-4" : ""}`}
               >
-                {console.log(currentReplyId[0])}
                 {/*processing.showReplyToReply because it shhould change text after loading  */}
                 {/* currentReplyId[0] beacuse theri is herarically replies open more ids availbe we jsut want to get latest */}
                 {!processing.showReplyToReply

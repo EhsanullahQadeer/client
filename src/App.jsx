@@ -41,8 +41,8 @@ const App = () => {
   }
   return (
     <div id="App" className="appMain">
-      {/* {isLoading &&
-       <Global_Loader />} */}
+      {isLoading &&
+       <Global_Loader />}
       <HashRouter>
         <ScrollToTop />
         <CheckUser />

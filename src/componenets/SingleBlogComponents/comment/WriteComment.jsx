@@ -47,9 +47,7 @@ export default function WriteComment({ setCommentsData, processing }) {
           src={curentuserImg || defImg}
         />
         <p className="commentWriterFlexName">
-          {activeUser?.name
-            ? activeUser?.name
-            : activeUser?.firstName(activeUser?.lastName)}
+        {activeUser?.name ? activeUser?.name : `${activeUser?.firstName} ${activeUser?.lastName}`}
         </p>
       </div>
       <div className="mt-4">
