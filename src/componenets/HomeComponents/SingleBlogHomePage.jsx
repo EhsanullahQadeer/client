@@ -17,13 +17,26 @@ export default function SingleBlogHomePage(props) {
         <img src={src} />
       </div>
       <div className="blogsContent">
-        <div className="travelChip">
-          <p>{props.category}</p>
+        <div className="travelChipSection">
+          <div className="travelChip travelChipCategory">
+            <p>{props.category}</p>
+          </div>
+          <div className="trendingFlex-writerTop">
+            <div className="trendingFlex-img">
+              {writerPhoto ? (
+                <img src={writerPhoto} />
+              ) : (
+                <AccountCircleIcon className="dummyProfileImage" />
+              )}
+            </div>
+
+            <p>{props?.name}</p>
+          </div>
         </div>
         <div className="blogsHead">
           <p>{props?.title}</p>
         </div>
-        <div className="trendingFlex">
+        <div className="trendingFlex homeTrendingFlex">
           <div className="trendingFlexSections trendingFlex-writer">
             <div className="trendingFlex-img">
               {writerPhoto ? (
