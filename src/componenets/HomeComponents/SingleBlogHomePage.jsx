@@ -12,34 +12,55 @@ export default function SingleBlogHomePage(props) {
   let description= gettingBlogDescription(props?.description);
   let src=gettingTumbnailImg(props?.description)
   return (
-    <div className="singleBlog">
-      <div className="singleBlog-img">
+    <div className="singleBlog homeSingleBlog">
+      <div className="singleBlog-img homeSingleBlog-img">
         <img src={src} />
       </div>
       <div className="blogsContent">
-        <div className="travelChip">
-          <p>{props.category}</p>
+        <div className="travelChipSection">
+          <div className="travelChip travelChipCategory">
+            <p>{props.category}</p>
+          </div>
+          <div className="trendingFlex-writerTop">
+            <div className="trendingFlex-img">
+              {writerPhoto ? (
+                <img src={writerPhoto} />
+              ) : (
+                <AccountCircleIcon className="dummyProfileImage" />
+              )}
+            </div>
+
+            <p>{props?.name}</p>
+          </div>
         </div>
         <div className="blogsHead">
           <p>{props?.title}</p>
         </div>
-        <div className="trendingFlex">
-          <div className="trendingFlex-img">
-            {writerPhoto ? (
-              <img src={writerPhoto} />
-            ) : (
-              <AccountCircleIcon className="dummyProfileImage" />
-            )}
+        <div className="trendingFlex homeTrendingFlex">
+          <div className="trendingFlexSections trendingFlex-writer">
+            <div className="trendingFlex-img">
+              {writerPhoto ? (
+                <img src={writerPhoto} />
+              ) : (
+                <AccountCircleIcon className="dummyProfileImage" />
+              )}
+            </div>
+
+            <p>{props?.name} |</p>
+            {/* <p>|</p> */}
           </div>
 
-          <p>{props?.name}</p>
-          <p>|</p>
-          <span className="fa-sharp fa-regular fa-calendar-days fa-sm"></span>
+          <div className="trendingFlexSections">
+            <span className="fa-sharp fa-regular fa-calendar-days fa-sm"></span>
 
-          <p>{props?.date}</p>
-          <p>|</p>
-          <span className="fa-sharp fa-regular fa-clock fa-sm"></span>
-          <p>{props?.time}</p>
+            <p>{props?.date} |</p>
+            {/* <p>|</p> */}
+          </div>
+
+          <div className="trendingFlexSections">
+            <span className="fa-sharp fa-regular fa-clock fa-sm"></span>
+            <p>{props?.time}</p>
+          </div>
         </div>
         <p
           className="trendingEnd-blog"

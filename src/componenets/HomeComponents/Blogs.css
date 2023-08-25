@@ -1,6 +1,7 @@
 .singleBlog {
   display: flex;
 }
+
 .blogsPart1{
   flex: 3;
 }
@@ -9,10 +10,11 @@
 }
 .singleBlog-img img{
   height: 152px;
-width: 225px;
-border-radius: 5px;
-object-fit: cover;
+  width: 225px;
+  border-radius: 5px;
+  object-fit: cover;
 }
+
 .blogsMain {
   padding: 85px 10% 114px;
   width: 100%;
@@ -54,8 +56,8 @@ padding: 1px 8px ;
   justify-content: center;
   margin: 50px 0px;
   height: 212px;
-max-width: 721px;
-border-radius: 10px;
+  max-width: 721px;
+  border-radius: 10px;
 }
 .addHere h1 {
   color: #d1e4e1;
@@ -101,10 +103,39 @@ border: none;
 color: #0065fd;
 
 }
+/* ******** New ********* */
+.travelChipSection{
+  margin-bottom: 10px;
+}
+.travelChipCategory{
+  margin-bottom: 0;
+}
+.trendingFlex-writerTop{
+  display: none;
+}
+.trendingFlex-writerTop p{
+    font-family: "Noto Sans", sans-serif;
+    color: #777777;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.homeTrendingFlex{
+  flex-wrap: wrap;
+}
+.trendingFlexSections{
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.trendingFlex-img{
+  display: flex;
+} 
+
 .trendingFlex-img img{
   border-radius: 50%;
   height: 18px;
-width: 18px;
+  width: 18px;
 }
 
 @media screen and (max-width: 1270px) {
@@ -136,6 +167,18 @@ width: 18px;
       flex-direction: column;
       row-gap: 20px;
     }
+
+    /* ****** New ******* */
+    .homeSingleBlog{
+      flex-direction: row-reverse;
+      gap: 20px;
+    }
+    .homeSingleBlog-img img{
+      width: 200px;
+      height: 134px;
+      min-height: 100%;
+    }
+
     .blogsMain {
       padding: 40px 10% 40px;
     }
@@ -148,16 +191,74 @@ width: 18px;
     .addHere h1 {
       font-size: 44px;
     }
+    /* ***** New ***** */
+    .homeSingleBlog .blogsContent{
+      width: -webkit-fill-available;
+    }
+    .homeSingleBlog .blogsHead p{
+      font-size: 20px;
+    }
+    .homeSingleBlog .trendingEnd-blog{
+      display: none;
+    }
+    .travelChipSection .travelChipCategory{
+      float: right;
+    }
+    .trendingFlex-writerTop{
+      display: flex;
+      gap: 7px;
+      align-items: center;
+      /* flex-wrap: wrap; */
+    }
+    .trendingFlex-writer{
+      display: none;
+    }
+    }
+
+    @media (max-width: 727px) {
+      .homeSingleBlog-img img{
+        width: 150px;
+        height: 100px;
+      }
+      .homeSingleBlog .blogsHead p{
+        font-size: 16px;
+      }
+ 
     }
     @media (max-width:576px) {
+      /* .blogsMain {
+        padding: 85px 5% 20px ;
+      } */
       .blogsMain {
-        padding: 85px 10% 20px ;
+        padding: 85px 5% 20px;
       }
+      .homeSingleBlog{
+        gap: 10px;
+      }
+
       .blogsPart2{
         display: none;
       }
      }
-      
+
+     /* ******* New ******** */
+     @media (max-width: 552px) {
+      .homeSingleBlog-img img{
+        width: 130px;
+        height: 100px;
+      }
+      .homeSingleBlog .blogsHead p{
+        font-size: 16px;
+      }
+      .trendingFlexSections{
+        gap: 2px;
+      }
+    }
+    @media (max-width: 470px) {
+      .travelChipCategory{
+        display: none;
+      }
+    }
 
     
     
