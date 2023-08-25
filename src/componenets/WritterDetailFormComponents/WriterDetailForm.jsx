@@ -6,8 +6,8 @@ import { updateActiveUser } from "../../features/user/userSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Alert from "../Alert/WriterRequestAlert";
 import numberLength from "./numberLegth.js";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
+// import "react-phone-number-input/style.css";
+// import PhoneInput from "react-phone-number-input";
 
 // function Example() {
 //   // `value` will be the parsed phone number in E.164 format.
