@@ -32,11 +32,11 @@ const Navbar = ({ signIn, getStarted, person }) => {
                 About Us
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link className="fancy-link" to="/about">
                 Our Story
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link className="fancy-link" to="/Write">
@@ -89,10 +89,7 @@ const Navbar = ({ signIn, getStarted, person }) => {
         />
         <nav>
           <ul>
-          <li>
-          {activeUser && <Profile_Logo profile={false} />}
-
-          </li>
+            <li>{activeUser && <Profile_Logo profile={false} />}</li>
             <li>
               <Link
                 onClick={() => setHam(true)}
@@ -111,7 +108,7 @@ const Navbar = ({ signIn, getStarted, person }) => {
                 About Us
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={() => setHam(true)}
                 className="fancy-link links"
@@ -119,7 +116,7 @@ const Navbar = ({ signIn, getStarted, person }) => {
               >
                 Our Story
               </Link>
-            </li>
+            </li> */}
 
             <li>
               <Link

@@ -12,7 +12,10 @@ const LearnWritting = () => {
       <div className="learnMain">
         {/*  */}
         <div className="leanContentMain">
-          <h1><span className="underline">Want to </span>Become an author or Learn Writing </h1>
+          <h1>
+            <span className="underline">Want to </span>Become an author or Learn
+            Writing{" "}
+          </h1>
           <div className="learnMainContent">
             <p>
               Dynamically underwhelm integrated outsourcing via timely models.
@@ -32,13 +35,19 @@ const LearnWritting = () => {
               Lorem Ipsum
             </p>
             <div className="learnWritingBtns">
-              <Link to="/WriterForm"><button className="joinBtn active">Join Writing Course</button></Link>
-              <button className="whatsAppBtn trans-btn-hv">
-                <div className="learnFlex">
-                <span className="fa-brands fa-whatsapp"></span> <span className="position-absolute ml-3">+92-333-1234567</span>
-                  
-                </div>
-              </button>
+              <Link to="/WriterForm">
+                <button className="joinBtn active">Join Writing Course</button>
+              </Link>
+              <a target="_blank" href="https://api.whatsapp.com/send?phone=923041743379">
+                <button className="whatsAppBtn trans-btn-hv">
+                  <div className="learnFlex">
+                    <span className="fa-brands fa-whatsapp"></span>{" "}
+                    <span className="position-absolute ml-3">
+                      +92-304-1743379
+                    </span>
+                  </div>
+                </button>
+              </a>
             </div>
           </div>
         </div>

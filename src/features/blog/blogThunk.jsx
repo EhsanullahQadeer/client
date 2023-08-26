@@ -13,10 +13,10 @@ export const setupCreateBlog = createAsyncThunk(
 export const getSingleCategoryBlogsApi = createAsyncThunk(
   "blog/getSingleCategoryBlogsApi",
   async (data, thunkAPI) => {
-    let pageIndex=data.pageIndex;
+    let pageIndex = data.pageIndex;
     return await axios.get(
       `blog/getSingleCategoryBlogs?pageIndex=${pageIndex}&pageSize=${data.pageSize}&category=${data.category}&storyType=${data.storyType}`,
-      pageIndex > 1?undefined:axiosShowLoader
+      pageIndex > 1 ? undefined : axiosShowLoader
     );
   }
 );
@@ -27,8 +27,7 @@ export const getAllBLogsApi = createAsyncThunk(
     let pageSize = 13;
     return await axios.get(
       `blog/?pageIndex=${pageIndex}&pageSize=${pageSize}`,
-    pageIndex > 1?'':axiosShowLoader
-
+      pageIndex > 1 ? "" : axiosShowLoader
     );
   }
 );
@@ -114,5 +113,12 @@ export const getBookmarkApi = createAsyncThunk(
         data?.pageIndex || 1
       }&pageSize=${data?.pageSize || 10}`
     );
+  }
+);
+//getQuickStats
+export const getQuickStatsApi = createAsyncThunk(
+  "blog/getQuickStatsApi",
+  async (_, thunkAPI) => {
+    return await axios.get(`recent/getQuickStats`, axiosShowLoader);
   }
 );

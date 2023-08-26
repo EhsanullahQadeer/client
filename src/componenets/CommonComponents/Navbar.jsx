@@ -45,24 +45,20 @@ const Navbar = () => {
                 About Us
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link className="fancy-link" to="/about">
                 Our Story
               </Link>
-            </li>
+            </li> */}
             {/* <li>
             <Link className="fancy-link" to="/courses">
                 courses
               </Link>
             </li> */}
             <li>
-                <Link
-                  onClick={scrollToWrite}
-                  className="fancy-link"
-                  to="/Write"
-                >
-                  Write
-                </Link>
+              <Link onClick={scrollToWrite} className="fancy-link" to="/Write">
+                Write
+              </Link>
             </li>
             <li>
               <Link
@@ -118,7 +114,7 @@ const Navbar = () => {
                 About Us
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 onClick={() => setHam(true)}
                 className="links fancy-link"
@@ -126,7 +122,7 @@ const Navbar = () => {
               >
                 Our Story
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 onClick={() => {

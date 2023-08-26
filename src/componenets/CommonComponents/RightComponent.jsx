@@ -9,19 +9,25 @@ import timeToRead from "../timeToRead/timeToRead";
 import { gettingTumbnailImg } from "../logicFunctionalities/logics";
 import { useDispatch, useSelector } from "react-redux";
 import { Writer_Files_URL } from "../../utils";
-import { getSingleCategoryBlogsApi } from "../../features/blog/blogThunk";
+import {
+  getSingleCategoryBlogsApi,
+  getQuickStatsApi,
+} from "../../features/blog/blogThunk";
 
 const RightComponent = (props) => {
   const { userId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [topStr, setTopStr] = useState([]);
   const [topWriters, setTopWriters] = useState([]);
+  const [quickStats, setQuickStats] = useState({});
 
   useEffect(() => {
+    //topWritter
     let writerData = { pageIndex: 1, pageSize: 3 };
     dispatch(setupGetTopWritters(writerData)).then(({ payload }) => {
       setTopWriters(payload[0].topWriter);
     });
+    // topStories
     let data = {
       pageIndex: 1,
       pageSize: 4,
@@ -30,6 +36,10 @@ const RightComponent = (props) => {
     dispatch(getSingleCategoryBlogsApi(data)).then((res) => {
       let result = res.payload[0];
       setTopStr(result.blogs);
+    });
+    // quickStats
+    dispatch(getQuickStatsApi()).then(({payload}) => {
+      setQuickStats(payload)
     });
   }, []);
   return (
@@ -156,19 +166,19 @@ const RightComponent = (props) => {
           </div>
           <div className="quick-stats">
             <div className="quick-stats-items">
-              <p className="amount">14</p>
+              <p className="amount">{quickStats?.newPosts}</p>
               <p className="amountContent">New Post</p>
             </div>
             <div className="quick-stats-items">
-              <p className="amount">480</p>
+              <p className="amount">{quickStats?.totalVisitors}</p>
               <p className="amountContent">total visitors</p>
             </div>
             <div className="quick-stats-items">
-              <p className="amount">29</p>
+              <p className="amount">{quickStats?.newSubscribers}</p>
               <p className="amountContent">New subscribers</p>
             </div>
             <div className="quick-stats-items">
-              <p className="amount">138</p>
+              <p className="amount">{quickStats?.blogRead}</p>
               <p className="amountContent">blog read</p>
             </div>
           </div>
