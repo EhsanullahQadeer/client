@@ -175,8 +175,10 @@ color: #0065fd;
     }
     .homeSingleBlog-img img{
       width: 200px;
-      height: 134px;
+      height: 0;
+      /* height: 134px; */
       min-height: 100%;
+      max-height: 100%;
     }
 
     .blogsMain {
@@ -198,6 +200,9 @@ color: #0065fd;
     .homeSingleBlog .blogsHead p{
       font-size: 20px;
     }
+    .homeTrendingFlex{
+      margin-bottom: 0;
+    }
     .homeSingleBlog .trendingEnd-blog{
       display: none;
     }
@@ -218,7 +223,7 @@ color: #0065fd;
     @media (max-width: 727px) {
       .homeSingleBlog-img img{
         width: 150px;
-        height: 100px;
+        /* height: 100px; */
       }
       .homeSingleBlog .blogsHead p{
         font-size: 16px;
@@ -245,7 +250,7 @@ color: #0065fd;
      @media (max-width: 552px) {
       .homeSingleBlog-img img{
         width: 130px;
-        height: 100px;
+        /* height: 100px; */
       }
       .homeSingleBlog .blogsHead p{
         font-size: 16px;

@@ -212,6 +212,13 @@ margin-top:8px;
       gap: 30px;
     }
   }
-   
-  
+
+  @media (max-width:576px) {
+    .footerMain {
+      padding: 55px 5%;
+    }
+    .footerLastPart {
+      padding: 20px 5%;
+    }
+  }
 

@@ -7,8 +7,11 @@
   cursor: pointer !important;
   border-radius: 100%;
 }
-
-
+@media (max-width:576px) {
+  .home-page-curosel-div{
+    padding: 73px 5% 93px 5%;
+  }
+}
 
 
 

@@ -161,6 +161,11 @@ i {
     margin-bottom: 20px;
   }
 }
+@media (max-width:576px) {
+  .trendingMain {
+    padding: 40px 5%;
+  }
+}
 @media (max-width: 450px) {
   .trendingFlex {
     gap: 4px;

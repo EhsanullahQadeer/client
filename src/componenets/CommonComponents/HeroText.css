@@ -38,6 +38,12 @@
   .heroTextMain h1 {
     font-size: 42px;}
   }
+
+  @media (max-width:576px) {
+    .hero-text-div{
+      padding: 40px 5%;
+    }
+  }
  
 
     
