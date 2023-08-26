@@ -15,15 +15,12 @@
   color: #292929;
   font-weight: 500;
   font-size: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 47px;
 }
 
 .trendingContainer {
   display: flex;
   flex-direction: column;
-}
-.trendingText h2 {
-  margin-bottom: 47px;
 }
 
 .trendingHead {
@@ -157,8 +154,14 @@ i {
   }
 }
 @media (max-width: 768px) {
-  rendingText h2 {
+  .trendingText h2 {
+    font-size: 16px;
     margin-bottom: 20px;
+    line-height: 20px;
+  }
+  .trendingHead{
+    font-weight: 700;
+    font-size: 16px;
   }
 }
 @media (max-width:576px) {

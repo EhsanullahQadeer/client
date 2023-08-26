@@ -16,7 +16,7 @@ const Trending = () => {
   }, []);
   return (
     <div className="trendingMain">
-      <div className="trendingText">
+      <div className="trendingText trendingTextHome">
         <h2 className="fancyDectorationTrading trendingText-h2">Trending</h2>
 
         <div className="trendingGrid">

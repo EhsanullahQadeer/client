@@ -175,8 +175,8 @@ cursor: pointer;
 
 .ham {
   display: none;
-  font-size: 40px;
   cursor: pointer;
+  color: white;
 }
 
 .navBarLogo {
@@ -186,10 +186,6 @@ cursor: pointer;
 
 .signUp {
   background-color: #0065fd;
-}
-
-.ham {
-  color: white;
 }
 
 .fancy-link {
@@ -234,6 +230,7 @@ cursor: pointer;
   }
   .ham {
     display: block;
+    font-size: 40px;
   }
   .smal-screen-nav {
     display: block;
@@ -246,7 +243,6 @@ cursor: pointer;
     gap: 20px;
   }
 }
-
 
 .fancyDectorationTrading {
   text-decoration: none;
@@ -373,13 +369,23 @@ cursor: pointer;
       /* padding-top: 10px; */
       padding: 30px 40px;
     }}
-    @media (max-width:576px) {
+    @media screen and (max-width:576px) {
       .nav-main {
         /* padding: 10px 10%; */
         /* padding-top: 10px; */
         padding: 30px 20px;
-      }}
-      
+      }
+      .smal-screen-nav nav ul li a{
+        font-size: 18px;
+      }
+      .small-screen-close {
+        font-size: 30px;
+      }
+      .ham{
+        font-size: 30px;
+      }
+    }
+
 
 
      

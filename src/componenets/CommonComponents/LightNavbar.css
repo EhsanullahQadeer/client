@@ -271,3 +271,15 @@
 .smal-screen-nav nav ul li a {
   color: #fcfcfc;
 }
+
+@media screen and (max-width:576px) {
+  .smal-screen-nav nav ul li a{
+    font-size: 18px;
+  }
+  .small-screen-close {
+    font-size: 30px;
+  }
+  .ham{
+    font-size: 30px;
+  }
+}

@@ -63,7 +63,8 @@
 
 .blogContentHeading {
   font-size: 30px;
-  font-weight: 400;
+  /* font-weight: 400; */
+  font-weight: 700;
   font-family: "Arial";
   color: #3e3d41;
   margin-top: 24px;
@@ -442,5 +443,29 @@ width: 45px;
   }
   .blogIconsMain {
     margin-top: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .blogContentHeading{
+    font-weight: 700;
+    margin-top: 18px;
+    margin-bottom: 28px;
+  }
+  .blogContentMain p{
+    margin-bottom: 22px;
+  }
+}
+
+@media (max-width: 576px) {
+  .blogContentHeading {
+    font-size: 25px;
+  }
+  .blogContentMain p {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  .commnetsResponse {
+    font-size: 22px;
   }
 }

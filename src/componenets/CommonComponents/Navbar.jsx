@@ -56,13 +56,9 @@ const Navbar = () => {
               </Link>
             </li> */}
             <li>
-                <Link
-                  onClick={scrollToWrite}
-                  className="fancy-link"
-                  to="/Write"
-                >
-                  Write
-                </Link>
+              <Link onClick={scrollToWrite} className="fancy-link" to="/Write">
+                Write
+              </Link>
             </li>
             <li>
               <Link
@@ -87,7 +83,10 @@ const Navbar = () => {
           {activeUser && <Profile_Logo profile={true} />}
         </div>
 
-        <GiHamburgerMenu className="ham" onClick={() => setHam(false)} />
+        <GiHamburgerMenu
+          className="ham homeNavHam"
+          onClick={() => setHam(false)}
+        />
       </div>
 
       <div
@@ -95,7 +94,7 @@ const Navbar = () => {
       >
         <AiOutlineClose
           onClick={() => setHam(true)}
-          className="small-screen-close"
+          className="small-screen-close homeNavClose"
         />
         <nav>
           <ul>
