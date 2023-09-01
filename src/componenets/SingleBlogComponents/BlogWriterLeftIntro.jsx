@@ -27,9 +27,9 @@ const BlogWriterLeftIntro = ({
   const [url, setUrl] = useState('');
   const [isCopied, setIsCopied] = useState(false);
   const allUrls = {
-    Facebook: `https://www.facebook.com/dialog/share&app_id=${''}&display=popup&href=https://howsquare.com/${location.hash}`,
-    Twitter: `https://twitter.com/intent/tweet?text=${blogTitle}&url=https://howsquare.com/${location?.hash}`,
-    Linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=https://howsquare.com/${location?.hash}`,
+    Facebook: `https://www.facebook.com/dialog/share&app_id=${''}&display=popup&href=${location.href}`,
+    Twitter: `https://twitter.com/intent/tweet?text=${blogTitle}&url=${location?.href}`,
+    Linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${location?.href}`,
   };
   const handleOnClick = (title)=> {
     if (title == 'copy') {

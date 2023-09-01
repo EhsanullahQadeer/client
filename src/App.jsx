@@ -24,7 +24,7 @@ import {
   WriterPublicProfile,
   SingleBlog,
 } from "./pages/index";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import { AxiosApihandling } from "./functions/ApiHandling";
 import Global_Loader from "./componenets/Alert/Global_Loader";
@@ -43,7 +43,7 @@ const App = () => {
     <div id="App" className="appMain">
       {isLoading &&
        <Global_Loader />}
-      <HashRouter>
+      <Router>
         <ScrollToTop />
         <CheckUser />
         <Routes>
@@ -74,7 +74,7 @@ const App = () => {
           <Route path="/profile/:writerId" element={<WriterProfile />} />
           <Route path="/category/:categoryName" element={<Category />} />
         </Routes>
-      </HashRouter>
+      </Router>
     </div>
   );
 };
