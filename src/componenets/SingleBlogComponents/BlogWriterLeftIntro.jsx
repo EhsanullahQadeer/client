@@ -8,15 +8,43 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router-dom";
 //
 import BookMark from "./BookMark";
+import { ShareConfirmModal } from "../CommonComponents/ShareConfirmModal";
+import { Tooltip } from "antd";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 const BlogWriterLeftIntro = ({
   name,
   image,
+  blogTitle,
   date,
   time: timeData,
   writerId,
   setisBookMarked,
   isBookmarked,
 }) => {
+  const [btnTitle, setBtnTitle] = useState('open');
+  const [open, setOpen] = useState(false);
+  const [url, setUrl] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
+  const allUrls = {
+    Facebook: `https://www.facebook.com/dialog/share&app_id=${''}&display=popup&href=${location.href}`,
+    Twitter: `https://twitter.com/intent/tweet?text=${blogTitle}&url=${location?.href}`,
+    Linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${location?.href}`,
+  };
+  const handleOnClick = (title)=> {
+    if (title == 'copy') {
+      setIsCopied(true);
+      window.navigator.clipboard.writeText(`${location.href}`);
+      setTimeout(() => {
+        setIsCopied(false);
+      }, 2000);
+    } else {
+      setOpen(true);
+      setUrl(allUrls[`${title}`]);
+      setBtnTitle(title);
+    }
+
+  };
   return (
     <div className="blogsWriterLeftIntroMain">
       {/*  */}
@@ -58,24 +86,17 @@ const BlogWriterLeftIntro = ({
       {/*  */}
       <div className="d-flex align-items-center mt-3 mt-sm-0">
         <div className="blogIconsMain mr-5">
-          <a href="">
-            <CiTwitter className="blogIcons fa-lg mx-1" />
-          </a>
-          <a href="">
-            <CiFacebook className="blogIcons fa-lg mx-1" />
-          </a>
-          <a href="">
-            <AiOutlineLinkedin className="blogIcons fa-lg mx-1" />
-          </a>
-          <a href="">
-            <BiLinkAlt className="blogIcons fa-lg mx-1" />
-          </a>
+          <CiTwitter onClick={()=> handleOnClick('Twitter')} className="blogIcons fa-lg mx-1" />
+          <CiFacebook onClick={()=> handleOnClick('Facebook')} className="blogIcons fa-lg mx-1" />
+          <AiOutlineLinkedin onClick={()=> handleOnClick('Linkedin')} className="blogIcons fa-lg mx-1" />
+          <Tooltip title={<div>{isCopied && <FontAwesomeIcon icon={faCheck} color="#4DFF4D"/>} {!isCopied ? 'Copy' : 'Copied!'}</div>}><BiLinkAlt onClick={()=> handleOnClick('copy')} className="blogIcons fa-lg mx-1" /></Tooltip>
         </div>
         <BookMark
           setisBookMarked={setisBookMarked}
           isBookmarked={isBookmarked}
         />
       </div>
+      <ShareConfirmModal title={blogTitle} url={url} btnTitle={btnTitle} open={open} setOpen={setOpen} />
     </div>
   );
 };

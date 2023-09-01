@@ -67,6 +67,7 @@ const SingleBlog = () => {
             date={date}
             time={time}
             blogId={singleBlog?._id}
+            blogTitle={singleBlog.title}
             writerId={writerId}
             setisBookMarked={setisBookMarked}
             isBookmarked={isBookmarked}
