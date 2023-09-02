@@ -26,37 +26,15 @@ export function RemoveBookMarkAlert(isRemoved) {
     });
   });
 }
-//
-export function RedirectToLoginAlert() {
-  const Alert = withReactContent(Swal);
-  Alert.fire({
-    title: "<strong>Not logged In</strong>",
-    icon: "info",
-    html: "Do you want to login/signup?",
-    showCloseButton: true,
-    showCancelButton: true,
-    focusConfirm: false,
-    confirmButtonText: 'Yes <span class="fa fa-thumbs-up"></span> ',
-    confirmButtonAriaLabel: "Thumbs up, great!",
-    cancelButtonText: 'No <span class="fa fa-thumbs-down"></span>',
-    cancelButtonAriaLabel: "Thumbs down",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      window.location.hash = "signIn";
-    }
-  });
-  return null;
-}
-//
 
-export function AuthenticateAlert({title,desc}) {
+export function AuthenticateAlert({ title, desc }) {
   const Alert = withReactContent(Swal);
   Alert.fire({
     allowOutsideClick: false,
     timer: 1000,
     icon: "success",
-    title:title,
-    text:desc,
+    title: title,
+    text: desc,
     didOpen: () => {
       Alert.showLoading();
     },

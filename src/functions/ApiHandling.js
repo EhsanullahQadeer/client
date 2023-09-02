@@ -1,6 +1,6 @@
 import axios from "axios";
-import { RedirectToLoginAlert } from "../componenets/Alert/Alerts";
 import { BACK_END_URL } from "../utils";
+import { RedirectToLoginAlert } from "../componenets/Alert/AuthAlert";
 var loadingStatusArray = [];
 function removeUserFromLocalStorage() {
   localStorage.removeItem("user");

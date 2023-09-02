@@ -74,3 +74,31 @@
   color: var(--green-dark);
   background: var(--green-light);
 }
+.swal2-actions {
+  flex-direction: column !important;
+}
+.swal2-confirm {
+  width: 300px !important;
+  background-color: #0D6EFD !important;
+  border:1px solid #0D6EFD !important;
+  border-radius: 30px !important;
+  &:hover {
+    background: #0D6EFDcc !important;
+    /* color: #121212 !important; */
+  }
+}
+.swal2-cancel {
+  width: 300px !important;
+  border-radius: 30px !important;
+  border: 1px solid #a3a4a4 !important;
+  background: transparent !important;
+  color: #121212 !important;
+  &:hover {
+    border:1px solid #0D6EFD !important;
+  }
+}
+.swal2-close {
+  &:focus {
+    box-shadow: none !important;
+  }
+}
