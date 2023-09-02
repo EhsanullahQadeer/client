@@ -84,6 +84,7 @@ useEffect(()=>{
               time={time}
               description={data?.description}
               category={data?.category}
+              writer={data?.writer}
              /></Link>
             );
           })}

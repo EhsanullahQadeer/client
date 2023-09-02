@@ -3,6 +3,7 @@ import parse from "html-react-parser";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Writer_Files_URL } from "../../utils";
 import { gettingBlogDescription,gettingTumbnailImg } from "../logicFunctionalities/logics";
+import { Link } from "react-router-dom";
 export default function SingleBlogHomePage(props) {
   //For blog tumbnail
   let writerPhoto;
@@ -18,9 +19,9 @@ export default function SingleBlogHomePage(props) {
       </div>
       <div className="blogsContent">
         <div className="travelChipSection">
-          <div className="travelChip travelChipCategory">
+          <Link to={`/category/${props?.category}`} className="travelChip travelChipCategory">
             <p>{props.category}</p>
-          </div>
+          </Link>
           <div className="trendingFlex-writerTop">
             <div className="trendingFlex-img">
               {writerPhoto ? (
@@ -37,7 +38,7 @@ export default function SingleBlogHomePage(props) {
           <p>{props?.title}</p>
         </div>
         <div className="trendingFlex homeTrendingFlex">
-          <div className="trendingFlexSections trendingFlex-writer">
+          <Link to={`/WriterPublicProfile/${props?.writer}`} title="Open writer profile" className="trendingFlexSections trendingFlex-writer">
             <div className="trendingFlex-img">
               {writerPhoto ? (
                 <img src={writerPhoto} />
@@ -48,7 +49,7 @@ export default function SingleBlogHomePage(props) {
 
             <p>{props?.name} |</p>
             {/* <p>|</p> */}
-          </div>
+          </Link>
 
           <div className="trendingFlexSections">
             <span className="fa-sharp fa-regular fa-calendar-days fa-sm"></span>

@@ -36,14 +36,14 @@ const Trending = () => {
               <Link className="link" to={`/blog/${item?._id}/${userId}`}>
                 <div className="trendingContainer">
                   <a className="trendingHead">{item?.title}</a>
-                  <div className="trendingFlex">
+                  <Link to={`/WriterPublicProfile /${item?.writer?._id}`} className="trendingFlex">
                     {writerImg ? (
                       <img className="rounded-circle" src={writerImg} />
                     ) : (
                       <AccountCircleIcon className="dummyProfileImage" />
                     )}
                     <p>{item?.writer?.name}</p>
-                  </div>
+                  </Link>
                   <div className="trendingTime">
                     <span className="fa-sharp fa-regular fa-calendar-days fa-sm"></span>
                     <p>{date}</p>

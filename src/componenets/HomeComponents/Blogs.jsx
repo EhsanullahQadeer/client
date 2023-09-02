@@ -78,6 +78,7 @@ const Blogs = () => {
               time={time}
               description={data?.description}
               category={data?.category}
+              writer={data?.writer}
              /></Link>
             );
           })}
@@ -99,6 +100,7 @@ const Blogs = () => {
               time={time}
               description={data?.description}
               category={data?.category}
+              writer={data?.writer}
              /></Link>
             );
           })}

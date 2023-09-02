@@ -27,7 +27,6 @@ const WritersList = () => {
       };
       dispatch(setupGetTopWritters(apiData)).then(({ payload }) => {
         setWritersData((pre) => {
-          console.log(payload[0].totalRecords[0].total);
           return [...pre, ...payload[0].topWriter];
         });
       });
