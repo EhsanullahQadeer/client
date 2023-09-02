@@ -38,6 +38,7 @@ const WriterProfileContent = () => {
     }
   });
   const [blogsData, setBlogsData] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { page, ref, setReached, setPage } = autoLoadMore();
   // pageIndex
   let apiData = {
@@ -68,6 +69,7 @@ const WriterProfileContent = () => {
 
   useEffect(() => {
     if (loadMore) {
+      setLoading(true);
       setTimeout(() => {
         setReached(false);
       }, 1000);
@@ -75,6 +77,7 @@ const WriterProfileContent = () => {
     } else {
       setReached(true);
     }
+    setLoading(false);
   }, [page, loadMore]);
 
   //This is for storing data in useState load from api
@@ -87,10 +90,15 @@ const WriterProfileContent = () => {
         return [...pre, ...singleWritterBlogs];
       });
     }
+    setTimeout(() => {
+      setLoading(false);
+    }, 100);
   }, [singleWritterBlogs]);
 
   //getting All blogs
   function activeArticlesFun() {
+    setLoading(true);
+    setBlogsData([]);
     setPage(1);
     setDisplayArticles({
       activeArticles: true,
@@ -99,6 +107,8 @@ const WriterProfileContent = () => {
   }
   //getting pendingblogs
   function pendingArticlesFun() {
+    setLoading(true);
+    setBlogsData([]);
     setPage(1);
     setDisplayArticles({
       pendingArticles: true,
@@ -106,6 +116,8 @@ const WriterProfileContent = () => {
   }
   //getting rejected blogs
   function rejectedArticlesFun() {
+    setLoading(true);
+    setBlogsData([]);
     setPage(1);
     setDisplayArticles({
       rejectedArticles: true,
@@ -113,12 +125,16 @@ const WriterProfileContent = () => {
   }
   //
   function recentActivitiesFun() {
+    setLoading(true);
+    setBlogsData([]);
     setPage(1);
     setDisplayArticles({
       recentActivities: true,
     });
   }
   function myBookmarksFun() {
+    setLoading(true);
+    setBlogsData([]);
     setPage(1);
     setDisplayArticles({
       myBookmarks: true,
@@ -225,28 +241,21 @@ const WriterProfileContent = () => {
               My Bookmarks
             </p>
           </div>
-
           <div className="writerLine"></div>
-          <Writter_Articles
-            userId={userId}
-            blogsData={blogsData}
-            bookmark={displayArticles?.myBookmarks ? true : false}
-            description={displayArticles?.myBookmarks && "hide"}
-            recentViewedTime={displayArticles?.recentActivities ? true : false}
-            setBlogsData={setBlogsData}
-          />
-          {/* {displayArticles.activeArticles && (
-            <Writter_Articles blogsData={blogsData} />
-          )}
-          {displayArticles.pendingArticles && (
-            <Writter_Articles blogsData={blogsData} />
-          )}
-          {displayArticles.rejectedArticles && (
-            <Writter_Articles blogsData={blogsData} />
-          )} */}
-          <button className="invisible" ref={ref}>
-            Load More
-          </button>
+          {loading ? <div className="loader-container">
+            <div className="loader"></div>
+          </div> : !blogsData?.length ? <div className="loader-container">No Data</div> :
+            <><Writter_Articles
+              userId={userId}
+              blogsData={blogsData}
+              bookmark={displayArticles?.myBookmarks ? true : false}
+              description={displayArticles?.myBookmarks && "hide"}
+              recentViewedTime={displayArticles?.recentActivities ? true : false}
+              setBlogsData={setBlogsData}
+            />
+              <button className="invisible" ref={ref}>
+                Load More
+              </button></>}
         </div>
       </div>
 
