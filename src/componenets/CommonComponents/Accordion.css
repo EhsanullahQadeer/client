@@ -69,12 +69,41 @@
   --bs-accordion-btn-focus-box-shadow: 0 0 0 0.25rem  #DFF1F0;
 }
 .modalStyled {
+  .ant-modal-body {
+    height: 450px !important;
+    overflow-y: scroll !important;
+}
+  .ant-modal-content {
+    overflow: hidden !important;
+  }
   .ant-btn-primary {
     display: none !important;
   }
   .ant-btn-default {
     display: flex !important;
   }
+  .ant-modal-footer {
+    height: 20px !important;
+  }
+  .ant-modal-close {
+    top: 5px;
+    right: 5px;
+  }
+      
+::-webkit-scrollbar {
+  width: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #A3A4A4;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 }
 
 

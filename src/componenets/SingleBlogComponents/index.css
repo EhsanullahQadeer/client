@@ -50,6 +50,25 @@
 .blogIcons {
   color: #a8a8a8;
   cursor: pointer;
+  margin-top: -5px;
+  &:hover {
+    color: #768181;
+  }
+}
+.twitterIcon {
+  &:hover {
+    color: #1DA1F2;
+  }
+}
+.facebookIcon {
+  &:hover {
+    color: #4267B2;
+  }
+}
+.linkedinIcon {
+  &:hover {
+    color: #0072b1 ;
+  }
 }
 
 .blogIconsMain {

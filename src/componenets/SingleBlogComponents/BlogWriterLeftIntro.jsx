@@ -12,10 +12,12 @@ import { ShareConfirmModal } from "../CommonComponents/ShareConfirmModal";
 import { Tooltip } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faFacebook, faLinkedin, faTwitter } from "@fortawesome/free-brands-svg-icons";
 const BlogWriterLeftIntro = ({
   name,
   image,
   blogTitle,
+  description,
   date,
   time: timeData,
   writerId,
@@ -86,9 +88,9 @@ const BlogWriterLeftIntro = ({
       {/*  */}
       <div className="d-flex align-items-center mt-3 mt-sm-0">
         <div className="blogIconsMain mr-5">
-          <CiTwitter onClick={()=> handleOnClick('Twitter')} className="blogIcons fa-lg mx-1" />
-          <CiFacebook onClick={()=> handleOnClick('Facebook')} className="blogIcons fa-lg mx-1" />
-          <AiOutlineLinkedin onClick={()=> handleOnClick('Linkedin')} className="blogIcons fa-lg mx-1" />
+          <FontAwesomeIcon icon={faTwitter} onClick={()=> handleOnClick('Twitter')} className="blogIcons twitterIcon fa-lg mx-1" />
+          <FontAwesomeIcon icon={faFacebook} onClick={()=> handleOnClick('Facebook')} className="blogIcons facebookIcon fa-lg mx-1" />
+          <FontAwesomeIcon icon={faLinkedin} onClick={()=> handleOnClick('Linkedin')} className="blogIcons linkedinIcon fa-lg mx-1" />
           <Tooltip title={<div>{isCopied && <FontAwesomeIcon icon={faCheck} color="#4DFF4D"/>} {!isCopied ? 'Copy' : 'Copied!'}</div>}><BiLinkAlt onClick={()=> handleOnClick('copy')} className="blogIcons fa-lg mx-1" /></Tooltip>
         </div>
         <BookMark
@@ -96,7 +98,7 @@ const BlogWriterLeftIntro = ({
           isBookmarked={isBookmarked}
         />
       </div>
-      <ShareConfirmModal title={blogTitle} url={url} btnTitle={btnTitle} open={open} setOpen={setOpen} />
+      <ShareConfirmModal description={description} title={blogTitle} url={url} btnTitle={btnTitle} open={open} setOpen={setOpen} />
     </div>
   );
 };
