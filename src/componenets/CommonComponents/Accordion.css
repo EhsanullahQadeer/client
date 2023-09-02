@@ -103,7 +103,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
-
+}
+.dangerousHtml {
+  overflow: hidden;
 }
 
 
