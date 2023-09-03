@@ -108,12 +108,14 @@
     object-fit: fill;
 }
 
-@media (max-width: 400px) {
+@media (width < 400px) {
   .modalImgStyled {
-    width: 100%; 
-    border-radius: 5px;
-    height: 200px;
-    object-fit: fill;
+    height: 250px !important;
+  }
+}
+@media (width < 500px) {
+  .modalImgStyled {
+    height: 300px;
   }
 }
 
