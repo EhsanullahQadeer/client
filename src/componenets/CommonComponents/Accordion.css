@@ -101,7 +101,21 @@
   margin: 0 0 5px 0;
   font-weight: 500;
 }
+.modalImgStyled {
+    width: 100%; 
+    border-radius: 5px;
+    height: 400px;
+    object-fit: fill;
+}
 
+@media (max-width: 400px) {
+  .modalImgStyled {
+    width: 100%; 
+    border-radius: 5px;
+    height: 300px;
+    object-fit: fill;
+}
+}
 
 @media (max-width:992px) {
    /*.......l-r-p 60px ......*/

@@ -3,7 +3,6 @@ import './Accordion.css';
 import { Button, Modal } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import parse from 'html-react-parser';
 import { gettingTumbnailImg } from '../logicFunctionalities/logics';
 
 export const ShareConfirmModal = ({ open, setOpen, title, url, btnTitle, description }) => {
@@ -12,7 +11,6 @@ export const ShareConfirmModal = ({ open, setOpen, title, url, btnTitle, descrip
         Twitter: <FontAwesomeIcon icon={faTwitter} color='#fff' />,
         Linkedin: <FontAwesomeIcon icon={faLinkedin} color='#fff' />,
     };
-    const htmlDescription = parse("" + description)
     const src = gettingTumbnailImg('' + description)
     return (
         <Modal
@@ -28,7 +26,7 @@ export const ShareConfirmModal = ({ open, setOpen, title, url, btnTitle, descrip
                     </button>
                 </a>
             </div>
-            <img style={{ width: '100%', borderRadius: '5px', height: '300px', objectFit: 'fill' }} src={src} />
+            <img className='modalImgStyled' src={src} />
         </Modal>
     )
 };

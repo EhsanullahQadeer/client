@@ -44,7 +44,6 @@ const WritterDetailsHeader = () => {
   function removeWriterImage() {
     setSelectedFile(undefined);
     setImgUrl(undefined);
-    console.log(photoRef.current.value);
     if (photoRef.current) {
       photoRef.current.value = "";
     }

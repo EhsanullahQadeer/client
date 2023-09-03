@@ -1,10 +1,13 @@
 import withReactContent from 'sweetalert2-react-content';
 import './Alert.css';
 import Swal from 'sweetalert2';
-import { Link } from 'react-router-dom';
 
 export function RedirectToLoginAlert() {
-    const Alert = withReactContent(Swal);
+  const Alert = withReactContent(Swal);
+  const handleSignUp = ()=> {
+    window.location.hash = "signUp";
+    Alert.close();
+  }
     Alert.fire({
       title: "<div>Action Required!</div>",
       html: "Login required to perform this action",
@@ -15,7 +18,11 @@ export function RedirectToLoginAlert() {
       confirmButtonAriaLabel: "Thumbs up, great!",
       cancelButtonText: 'Cancel',
       cancelButtonAriaLabel: "Thumbs down",
-      footer: "Don't have an account?&nbsp;<div onClick='window.location.hash = signUp' style='color: #0D6EFD'> Sign up</div>",
+      footer: (
+        <div style={{display: 'flex', gap: '5px'}}>
+          Don't have an account? <div onClick={handleSignUp} style={{ color: '#0D6EFD', cursor: 'pointer' }}>Sign Up</div>
+        </div>
+      ),
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.hash = "signIn";

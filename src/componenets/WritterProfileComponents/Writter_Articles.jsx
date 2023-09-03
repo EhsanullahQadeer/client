@@ -44,7 +44,6 @@ export default function Writter_Articles(props) {
     //
     let writerPhoto;
     if (item?.writer?.photo || recentBlogWriter?.photo) {
-      console.log(recentBlogWriter?.photo)
       writerPhoto =
         Writer_Files_URL + (item?.writer?.photo || recentBlogWriter?.photo);
     }

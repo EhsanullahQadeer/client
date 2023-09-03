@@ -28,7 +28,6 @@ const ResetPassword = () => {
     setTimeout(() => {
       dispatch(removeAlert());
     }, 3000);
-    console.log(password);
   }
 
   return (

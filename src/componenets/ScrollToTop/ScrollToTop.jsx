@@ -20,6 +20,9 @@ export default function ScrollToTop() {
       localStorage.setItem("prePath",pathname)
       navigate("/signIn")
     }
+    if (hash == '#signUp') {
+      navigate('/signUp');
+    }
     if(hash=="#becomeWriterSection"){
      let element= document.getElementById("becomeWriterSection")
      console.log(element)

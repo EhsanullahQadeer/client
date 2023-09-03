@@ -135,7 +135,6 @@ const blogSlice = createSlice({
       state.isLoading = false;
       // state.recentViewedBlogs=payload;
       state.singleWritterBlogs = payload;
-      console.log(payload.length);
       if (payload.length == 0) {
         state.loadMore = false;
       } else {
