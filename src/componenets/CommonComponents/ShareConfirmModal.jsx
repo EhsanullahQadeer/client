@@ -16,6 +16,7 @@ export const ShareConfirmModal = ({ open, setOpen, title, url, btnTitle, descrip
         <Modal
             className='modalStyled'
             visible={open}
+            centered
             onCancel={() => setOpen(false)}
             getPopupContainer={node => node}
         >
