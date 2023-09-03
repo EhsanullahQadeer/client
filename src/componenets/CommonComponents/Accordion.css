@@ -104,18 +104,18 @@
 .modalImgStyled {
     width: 100%; 
     border-radius: 5px;
-    height: 400px;
+    height: 300px;
     object-fit: fill;
 }
 
 @media (width < 400px) {
   .modalImgStyled {
-    height: 250px !important;
+    height: 200px !important;
   }
 }
 @media (width < 500px) {
   .modalImgStyled {
-    height: 300px;
+    height: 200px;
   }
 }
 

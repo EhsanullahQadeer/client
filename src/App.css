@@ -11,3 +11,6 @@
 img {
   object-fit: cover;
 }
+img.navBarLogo {
+  object-fit: contain;
+}

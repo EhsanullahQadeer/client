@@ -74,13 +74,13 @@
   color: var(--green-dark);
   background: var(--green-light);
 }
-.swal2-actions {
+.my-custom-alert .swal2-actions {
   flex-direction: column !important;
 }
-.swal2-confirm {
+.my-custom-alert .swal2-confirm {
   width: 300px !important;
   display: flex !important;
-  justify-content: center;
+  justify-content: center !important;
   align-items: center !important;
   background-color: #0D6EFD !important;
   border:1px solid #0D6EFD !important;
@@ -90,7 +90,7 @@
     /* color: #121212 !important; */
   }
 }
-.swal2-cancel {
+.my-custom-alert .swal2-cancel {
   width: 300px !important;
   border-radius: 30px !important;
   border: 1px solid #a3a4a4 !important;
@@ -100,38 +100,31 @@
     border:1px solid #0D6EFD !important;
   }
 }
-.swal2-close {
+.my-custom-alert .swal2-close {
   &:focus {
     box-shadow: none !important;
   }
 }
-.swal2-popup {
- height: 500px;
- /* width: 700px !important; */
+.my-custom-alert .swal2-popup {
+ height: 500px !important;
 }
 @media (max-width: 340px) {
-  .swal2-confirm {
+  .my-custom-alert .swal2-confirm {
     width: 250px !important;
   }
-  .swal2-cancel {
+  .my-custom-alert .swal2-cancel {
     width: 250px !important;
   }
 }
 @media (max-width: 600px) {
-  .swal2-popup {
-    height: 100vh;
+  .my-custom-alert .swal2-popup {
+    height: 100vh !important;
     width: 100% !important;
     grid-row: 3 !important;
     align-self: end !important;
   }
-  .swal2-container {
+  .my-custom-alert {
     background: transparent !important;
     padding: 0 !important;
    }
 }
-/* @media (height <= 600px) {
-  .swal2-popup {
-    height: 97vh;
-    width: 500px !important;
-   }
-} */

@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useNavigate } from "react-router-dom";
 //
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
@@ -9,6 +8,39 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import './Alert.css';
+
+export function RedirectToLoginAlert() {
+  const Alert = withReactContent(Swal);
+  const handleSignUp = () => {
+    window.location.hash = "signUp";
+    Alert.close();
+  }
+  Alert.fire({
+    customClass: {
+      container: 'my-custom-alert',
+    },
+    title: "<div>Action Required!</div>",
+    html: "Login required to perform this action",
+    showCloseButton: true,
+    showCancelButton: true,
+    focusConfirm: false,
+    confirmButtonText: 'Sign In',
+    confirmButtonAriaLabel: "Thumbs up, great!",
+    cancelButtonText: 'Cancel',
+    cancelButtonAriaLabel: "Thumbs down",
+    footer: (
+      <div style={{ display: 'flex', gap: '5px' }}>
+        Don't have an account? <div onClick={handleSignUp} style={{ color: '#0D6EFD', cursor: 'pointer' }}>Sign Up</div>
+      </div>
+    ),
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.hash = "signIn";
+    }
+  });
+  return null;
+}
 
 export function RemoveBookMarkAlert(isRemoved) {
   return new Promise((resolve) => {
