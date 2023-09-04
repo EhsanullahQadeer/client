@@ -71,8 +71,7 @@ const Register = () => {
           {isLoading && <CircularProgress />}
           <div className="divCenter">{showAlert && <Alert />}</div>
           <div>
-            <h1 className="authHead">Sign Up</h1>
-            <p className="authPara">Enter your Details to Create Account.</p>
+            <h1 className="authHead text-center">Sign Up With Email</h1>
           </div>
 
           <div className="registerTextFields">
@@ -149,10 +148,11 @@ const Register = () => {
                 <span onClick={tooglePassword} className={eyeType}></span>
               </div>
             </div>
-
-            <button type="submit" className="authBlueBtn" onClick={RegisterFun}>
-              Sign Up
-            </button>
+            <div className="text-center">
+              <button type="submit" className="authBlueBtn" onClick={RegisterFun}>
+                Sign Up
+              </button>
+            </div>
 
             <p className="alreadyAuth">
               You have an account?
@@ -162,8 +162,8 @@ const Register = () => {
             </p>
           </div>
         </div>
-      </form>
-    </div>
+      </form >
+    </div >
   );
 };
 

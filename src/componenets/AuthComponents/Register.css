@@ -15,16 +15,15 @@ width: 49%;
 }
 
 .authHead {
-  font-size: 16px;
-  font-weight: 600;
-  font-family: "Nunito", sans-serif;
-  color: #777777;
+  font-size: 28px;
+  font-weight: normal;
+  font-family: "Poppins", sans-serif;
+  color: #1E1E1E;
 }
 .authPara {
-  font-size: 14px;
-  font-weight: 400;
-  font-family: "Nunito", sans-serif;
-  color: #777777;
+  font-size: 16px;
+  font-family: "Poppins", sans-serif;
+  color: #1E1E1E;
 }
 
 .TextFields p {
@@ -41,7 +40,7 @@ width: 49%;
   border-bottom: 1px solid #777777 ;
   height: 47.67px;
   width: 100%;
-  padding: 0 23PX;
+  padding: 0 5PX;
   outline: none;
 }
 .passwordWrapper{
@@ -90,12 +89,17 @@ padding: 10px;
 
 .authBlueBtn {
   width: 100%;
-  border-radius: 58px;
-  height:47.67px;
-  background-color: #0065fd;
-  border: 1px solid #0065fd;
-  color: #ffffff;
+  border-radius: 19px;
+  width: 200px;
+  height: 38px;
+  background-color: transparent;
+  border: 1px solid #2680EB;
+  color: #2680EB;
   cursor: pointer;
+  &:hover {
+    background: #2680EB;
+    color: #fff;
+  }
 }
 
 .authRedBtn {
@@ -125,7 +129,7 @@ padding: 10px;
 
 .checkFlex {
   display: flex;
-  gap: 30px;
+  gap: 10px;
 }
 
 .checkFlex p {
@@ -136,10 +140,10 @@ padding: 10px;
 }
 
 .forgerPassword {
-  font-weight: 400;
-  font-size: 14px;
+  margin-top: -20px;
+  font-size: 12px;
   font-family: "Nunito", sans-serif;
-  color: #777777;
+  color: #2680EB;
 }
 
 .authFlex {
@@ -199,7 +203,7 @@ padding: 10px;
     .authBlueBtn {
       height:35px;}
     .registerBigMian {
-      padding: 34px 10% 35px;
+      padding: 0;
     }
     .categoryField {
       border-right:12px solid transparent;
