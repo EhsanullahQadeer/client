@@ -36,7 +36,7 @@ const Trending = () => {
               <Link className="link" to={`/blog/${item?._id}/${userId}`}>
                 <div className="trendingContainer">
                   <a className="trendingHead">{item?.title}</a>
-                  <Link to={`/WriterPublicProfile /${item?.writer?._id}`} className="trendingFlex">
+                  <Link to={`/WriterPublicProfile/${item?.writer?._id}`} className="trendingFlex">
                     {writerImg ? (
                       <img className="rounded-circle" src={writerImg} />
                     ) : (

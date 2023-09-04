@@ -77,9 +77,10 @@ const Register = () => {
 
           <div className="registerTextFields">
             <div className="TextFields">
-              <p>First name</p>
+              {/* <p>First name</p> */}
               <input
                 className="textarea"
+                placeholder='First name'
                 name="firstName"
                 value={data.firstName}
                 onChange={handleChange}
@@ -87,9 +88,10 @@ const Register = () => {
               />
             </div>
             <div className="TextFields">
-              <p>Last Name</p>
+              {/* <p>Last Name</p> */}
               <input
                 className="textarea"
+                placeholder="Last name"
                 name="lastName"
                 value={data.lastName}
                 onChange={handleChange}
@@ -97,19 +99,21 @@ const Register = () => {
               />
             </div>
             <div className="TextFields">
-              <p>Email</p>
+              {/* <p>Email</p> */}
               <input
                 type="email"
                 className="textarea"
+                placeholder='Email'
                 name="email"
                 value={data.email}
                 onChange={handleChange}
               />
             </div>
             <div className="TextFields">
-              <p>Phone Number</p>
+              {/* <p>Phone Number</p> */}
               <input
                 className="textarea"
+                placeholder='Phone number'
                 name="phoneNo"
                 value={data.phoneNo}
                 onChange={handleChange}
@@ -131,10 +135,11 @@ const Register = () => {
               </select>
             </div>
             <div className="TextFields">
-              <p>Password</p>
+              {/* <p>Password</p> */}
               <div className="passwordWrapper textarea">
                 <input
                   className="passTextarea"
+                  placeholder="Password"
                   type={passwordType ? "password" : "text"}
                   name="password"
                   value={data.password}

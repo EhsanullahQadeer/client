@@ -17,9 +17,20 @@ import {
 import { removeBookmarkApi } from "../../features/blog/blogThunk";
 import { useDispatch } from "react-redux";
 import { Writer_Files_URL } from "../../utils";
+import { BookMarkShareModal } from "./BookMarkShareModal";
 
 moment().format();
 export default function Writter_Articles(props) {
+  const [open, setOpen] = useState(false);
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [blogUrl, setBlogUrl] = useState('');
+  const handleBookmark = e => {
+    setBlogUrl(`${location.origin}/Blog/${e?.blogId?._id}`);
+    setOpen(true);
+    setDesc(e?.blogId?.description);
+    setTitle(e?.blogId?.title);
+  }
   const userId = props?.userId;
   return props?.blogsData?.map((item, index) => {
     //
@@ -153,7 +164,7 @@ export default function Writter_Articles(props) {
                               placement="top-start"
                               arrow
                             >
-                              <IconButton>
+                              <IconButton onClick={()=> handleBookmark(item)}>
                                 <ShareIcon />
                               </IconButton>
                             </Tooltip>
@@ -175,6 +186,7 @@ export default function Writter_Articles(props) {
             )}
           </div>
         </div>
+        <BookMarkShareModal url={blogUrl} title={title} description={desc} setOpen={setOpen} open={open}/>
       </div>
     );
   });

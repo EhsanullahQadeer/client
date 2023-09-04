@@ -36,13 +36,13 @@ width: 49%;
 }
 
 .textarea {
+  border: none;
   background-color: #ffffff1a;
-  outline: 1px solid #777777 ;
-  border-radius: 45px;
+  border-bottom: 1px solid #777777 ;
   height: 47.67px;
   width: 100%;
   padding: 0 23PX;
- border: none;
+  outline: none;
 }
 .passwordWrapper{
  display: flex;

@@ -19,6 +19,7 @@ import {
 import { SmallAlert } from "../../Alert/Alerts";
 import Step2Repies from "./Step2Repies";
 import WriteReply from "./WriteReply";
+import { ReportModal } from "../../CommonComponents/ReportModal";
 
 // Step 1: Create a Combined Context
 export const CombinedContext = createContext();
@@ -34,9 +35,12 @@ export default function Step1Repies({
   const { processing } = useSelector((state) => state.comments);
 
   let { blogId } = useParams();
-  const handleReport = () => {};
+  const handleReport = () => {
+    setOpenReportModal(true);
+  };
   const [expandedComments, setExpandedComments] = useState([]);
   const [openReplyId, setopenReplyId] = useState(0);
+  const [openReportModal, setOpenReportModal] = useState(false);
   const [toggleShowReplyId, setToggleReplyId] = useState(0);
   const [pageIndex, setpageIndex] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -204,6 +208,8 @@ export default function Step1Repies({
     commentId,
     handleReplyToComment,
     trackChangesInput,
+    openReportModal,
+    setOpenReportModal,
   };
 
   return (
@@ -440,6 +446,7 @@ export default function Step1Repies({
           )}
         </div>
       </div>
+      <ReportModal/>
     </CombinedContext.Provider>
   );
 }

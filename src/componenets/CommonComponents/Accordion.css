@@ -107,7 +107,9 @@
     height: 300px;
     object-fit: fill;
 }
-
+.textArea {
+  resize: none  !important;
+}
 @media (width < 400px) {
   .modalImgStyled {
     height: 200px !important;
