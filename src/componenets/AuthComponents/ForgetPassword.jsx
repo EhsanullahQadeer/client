@@ -10,7 +10,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const Login = () => {
   let [email, setEmail] = React.useState("");
   let dispatch = useDispatch();
-  let { showAlert, isLoading } = useSelector((state) => state.store);
+  let { showAlert, isLoading } = useSelector((state) => state.user);
 
   function ForgetFun() {
     dispatch(ForgetPasswordApi(email));
@@ -48,7 +48,7 @@ const Login = () => {
             </button>
           </div>
           <p className="alreadyAuth">
-            Back to
+            Back to&nbsp;
             <Link to="/signIn">
               <span>Sign In</span>
             </Link>

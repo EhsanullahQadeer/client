@@ -58,7 +58,7 @@ const ResetPassword = () => {
             </button>
           </div>
           <p className="alreadyAuth">
-            Back to
+            Back to&nbsp;
             <Link to="/signIn">
               <span>Sign In</span>
             </Link>
