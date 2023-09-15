@@ -48,6 +48,8 @@ export default function Landing() {
     <div className="App">
       <GoogleOAuthProvider clientId="705164632277-vhv4q8ki9tntsbiv8n0do8l9rdbd1knk.apps.googleusercontent.com">
         <GoogleLogin
+          width="200px"
+          shape="circle"
           // buttonText="Login with google"
           // buttonText="Login"
           onSuccess={responseGoogleSuccess}

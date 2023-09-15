@@ -4,14 +4,15 @@
 }
 .registerMain {
   box-sizing: border-box;
-width: 49%;
+  width: 49%;
+  max-width: 636px;
   background-color: #ffffff;
- padding: 57px 60px;
+  padding: 30px;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  gap: 40px;
+  /* gap: 40px; */
 }
 
 .authHead {
@@ -24,6 +25,7 @@ width: 49%;
   font-size: 16px;
   font-family: "Poppins", sans-serif;
   color: #1E1E1E;
+  margin-bottom: 10px;
 }
 
 .TextFields p {
@@ -33,10 +35,13 @@ width: 49%;
   color: #777777;
   margin-bottom: 0;
 }
-
+select:invalid,
+select option[value=""] {
+  color: #777;
+}
 .textarea {
   border: none;
-  background-color: #ffffff1a;
+  background-color: #ffffff;
   border-bottom: 1px solid #777777 ;
   height: 47.67px;
   width: 100%;

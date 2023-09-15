@@ -120,7 +120,7 @@ const Register = () => {
               />
             </div>
             <div className="TextFields">
-              <p>Categories</p>
+              {/* <p>Categories</p> */}
               <select
                 className="textarea categoryField"
                 name="categories"
@@ -128,7 +128,7 @@ const Register = () => {
                 onChange={handleChange}
                 required
               >
-                <option value=""></option>
+                <option value="">Categories</option>
                 <option value="SelfImprovement">Self Improvement</option>
                 <option value="Technology">Technology</option>
               </select>
