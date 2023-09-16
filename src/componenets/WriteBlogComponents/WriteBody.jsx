@@ -114,7 +114,7 @@ const WriteBody = () => {
       }, 3000);
     }
   }
-  let title = "You blog has been submitted for approval.";
+  let title = "Your blog has been submitted for approval.";
 
   return (
     <div className="writeMain" ref={alert}>
