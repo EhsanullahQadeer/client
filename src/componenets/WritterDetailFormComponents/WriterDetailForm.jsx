@@ -29,7 +29,6 @@ const WriterDetailForm = () => {
     currentWriterInfo: writer,
     image,
     showAlert,
-    currentWriterInfo,
   } = useSelector((state) => state.writerRequest);
   let dispatch = useDispatch();
 
@@ -141,10 +140,10 @@ const WriterDetailForm = () => {
                     checked={data.agePrivacy == "private" && true}
                     onChange={handleChange}
                   />
-                  <label for="onlyMeAge">Only Me</label> {" "}
+                  <label for="onlyMeAge">Only Me</label>{" "}
                 </div>
                 <div className="showPublic-div">
-                   {" "}
+                  {" "}
                   <input
                     type="radio"
                     id="showAge"
@@ -153,7 +152,7 @@ const WriterDetailForm = () => {
                     checked={data.agePrivacy == "public" && true}
                     onChange={handleChange}
                   />
-                  <label for="showAge">Show to Public</label> {" "}
+                  <label for="showAge">Show to Public</label>{" "}
                 </div>
               </div>
             </div>
@@ -188,10 +187,10 @@ const WriterDetailForm = () => {
                     value="private"
                     onChange={handleChange}
                   />
-                  <label for="onlyMeCity">Only Me</label> {" "}
+                  <label for="onlyMeCity">Only Me</label>{" "}
                 </div>
                 <div className="showPublic-div">
-                   {" "}
+                  {" "}
                   <input
                     type="radio"
                     id="showCity"
@@ -200,7 +199,7 @@ const WriterDetailForm = () => {
                     value="public"
                     onChange={handleChange}
                   />
-                  <label for="showCity">Show to Public</label> {" "}
+                  <label for="showCity">Show to Public</label>{" "}
                 </div>
               </div>
             </div>
@@ -278,10 +277,10 @@ const WriterDetailForm = () => {
                     value="private"
                     onChange={handleChange}
                   />
-                  <label for="onlyMeEmail">Only Me</label> {" "}
+                  <label for="onlyMeEmail">Only Me</label>{" "}
                 </div>
                 <div className="showPublic-div">
-                   {" "}
+                  {" "}
                   <input
                     type="radio"
                     id="showEmail"
@@ -290,7 +289,7 @@ const WriterDetailForm = () => {
                     value="public"
                     onChange={handleChange}
                   />
-                  <label for="showEmail">Show to Public</label> {" "}
+                  <label for="showEmail">Show to Public</label>{" "}
                 </div>
               </div>
             </div>
@@ -317,10 +316,10 @@ const WriterDetailForm = () => {
                     checked={data.contactPrivacy == "private" && true}
                     onChange={handleChange}
                   />
-                  <label for="onlyMeContact">Only Me</label> {" "}
+                  <label for="onlyMeContact">Only Me</label>{" "}
                 </div>
                 <div className="showPublic-div">
-                   {" "}
+                  {" "}
                   <input
                     type="radio"
                     id="showContact"
@@ -329,7 +328,7 @@ const WriterDetailForm = () => {
                     checked={data.contactPrivacy == "public" && true}
                     onChange={handleChange}
                   />
-                  <label for="showContact">Show to Public</label> {" "}
+                  <label for="showContact">Show to Public</label>{" "}
                 </div>
               </div>
             </div>

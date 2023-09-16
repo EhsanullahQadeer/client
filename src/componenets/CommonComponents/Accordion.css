@@ -97,30 +97,45 @@
 }
 }
 .titleStyled {
-  font-size: 17px;
-  margin: 0 0 5px 0;
-  font-weight: 500;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  font-weight: 600;
+  color: #222222;
+  font-family: "Noto Sans", sans-serif;
+  margin-bottom: 0;
+  max-width: 461px;
+ -webkit-line-clamp: 3;
+  white-space: pre-wrap;
 }
 .modalImgStyled {
-    width: 100%; 
-    border-radius: 5px;
-    height: 300px;
+    width: 150px;
+    height: 100px;
+    border-radius: 3px;
     object-fit: fill;
 }
 .textArea {
   resize: none  !important;
 }
-@media (width < 400px) {
-  .modalImgStyled {
-    height: 200px !important;
-  }
+.flex {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
 }
-@media (width < 500px) {
+@media (max-width: 400px) {
+  .flex {
+    flex-direction: column !important;
+  }
   .modalImgStyled {
+    width: 100%;
     height: 200px;
   }
 }
-
 @media (max-width:992px) {
    /*.......l-r-p 60px ......*/
    .homePage2-accordian .accordionBigMain {
